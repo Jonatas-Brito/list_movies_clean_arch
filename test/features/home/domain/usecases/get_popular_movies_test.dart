@@ -9,19 +9,19 @@ import 'package:movies_list/features/home/domain/usecases/get_popular_movies.dar
 class GetMoviesRepositoryMock extends Mock implements MoviesRepository {}
 
 void main() {
-  GetPopularMovies usecase;
-  GetMoviesRepositoryMock repository;
+  GetPopularMovies tUsecase;
+  GetMoviesRepositoryMock tRepository;
 
-  repository = GetMoviesRepositoryMock();
-  usecase = GetPopularMovies(repository);
+  tRepository = GetMoviesRepositoryMock();
+  tUsecase = GetPopularMovies(tRepository);
 
   test('get list of popular movies', () async {
     //arrange
     String key = 'key';
-    when(() => repository.getMoviesPopular(key))
+    when(() => tRepository.getMoviesPopular(key))
         .thenAnswer((_) async => Right(<Movie>[]));
     //act
-    final result = await usecase(Params(key: key));
+    final result = await tUsecase(Params(key: key));
     //assert
     expect(result.isRight(), true);
     expect(result.fold(id, id), isA<List<Movie>>());
@@ -30,10 +30,10 @@ void main() {
   test('get list of popular movies failed', () async {
     //arrange
     String key = 'key';
-    when(() => repository.getMoviesPopular(key))
+    when(() => tRepository.getMoviesPopular(key))
         .thenAnswer((_) async => Left(FailureGetMovies()));
     //act
-    final result = await usecase(Params(key: key));
+    final result = await tUsecase(Params(key: key));
     //assert
     expect(result.isRight(), false);
     expect(result.fold(id, id), isA<FailureGetMovies>());

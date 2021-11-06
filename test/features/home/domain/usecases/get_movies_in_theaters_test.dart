@@ -9,16 +9,16 @@ import 'package:movies_list/features/home/domain/usecases/get_movies_in_theaters
 class GetMoviesRepositoryMock extends Mock implements MoviesRepository {}
 
 void main() {
-  final repository = GetMoviesRepositoryMock();
-  final usecase = GetMoviesInTeathers(repository);
+  final tRepository = GetMoviesRepositoryMock();
+  final tUsecase = GetMoviesInTeathers(tRepository);
 
   test('get list of movies in theater ', () async {
     //arrange
     String key = 'key';
-    when(() => repository.getMoviesInTheaters(key))
+    when(() => tRepository.getMoviesInTheaters(key))
         .thenAnswer((_) async => Right(<Movie>[]));
     //act
-    final result = await usecase(Params(key: key));
+    final result = await tUsecase(Params(key: key));
     //assert
 
     expect(result.isRight(), true);
@@ -28,10 +28,10 @@ void main() {
   test('get list of movies in theater failed', () async {
     //arrange
     String key = 'key';
-    when(() => repository.getMoviesInTheaters(key))
+    when(() => tRepository.getMoviesInTheaters(key))
         .thenAnswer((_) async => Left(FailureGetMovies()));
     //act
-    final result = await usecase(Params(key: key));
+    final result = await tUsecase(Params(key: key));
     //assert
 
     expect(result.isLeft(), true);
