@@ -7,14 +7,11 @@ import 'package:movies_list/features/home/domain/entities/movie.dart';
 import '../../../../fixtures/fixtures_reader.dart';
 
 void main() {
-  final tMoviesModel = MovieModel(
-      title: 'Test Movie',
-      imagePath: 'image.png',
-      popularity: 48.261451,
-      releaseDate: '2016-08-03');
+  final tMovieModel = MovieModel.fromJson(jsonDecode(fixture('movie.json')));
+
   test('should be a subclass of MovieEntity', () async {
     //assert
-    expect(tMoviesModel, isA<Movie>());
+    expect(tMovieModel, isA<Movie>());
   });
 
   test('fromJson - should return a valid model', () async {
@@ -23,19 +20,19 @@ void main() {
     // act
     final result = MovieModel.fromJson(jsonMap);
     // assert
-    expect(result, tMoviesModel);
+    expect(result, tMovieModel);
   });
 
   test('toJson - should return a JSON map containing the proper data',
       () async {
     // act
-    final result = tMoviesModel.toJson();
+    final result = tMovieModel.toJson();
     // assert
     final expectedMap = {
-      "title": "Test Movie",
-      "imagePath": "image.png",
-      "releaseDate": "2016-08-03",
-      "popularity": 48.261451
+      "title": "Venom: Let There Be Carnage",
+      "popularity": 6093.846,
+      "imagePath": "/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
+      "releaseDate": "2021-09-30",
     };
     expect(result, expectedMap);
   });
