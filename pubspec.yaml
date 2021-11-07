@@ -20,7 +20,7 @@ dependencies:
   # Functional programming thingies
   dartz: ^0.10.0
   # Remote API
-  data_connection_checker: ^0.3.4
+  internet_connection_checker: ^0.0.1+3
   http: ^0.13.3
   # mockito: ^5.0.15
   mocktail: ^0.2.0
