@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:movies_list/core/failure/failure.dart';
+import 'package:movies_list/core/error/failure.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 import 'package:movies_list/features/home/domain/repositories/movies_repository.dart';
 import 'package:movies_list/features/home/domain/usecases/get_popular_movies.dart';
@@ -31,11 +31,11 @@ void main() {
     //arrange
     String key = 'key';
     when(() => tRepository.getMoviesPopular(key))
-        .thenAnswer((_) async => Left(FailureGetMovies()));
+        .thenAnswer((_) async => Left(ServerFailure()));
     //act
     final result = await tUsecase(Params(key: key));
     //assert
     expect(result.isRight(), false);
-    expect(result.fold(id, id), isA<FailureGetMovies>());
+    expect(result.fold(id, id), isA<ServerFailure>());
   });
 }

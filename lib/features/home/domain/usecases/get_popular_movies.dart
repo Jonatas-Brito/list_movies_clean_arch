@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/failure/failure.dart';
+import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecases.dart';
 import '../entities/movie.dart';
 import '../repositories/movies_repository.dart';
 
-typedef FutureGetMovies = Future<Either<FailureGetMovies, List<Movie>>>;
+typedef FutureGetMovies = Future<Either<Failure, List<Movie>>>;
 typedef Usecase = UseCase<List<Movie>, Params>;
 
 class GetPopularMovies implements Usecase {

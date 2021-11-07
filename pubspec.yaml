@@ -22,7 +22,6 @@ dependencies:
   # Remote API
   data_connection_checker: ^0.3.4
   http: ^0.13.3
-  # System for handling from JSON
   # mockito: ^5.0.15
   mocktail: ^0.2.0
 
