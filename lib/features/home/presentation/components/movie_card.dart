@@ -23,63 +23,65 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var percent = movie.popularity / 10000;
-    print("percent: $percent ");
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        children: [
-          Container(
-            width: width,
-            height: heigth,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: CachedNetworkImageProvider(
-                      'http://image.tmdb.org/t/p/w500${movie.imagePath}',
-                    )),
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: Stack(
+      child: GestureDetector(
+        onTap: () {},
+        child: Column(
+          children: [
+            Container(
+              width: width,
+              height: heigth,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: CachedNetworkImageProvider(
+                        'http://image.tmdb.org/t/p/w500${movie.imagePath}',
+                      )),
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              child: Stack(
+                children: [
+                  Positioned(
+                    right: 0,
+                    bottom: 0,
+                    child: Container(
+                      height: 35,
+                      width: 35,
+                      child: AnimatedProgress(percent: percent, movie: movie),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    height: 35,
-                    width: 35,
-                    child: AnimatedProgress(percent: percent, movie: movie),
+                Container(
+                  width: width,
+                  color: Colors.transparent,
+                  child: Text(
+                    movie.title,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontWeight: FontWeight.bold, fontSize: fontSizeTitle),
                   ),
                 )
               ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                width: width,
-                color: Colors.transparent,
-                child: Text(
-                  movie.title,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontWeight: FontWeight.bold, fontSize: fontSizeTitle),
-                ),
-              )
-            ],
-          ),
-          SizedBox(height: 5),
-          Row(
-            children: [
-              Container(
-                  width: width,
-                  child: Text(
-                    dateNumberToAbbreviationMonth(movie.releaseDate),
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontWeight: FontWeight.w300,
-                        fontSize: fontSizeSubtitle),
-                  ))
-            ],
-          )
-        ],
+            SizedBox(height: 5),
+            Row(
+              children: [
+                Container(
+                    width: width,
+                    child: Text(
+                      dateNumberToAbbreviationMonth(movie.releaseDate),
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontWeight: FontWeight.w300,
+                          fontSize: fontSizeSubtitle),
+                    ))
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
