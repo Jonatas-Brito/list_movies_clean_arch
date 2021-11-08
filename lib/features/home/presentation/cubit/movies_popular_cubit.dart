@@ -24,16 +24,21 @@ class MoviesPopularCubit extends Cubit<MoviePopularState> {
     emit(GetPopularMoviesIsLoading());
     String key = ApiKey.key;
     final faiulureOrMovies = await getPopularMovies.call(Params(key: key));
-    _eitherLoadedOrErrorState(faiulureOrMovies);
+
+    faiulureOrMovies.fold(
+        (failure) => emit(
+            GetPopularMoviesIsError(errorMessage: _mapFailureMessage(failure))),
+        (listMovies) => emit(GetPopularMoviesIsSuccessful(movies: listMovies)));
+    // _eitherLoadedOrErrorState(faiulureOrMovies);
   }
 
   _eitherLoadedOrErrorState(
     Either<Failure, List<Movie>> failureOrMovie,
   ) async {
-    failureOrMovie.fold(
-        (failure) => emit(
-            GetPopularMoviesIsError(errorMessage: _mapFailureMessage(failure))),
-        (listMovies) => emit(GetPopularMoviesIsSuccessful(movies: listMovies)));
+    emit(failureOrMovie.fold(
+        (failure) =>
+            GetPopularMoviesIsError(errorMessage: _mapFailureMessage(failure)),
+        (listMovies) => GetPopularMoviesIsSuccessful(movies: listMovies)));
   }
 
   String _mapFailureMessage(Failure failure) {

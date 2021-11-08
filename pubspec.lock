@@ -403,8 +403,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  mocktail:
+  mockito:
     dependency: "direct main"
+    description:
+      name: mockito
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.15"
+  mocktail:
+    dependency: transitive
     description:
       name: mocktail
       url: "https://pub.dartlang.org"
@@ -576,6 +583,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  source_gen:
+    dependency: transitive
+    description:
+      name: source_gen
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   source_map_stack_trace:
     dependency: transitive
     description:
