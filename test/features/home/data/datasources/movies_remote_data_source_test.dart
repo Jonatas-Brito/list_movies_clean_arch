@@ -22,30 +22,31 @@ void main() {
   String key = ApiKey.key;
 
   void setUpMockHttopClientSuccess200() {
-    when(() => mockHttpClient.get(Uri(
-            path: 'https://api.themoviedb.org/3/movie/popular',
-            queryParameters: {'api_key': key, 'language': 'pt-BR'})))
+    String uri =
+        'https://api.themoviedb.org/3/movie/popular?api_key=$key&language=pt-BR&page=1';
+
+    when(() => mockHttpClient.get(Uri.parse(uri)))
         .thenAnswer((_) async => http.Response(fixture('movie.json'), 200));
   }
 
-  void setUpMockHttopClientSuccess200PopularMovies() {
-    when(() => mockHttpClient.get(Uri(
-            path: 'https://api.themoviedb.org/3/movie/now_playing',
-            queryParameters: {'api_key': key, 'language': 'pt-BR'})))
+  void setUpMockHttopClientSuccess200MoviesInTheaters() {
+    String uri =
+        'https://api.themoviedb.org/3/movie/now_playing?api_key=$key&language=pt-BR&page=1';
+    when(() => mockHttpClient.get(Uri.parse(uri)))
         .thenAnswer((_) async => http.Response(fixture('movie.json'), 200));
   }
 
   void setUpMockHttopClientFailure404orOther() {
-    when(() => mockHttpClient.get(Uri(
-            path: 'https://api.themoviedb.org/3/movie/popular',
-            queryParameters: {'api_key': key, 'language': 'pt-BR'})))
+    String uri =
+        'https://api.themoviedb.org/3/movie/popular?api_key=$key&language=pt-BR&page=1';
+    when(() => mockHttpClient.get(Uri.parse(uri)))
         .thenAnswer((_) async => http.Response('Somenthing went wrong', 404));
   }
 
   void setUpMockHttopClientFailure404orOtherMoviesInTheaters() {
-    when(() => mockHttpClient.get(Uri(
-            path: 'https://api.themoviedb.org/3/movie/now_playing',
-            queryParameters: {'api_key': key, 'language': 'pt-BR'})))
+    String uri =
+        'https://api.themoviedb.org/3/movie/now_playing?api_key=$key&language=pt-BR&page=1';
+    when(() => mockHttpClient.get(Uri.parse(uri)))
         .thenAnswer((_) async => http.Response('Somenthing went wrong', 404));
   }
 
@@ -55,12 +56,12 @@ void main() {
         () async {
       // arrange
       setUpMockHttopClientSuccess200();
+      String uri =
+          'https://api.themoviedb.org/3/movie/popular?api_key=$key&language=pt-BR&page=1';
       // act
       await dataSource.getMoviesPopular(key);
       // assert
-      verify(() => mockHttpClient.get(Uri(
-          path: 'https://api.themoviedb.org/3/movie/popular',
-          queryParameters: {'api_key': key, 'language': 'pt-BR'})));
+      verify(() => mockHttpClient.get(Uri.parse(uri)));
     });
 
     test('should return Movies when the status code is 200 (success)',
@@ -83,24 +84,35 @@ void main() {
       expect(() => call(key), throwsA(TypeMatcher<ServerException>()));
     });
   });
+
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+  ///
+
   group('getMoviesInTheaters', () {
     test(
         'should perform a GET request on a URL with "key" assigned a "queryParam"',
         () async {
       // arrange
-      setUpMockHttopClientSuccess200PopularMovies();
+      setUpMockHttopClientSuccess200MoviesInTheaters();
+      String uri =
+          'https://api.themoviedb.org/3/movie/now_playing?api_key=$key&language=pt-BR&page=1';
+
       // act
       await dataSource.getMoviesInTheaters(key);
       // assert
-      verify(() => mockHttpClient.get(Uri(
-          path: 'https://api.themoviedb.org/3/movie/now_playing',
-          queryParameters: {'api_key': key, 'language': 'pt-BR'})));
+      verify(() => mockHttpClient.get(Uri.parse(uri)));
     });
 
     test('should return Movies when the status code is 200 (success)',
         () async {
       // arrange
-      setUpMockHttopClientSuccess200PopularMovies();
+      setUpMockHttopClientSuccess200MoviesInTheaters();
       // act
       final result = await dataSource.getMoviesInTheaters(key);
       // assert
