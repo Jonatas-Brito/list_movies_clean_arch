@@ -28,22 +28,18 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
   FutureMovies _getMovies(String url, String key) async {
     final response = await client.get(
         Uri(path: url, queryParameters: {'api_key': key, 'language': 'pt-BR'}));
-    List<Movie> _movies = [];
 
     if (response.statusCode == 200) {
-      final tMovieModel = MovieModel.fromJson(jsonDecode(response.body));
-      print(tMovieModel.title);
-      _movies.add(tMovieModel);
+      List<Movie> _movies = [];
+      Map<String, dynamic> _mapBody = jsonDecode(response.body);
+      List _dynamicList = _mapBody['results'];
+      _movies = _dynamicList.map((e) => MovieModel.fromJson(e)).toList();
 
-      // Map<String, dynamic> _mapBody = jsonDecode(response.body);
-      // List _dynamicList = _mapBody['results'];
-      // _movies =
-      //     _dynamicList.map((e) => MovieModel.fromJson(jsonDecode(e))).toList();
+      return _movies;
     } else {
       throw ServerException();
     }
 
-    return _movies;
     // return response
   }
 }

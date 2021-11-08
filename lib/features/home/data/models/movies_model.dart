@@ -14,7 +14,7 @@ class MovieModel extends Movie {
 
   factory MovieModel.fromJson(Map<String, dynamic> map) {
     return MovieModel(
-      title: map['original_title'] != null ? map['original_title'] : null,
+      title: map['title'] != null ? map['title'] : null,
       imagePath: map['poster_path'] != null ? map['poster_path'] : null,
       popularity: map['popularity'] != null ? map['popularity'] : null,
       releaseDate: map['release_date'] != null ? map['release_date'] : null,

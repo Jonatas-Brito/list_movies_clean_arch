@@ -7,7 +7,12 @@ import 'package:movies_list/features/home/domain/entities/movie.dart';
 import '../../../../fixtures/fixtures_reader.dart';
 
 void main() {
-  final tMovieModel = MovieModel.fromJson(jsonDecode(fixture('movie.json')));
+  Map<String, dynamic> map = jsonDecode(fixture('movie.json'));
+  List _dynamicList = map['results'];
+
+  final jsonMovie = _dynamicList[0];
+
+  final tMovieModel = MovieModel.fromJson(_dynamicList[0]);
 
   test('should be a subclass of MovieEntity', () async {
     //assert
@@ -16,7 +21,7 @@ void main() {
 
   test('fromJson - should return a valid model', () async {
     // arrange
-    final Map<String, dynamic> jsonMap = jsonDecode(fixture('movie.json'));
+    final Map<String, dynamic> jsonMap = jsonMovie;
     // act
     final result = MovieModel.fromJson(jsonMap);
     // assert
@@ -29,9 +34,9 @@ void main() {
     final result = tMovieModel.toJson();
     // assert
     final expectedMap = {
-      "title": "Venom: Let There Be Carnage",
+      "title": "Venom: Tempo de Carnificina",
       "popularity": 6093.846,
-      "imagePath": "/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
+      "imagePath": "/h5UzYZquMwO9FVn15R2eK2itmHu.jpg",
       "releaseDate": "2021-09-30",
     };
     expect(result, expectedMap);

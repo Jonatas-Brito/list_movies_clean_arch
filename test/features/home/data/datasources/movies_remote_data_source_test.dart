@@ -15,8 +15,9 @@ void main() {
   MockHttpClient mockHttpClient = MockHttpClient();
   MoviesRemoteDataSourceImpl dataSource =
       MoviesRemoteDataSourceImpl(client: mockHttpClient);
-
-  final tMovieModel = MovieModel.fromJson(jsonDecode(fixture('movie.json')));
+  Map<String, dynamic> tMapMovies = jsonDecode(fixture('movie.json'));
+  List _dynamicList = tMapMovies['results'];
+  MovieModel tMapMoviesModel = MovieModel.fromJson(_dynamicList[0]);
 
   String key = ApiKey.key;
 
@@ -69,7 +70,7 @@ void main() {
       // act
       final result = await dataSource.getMoviesPopular(key);
       // assert
-      expect(result, equals([tMovieModel]));
+      expect(result, equals([tMapMoviesModel]));
     });
 
     test('''should throw a ServerException when the 
@@ -103,7 +104,7 @@ void main() {
       // act
       final result = await dataSource.getMoviesInTheaters(key);
       // assert
-      expect(result, equals([tMovieModel]));
+      expect(result, equals([tMapMoviesModel]));
     });
 
     test('''should throw a ServerException when the 

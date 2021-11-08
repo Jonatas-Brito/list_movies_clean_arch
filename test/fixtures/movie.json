@@ -1,20 +1,24 @@
 {
-    "adult": false,
-    "backdrop_path": "/lNyLSOKMMeUPr1RsL4KcRuIXwHt.jpg",
-    "genre_ids": [
-        878,
-        28,
-        12
-    ],
-    "id": 580489,
-    "original_language": "en",
-    "original_title": "Venom: Let There Be Carnage",
-    "overview": "After finding a host body in investigative reporter Eddie Brock, the alien symbiote must face a new enemy, Carnage, the alter ego of serial killer Cletus Kasady.",
-    "popularity": 6093.846,
-    "poster_path": "/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
-    "release_date": "2021-09-30",
-    "title": "Venom: Let There Be Carnage",
-    "video": false,
-    "vote_average": 6.8,
-    "vote_count": 1597
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/lNyLSOKMMeUPr1RsL4KcRuIXwHt.jpg",
+            "genre_ids": [
+                878,
+                28,
+                12
+            ],
+            "id": 580489,
+            "original_language": "en",
+            "original_title": "Venom: Let There Be Carnage",
+            "overview": "O relacionamento entre Eddie e Venom (Tom Hardy) está evoluindo. Buscando a melhor forma de lidar com a inevitável simbiose, esse dois lados descobrem como viver juntos e, de alguma forma, se tornarem melhores juntos do que separados.",
+            "popularity": 6093.846,
+            "poster_path": "/h5UzYZquMwO9FVn15R2eK2itmHu.jpg",
+            "release_date": "2021-09-30",
+            "title": "Venom: Tempo de Carnificina",
+            "video": false,
+            "vote_average": 6.8,
+            "vote_count": 1597
+        }
+    ]
 }
