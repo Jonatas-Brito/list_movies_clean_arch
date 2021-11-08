@@ -19,7 +19,7 @@ class MoviesRepositoryImpl implements MoviesRepository {
     String key,
   ) async {
     return await _getMovies(() {
-      return remoteDataSource.getMoviesInTheaters('key');
+      return remoteDataSource.getMoviesInTheaters(key);
     });
   }
 
@@ -28,7 +28,7 @@ class MoviesRepositoryImpl implements MoviesRepository {
     String key,
   ) async {
     return await _getMovies(() {
-      return remoteDataSource.getMoviesPopular('key');
+      return remoteDataSource.getMoviesPopular(key);
     });
   }
 

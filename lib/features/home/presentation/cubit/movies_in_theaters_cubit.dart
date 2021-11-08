@@ -4,26 +4,25 @@ import 'package:equatable/equatable.dart';
 import 'package:movies_list/core/error/failure.dart';
 import 'package:movies_list/core/key/tmdb_key.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/home/domain/usecases/get_popular_movies.dart';
+import 'package:movies_list/features/home/domain/usecases/get_movies_in_theaters.dart';
 
-part 'movie_state.dart';
+part 'movies_in_theaters_state.dart';
 
-// UnconnectedDevice
 const String SERVER_FAILURE_MESSAGE = 'Houve um problema no servidor';
 
 const String NETWORK_FAILURE_MESSAGE =
     'É necessário se connectar a internet para listar os filmes';
 
-class MoviePopularCubit extends Cubit<MoviePopularState> {
-  final GetPopularMovies getPopularMovies;
+class MoviesInTheatersCubit extends Cubit<MoviesInTheatersState> {
+  final GetMoviesInTheaters getMoviesInTheaters;
 
-  MoviePopularCubit({required this.getPopularMovies})
-      : super(PopularMoviesIsIdle());
+  MoviesInTheatersCubit({required this.getMoviesInTheaters})
+      : super(MoviesInTheatersInitial());
 
-  void getListPopularMovies() async {
-    emit(GetPopularMoviesIsLoading());
+  void getListMoviesInTheaters() async {
+    emit(GetMoviesInTheatersIsLoading());
     String key = ApiKey.key;
-    final faiulureOrMovies = await getPopularMovies.call(Params(key: key));
+    final faiulureOrMovies = await getMoviesInTheaters.call(Params(key: key));
     _eitherLoadedOrErrorState(faiulureOrMovies);
   }
 
@@ -31,9 +30,10 @@ class MoviePopularCubit extends Cubit<MoviePopularState> {
     Either<Failure, List<Movie>> failureOrMovie,
   ) async {
     failureOrMovie.fold(
-        (failure) => emit(
-            GetPopularMoviesIsError(errorMessage: _mapFailureMessage(failure))),
-        (listMovies) => emit(GetPopularMoviesIsSuccessful(movies: listMovies)));
+        (failure) => emit(GetMoviesInTheatersIsError(
+            errorMessage: _mapFailureMessage(failure))),
+        (listMovies) =>
+            emit(GetMoviesInTheatersIsSuccessful(movies: listMovies)));
   }
 
   String _mapFailureMessage(Failure failure) {

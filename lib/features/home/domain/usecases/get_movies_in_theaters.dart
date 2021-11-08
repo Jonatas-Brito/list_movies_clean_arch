@@ -9,9 +9,9 @@ import '../repositories/movies_repository.dart';
 typedef FutureGetMovies = Future<Either<Failure, List<Movie>>>;
 typedef Usecase = UseCase<List<Movie>, Params>;
 
-class GetMoviesInTeathers implements Usecase {
+class GetMoviesInTheaters implements Usecase {
   final MoviesRepository repository;
-  const GetMoviesInTeathers(this.repository);
+  const GetMoviesInTheaters(this.repository);
 
   @override
   FutureGetMovies call(Params params) {

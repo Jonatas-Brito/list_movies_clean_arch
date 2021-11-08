@@ -10,7 +10,7 @@ class GetMoviesRepositoryMock extends Mock implements MoviesRepository {}
 
 void main() {
   final tRepository = GetMoviesRepositoryMock();
-  final tUsecase = GetMoviesInTeathers(tRepository);
+  final tUsecase = GetMoviesInTheaters(tRepository);
 
   test('get list of movies in theater ', () async {
     //arrange

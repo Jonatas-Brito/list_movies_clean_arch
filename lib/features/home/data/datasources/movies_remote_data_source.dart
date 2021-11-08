@@ -18,16 +18,22 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
   const MoviesRemoteDataSourceImpl({required this.client});
 
   @override
-  FutureMovies getMoviesInTheaters(String key) =>
-      _getMovies('https://api.themoviedb.org/3/movie/now_playing', key);
+  FutureMovies getMoviesInTheaters(String key) => _getMovies(
+        'now_playing',
+        key,
+      );
 
   @override
-  FutureMovies getMoviesPopular(String key) =>
-      _getMovies('https://api.themoviedb.org/3/movie/popular', key);
+  FutureMovies getMoviesPopular(String key) => _getMovies(
+        'popular',
+        key,
+      );
 
-  FutureMovies _getMovies(String url, String key) async {
-    final response = await client.get(
-        Uri(path: url, queryParameters: {'api_key': key, 'language': 'pt-BR'}));
+  FutureMovies _getMovies(String path, String key) async {
+    String uri =
+        'https://api.themoviedb.org/3/movie/$path?api_key=$key&language=pt-BR&page=1';
+
+    final response = await client.get(Uri.parse(uri));
 
     if (response.statusCode == 200) {
       List<Movie> _movies = [];

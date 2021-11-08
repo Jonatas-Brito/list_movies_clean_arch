@@ -1,4 +1,4 @@
-part of 'movie_cubit.dart';
+part of 'movies_popular_cubit.dart';
 
 abstract class MoviePopularState extends Equatable {
   const MoviePopularState();
