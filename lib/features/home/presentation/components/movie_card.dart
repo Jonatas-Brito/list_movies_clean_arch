@@ -46,9 +46,7 @@ class MovieCard extends StatelessWidget {
                   child: Container(
                     height: 35,
                     width: 35,
-                    child: AnimatedProgress(
-                      percent: percent,
-                    ),
+                    child: AnimatedProgress(percent: percent, movie: movie),
                   ),
                 )
               ],

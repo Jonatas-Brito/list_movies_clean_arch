@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
 import 'package:movies_list/core/utils/change_colors_indicator.dart';
+import 'package:movies_list/features/home/domain/entities/movie.dart';
 
 class AnimatedProgress extends StatefulWidget {
   final double percent;
+  final Movie? movie;
 
-  const AnimatedProgress({Key? key, required this.percent}) : super(key: key);
+  const AnimatedProgress({Key? key, this.movie, required this.percent})
+      : super(key: key);
   @override
   _AnimatedProgressState createState() => _AnimatedProgressState();
 }
@@ -29,7 +32,21 @@ class _AnimatedProgressState extends State<AnimatedProgress>
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    _animation.removeListener(() {});
+    super.dispose();
+  }
+
   Widget progress() {
+    double percent = widget.percent;
+    double animation = _animation.value;
+    if (animation > 1) animation = 1;
+    if (animation < 0) animation = 0;
+    if (percent < 0) percent = 0;
+    if (percent > 1) percent = 1;
+    print("${widget.movie!.title}: Popularity: ${percent * 100}");
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, _) {
@@ -45,13 +62,13 @@ class _AnimatedProgressState extends State<AnimatedProgress>
               child: CircularProgressIndicator(
                 strokeWidth: 4,
                 value: _animation.value,
-                backgroundColor: verifyColorSecondaryToPercent(widget.percent),
+                backgroundColor: verifyColorSecondaryToPercent(percent),
                 valueColor: AlwaysStoppedAnimation<Color>(
-                    verifyColorPrimaryToPercent(widget.percent)),
+                    verifyColorPrimaryToPercent(percent)),
               ),
             ),
             Text(
-              "${(_animation.value * 100).toInt()}%",
+              "${(percent * 100).toInt()}%",
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!

@@ -16,6 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool loading = true;
+
   @override
   void initState() {
     context.read<MoviesInTheatersCubit>().getListMoviesInTheaters();
@@ -42,6 +44,7 @@ class _HomePageState extends State<HomePage> {
                         if (state is GetPopularMoviesIsSuccessful) {
                           return popularList(state.movies);
                         }
+                        if (state is GetPopularMoviesIsError) {}
 
                         return Container(
                           height: 150,
