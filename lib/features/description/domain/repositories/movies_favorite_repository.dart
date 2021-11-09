@@ -6,7 +6,7 @@ import 'package:movies_list/features/home/domain/entities/movie.dart';
 //   / Throws [CacheException] if no cached data is present.
 
 abstract class MoviesFavoriteReposiry {
-  Future<List<Movie>> getListMoviesFavorite();
-  Future<Either<Failure, void>> addMovieToCachedFavorite(Movie movie);
-  Future<Movie> retriveMovieFavorite(Movie movie);
+  Future<Either<Failure, List<Movie>>> retriveMoviesFavorites();
+  Future<Either<Failure, void>> addMovieToCachedFavorites(Movie movie);
+  Future<Either<Failure, void>> removeMovieOfFavorites(Movie movie);
 }

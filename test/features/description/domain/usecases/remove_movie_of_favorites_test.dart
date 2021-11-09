@@ -4,35 +4,37 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movies_list/core/error/failure.dart';
 import 'package:movies_list/features/description/domain/repositories/movies_favorite_repository.dart';
-import 'package:movies_list/features/description/domain/usecases/add_movie_to_favorites.dart';
+import 'package:movies_list/features/description/domain/usecases/params/favorite_params.dart';
+import 'package:movies_list/features/description/domain/usecases/remove_movie_of_favorites.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 
-import 'add_movie_to_favorites_test.mocks.dart';
+import 'remove_movie_of_favorites_test.mocks.dart';
 
 @GenerateMocks([MoviesFavoriteReposiry])
 void main() {
   MockMoviesFavoriteReposiry tRepository = MockMoviesFavoriteReposiry();
-  AddMovieToFavorite useCase = AddMovieToFavorite(tRepository);
+  RemoveMovieOfFavorites usecase =
+      RemoveMovieOfFavorites(favoriteReposiry: tRepository);
   final movie = Movie.empty(id: 1, title: 'Movie Test');
 
-  test('should return movie ifsuccessful', () async {
+  test('should removed movie of favorites list', () async {
     // arrange
-    when(tRepository.addMovieToCachedFavorite(any))
+    when(tRepository.removeMovieOfFavorites(any))
         .thenAnswer((_) async => Right(movie));
     // act
-    final result = await useCase(FavoriteParams(movie: movie));
+    final result = await usecase(FavoriteParams(movie: movie));
     // assert
+    expect(result.isRight(), true);
     expect(result, Right(movie));
   });
 
-  test('should return [CachedFailure] if the chached process fails', () async {
+  test('should return [CachedFailure] if removed proccess fails', () async {
     // arrange
-    when(tRepository.addMovieToCachedFavorite(any))
+    when(tRepository.removeMovieOfFavorites(any))
         .thenAnswer((_) async => Left(CachedFailure()));
-    // act
-    final result = await useCase(FavoriteParams(movie: movie));
-    // assert
-    verify(useCase(FavoriteParams(movie: movie)));
+    //act
+    final result = await usecase(FavoriteParams(movie: movie));
+    //assert
     expect(result.isLeft(), true);
     expect(result.fold((l) => Left(CachedFailure), (r) => null),
         Left(CachedFailure));
