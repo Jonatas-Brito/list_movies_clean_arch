@@ -19,14 +19,23 @@ class Movie extends Equatable {
     required this.releaseDate,
   });
 
+  const Movie.empty(
+      {this.title = '',
+      this.imagePath = '',
+      this.popularity = 0.0,
+      this.overview = '',
+      this.voteCount = 0,
+      this.releaseDate = '',
+      this.id = 0});
+
   @override
   List<Object?> get props => [
         id,
         title,
         imagePath,
-        popularity,
-        overview,
-        voteCount,
         releaseDate,
+        popularity,
+        voteCount,
+        overview,
       ];
 }

@@ -13,6 +13,10 @@ class ServerFailure extends Failure {
   ServerFailure() : super(properties: []);
 }
 
+class CachedFailure extends Failure {
+  CachedFailure() : super(properties: []);
+}
+
 class UnconnectedDevice extends Failure {
   UnconnectedDevice() : super(properties: []);
 }
