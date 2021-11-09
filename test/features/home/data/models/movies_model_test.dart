@@ -30,14 +30,20 @@ void main() {
 
   test('toJson - should return a JSON map containing the proper data',
       () async {
+    // arrange
+    String overview =
+        'O relacionamento entre Eddie e Venom (Tom Hardy) está evoluindo. Buscando a melhor forma de lidar com a inevitável simbiose, esse dois lados descobrem como viver juntos e, de alguma forma, se tornarem melhores juntos do que separados.';
     // act
     final result = tMovieModel.toJson();
     // assert
-    final expectedMap = {
+    final Map<String, dynamic> expectedMap = {
+      "id": 580489,
       "title": "Venom: Tempo de Carnificina",
+      'vote_count': 1597,
       "popularity": 6093.846,
-      "imagePath": "/h5UzYZquMwO9FVn15R2eK2itmHu.jpg",
-      "releaseDate": "2021-09-30",
+      'overview': "$overview",
+      "poster_path": "/h5UzYZquMwO9FVn15R2eK2itmHu.jpg",
+      "release_date": "2021-09-30",
     };
     expect(result, expectedMap);
   });

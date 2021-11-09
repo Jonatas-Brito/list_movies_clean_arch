@@ -42,6 +42,9 @@ void main() {
 
   group('getPopularMovies', () {
     final tMovieModel = MovieModel(
+        id: 1,
+        overview: 'as',
+        voteCount: 1,
         title: 'Test Text',
         imagePath: 'image.jpeg',
         popularity: 1.2,
@@ -108,6 +111,9 @@ void main() {
 
   group('getMoviesInTheater', () {
     final tMovieModel = MovieModel(
+        id: 1,
+        overview: 'as',
+        voteCount: 1,
         title: 'Test Text',
         imagePath: 'image.jpeg',
         popularity: 1.2,
