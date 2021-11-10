@@ -39,20 +39,20 @@ class MockMoviesFavoriteReposiry extends _i1.Mock
                           _FakeEither_0<_i5.Failure, List<_i6.Movie>>()))
               as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Movie>>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, void>> addMovieToCachedFavorites(
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Movie>> addMovieToCachedFavorites(
           _i6.Movie? movie) =>
       (super.noSuchMethod(
               Invocation.method(#addMovieToCachedFavorites, [movie]),
-              returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
-                  _FakeEither_0<_i5.Failure, void>()))
-          as _i4.Future<_i2.Either<_i5.Failure, void>>);
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.Movie>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.Movie>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.Movie>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, void>> removeMovieOfFavorites(
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Movie>> removeMovieOfFavorites(
           _i6.Movie? movie) =>
       (super.noSuchMethod(Invocation.method(#removeMovieOfFavorites, [movie]),
-              returnValue: Future<_i2.Either<_i5.Failure, void>>.value(
-                  _FakeEither_0<_i5.Failure, void>()))
-          as _i4.Future<_i2.Either<_i5.Failure, void>>);
+              returnValue: Future<_i2.Either<_i5.Failure, _i6.Movie>>.value(
+                  _FakeEither_0<_i5.Failure, _i6.Movie>()))
+          as _i4.Future<_i2.Either<_i5.Failure, _i6.Movie>>);
   @override
   String toString() => super.toString();
 }

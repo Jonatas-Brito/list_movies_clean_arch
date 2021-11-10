@@ -68,7 +68,7 @@ class _AnimatedProgressState extends State<AnimatedProgress>
               ),
             ),
             Text(
-              "${(percent * 100).toInt()}%",
+              "${(_animation.value * 100).toInt()}%",
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!

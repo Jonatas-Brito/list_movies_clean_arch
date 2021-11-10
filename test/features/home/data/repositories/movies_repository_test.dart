@@ -60,8 +60,10 @@ void main() {
           .thenAnswer((invocation) async => <Movie>[]);
       // act
       await repositoryImpl.getMoviesPopular('key');
+      final result = await mockNetworkInfo.isConnected;
       // assert
       verify(mockNetworkInfo.isConnected);
+      expect(result, true);
     });
 
     runTestsOnline(() {
@@ -129,8 +131,10 @@ void main() {
           .thenAnswer((invocation) async => <Movie>[]);
       // act
       await repositoryImpl.getMoviesInTheaters('key');
+      final result = await mockNetworkInfo.isConnected;
       // assert
       verify(mockNetworkInfo.isConnected);
+      expect(result, true);
     });
 
     runTestsOnline(() {
