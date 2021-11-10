@@ -5,7 +5,7 @@
 import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:movies_list/features/description/data/datasources/favorites_list_local_data_source.dart'
+import 'package:movies_list/features/favorites/data/datasources/favorites_list_local_data_source.dart'
     as _i4;
 import 'package:movies_list/features/home/domain/entities/movie.dart' as _i3;
 import 'package:shared_preferences/shared_preferences.dart' as _i2;

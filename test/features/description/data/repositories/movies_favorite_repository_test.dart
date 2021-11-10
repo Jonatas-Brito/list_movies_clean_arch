@@ -4,8 +4,8 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movies_list/core/error/exceptions.dart';
 import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/features/description/data/datasources/favorites_list_local_data_source.dart';
-import 'package:movies_list/features/description/data/repositories/movies_favorite_repository_impl.dart';
+import 'package:movies_list/features/favorites/data/datasources/favorites_list_local_data_source.dart';
+import 'package:movies_list/features/favorites/data/repositories/movies_favorite_repository_impl.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 
 import 'movies_favorite_repository_test.mocks.dart';

@@ -7,7 +7,7 @@ import 'dart:async' as _i4;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:movies_list/core/error/failure.dart' as _i5;
-import 'package:movies_list/features/description/domain/repositories/movies_favorite_repository.dart'
+import 'package:movies_list/features/favorites/domain/repositories/movies_favorite_repository.dart'
     as _i3;
 import 'package:movies_list/features/home/domain/entities/movie.dart' as _i6;
 

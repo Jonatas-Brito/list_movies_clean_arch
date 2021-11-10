@@ -3,9 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/features/description/domain/repositories/movies_favorite_repository.dart';
-import 'package:movies_list/features/description/domain/usecases/params/favorite_params.dart';
-import 'package:movies_list/features/description/domain/usecases/remove_movie_of_favorites.dart';
+import 'package:movies_list/features/favorites/domain/repositories/movies_favorite_repository.dart';
+import 'package:movies_list/features/favorites/domain/usecases/params/favorite_params.dart';
+import 'package:movies_list/features/favorites/domain/usecases/remove_movie_of_favorites.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 
 import 'remove_movie_of_favorites_test.mocks.dart';
