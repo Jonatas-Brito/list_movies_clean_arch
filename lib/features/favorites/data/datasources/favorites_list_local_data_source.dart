@@ -11,8 +11,8 @@ abstract class FavoritesListLocalDataSource {
   /// Throws [CachedException] if no cached data is present.
   Future<List<Movie>> retriveFavoritesMovies();
 
-  Future<Movie> addMovieToCachedFavorites(Movie moviefavoriteToChache);
-  Future<void> removeMovieOfFavorites(Movie moviefavoriteToChache);
+  Future<bool> addMovieToCachedFavorites(Movie moviefavoriteToChache);
+  Future<bool> removeMovieOfFavorites(Movie moviefavoriteToChache);
 }
 
 const CACHED_NUMBER_FAVORITE_LIST = 'CACHED_NUMBER_FAVORITE_LIST';
@@ -22,9 +22,10 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
   const FavoritesListLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<Movie> addMovieToCachedFavorites(Movie moviefavoriteToChache) async {
+  Future<bool> addMovieToCachedFavorites(Movie moviefavoriteToChache) async {
     final checkForKey =
         sharedPreferences.containsKey(CACHED_NUMBER_FAVORITE_LIST);
+    bool addIsSuccessful = false;
     Movie selecMovie = moviefavoriteToChache;
     List<Movie> listFavoriteCache = [];
     try {
@@ -45,20 +46,21 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
       } else {
         listFavoriteCache = [selecMovie];
       }
-      await sharedPreferences.setString(
+      addIsSuccessful = await sharedPreferences.setString(
           CACHED_NUMBER_FAVORITE_LIST, jsonEncode(listFavoriteCache));
     } catch (e) {
       throw CachedException();
     }
 
-    return selecMovie;
+    return addIsSuccessful;
   }
 
   @override
-  Future<void> removeMovieOfFavorites(Movie moviefavoriteToChache) async {
+  Future<bool> removeMovieOfFavorites(Movie moviefavoriteToChache) async {
     final checkForKey =
         sharedPreferences.containsKey(CACHED_NUMBER_FAVORITE_LIST);
     Movie selecMovie = moviefavoriteToChache;
+    bool removeIsSuccessful = false;
     // List dynamicList;
     List<Movie> listFavoriteCache = [];
     try {
@@ -76,14 +78,16 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
           if (containMovie) {
             listFavoriteCache.removeWhere((movie) => movie.id == selecMovie.id);
             if (listFavoriteCache.length == 0) {
-              await sharedPreferences.remove(CACHED_NUMBER_FAVORITE_LIST);
+              removeIsSuccessful =
+                  await sharedPreferences.remove(CACHED_NUMBER_FAVORITE_LIST);
             } else {
-              await sharedPreferences.setString(
+              removeIsSuccessful = await sharedPreferences.setString(
                   CACHED_NUMBER_FAVORITE_LIST, jsonEncode(listFavoriteCache));
             }
           }
         }
       }
+      return removeIsSuccessful;
     } catch (e) {
       throw CachedException();
     }

@@ -29,9 +29,9 @@ class MoviesPopularCubit extends Cubit<MoviePopularState> {
   }
 
   _eitherLoadedOrErrorState(
-    Either<Failure, List<Movie>> failureOrMovie,
+    Either<Failure, List<Movie>> failureOrMovies,
   ) async {
-    failureOrMovie.fold(
+    failureOrMovies.fold(
         (failure) => emit(
             GetPopularMoviesIsError(errorMessage: _mapFailureMessage(failure))),
         (listMovies) => emit(GetPopularMoviesIsSuccessful(movies: listMovies)));

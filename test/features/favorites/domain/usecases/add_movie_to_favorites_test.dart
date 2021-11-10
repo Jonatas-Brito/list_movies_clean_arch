@@ -13,29 +13,29 @@ import 'add_movie_to_favorites_test.mocks.dart';
 @GenerateMocks([MoviesFavoriteReposiry])
 void main() {
   MockMoviesFavoriteReposiry tRepository = MockMoviesFavoriteReposiry();
-  AddMovieToFavorite useCase = AddMovieToFavorite(tRepository);
+  AddMovieToFavorites useCase = AddMovieToFavorites(tRepository);
   final movie = Movie.empty(id: 1, title: 'Movie Test');
 
-  test('should return movie ifsuccessful', () async {
+  test('should return movie if successful', () async {
     // arrange
     when(tRepository.addMovieToCachedFavorites(any))
-        .thenAnswer((_) async => Right(movie));
+        .thenAnswer((_) async => Right(true));
     // act
     final result = await useCase(FavoriteParams(movie: movie));
     // assert
-    expect(result, Right(movie));
+    expect(result, Right(true));
   });
 
   test('should return [CachedFailure] if the chached process fails', () async {
     // arrange
     when(tRepository.addMovieToCachedFavorites(any))
-        .thenAnswer((_) async => Left(CachedFailure()));
+        .thenAnswer((_) async => Left(CachedToAddFailure()));
     // act
     final result = await useCase(FavoriteParams(movie: movie));
     // assert
     verify(useCase(FavoriteParams(movie: movie)));
     expect(result.isLeft(), true);
-    expect(result.fold((l) => Left(CachedFailure), (r) => null),
-        Left(CachedFailure));
+    expect(result.fold((l) => Left(CachedToAddFailure), (r) => null),
+        Left(CachedToAddFailure));
   });
 }

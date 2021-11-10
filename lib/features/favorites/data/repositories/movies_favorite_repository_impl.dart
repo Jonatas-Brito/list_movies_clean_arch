@@ -10,22 +10,24 @@ class MoviesFavoriteReposiryImpl implements MoviesFavoriteReposiry {
   const MoviesFavoriteReposiryImpl({required this.localFavoritesDataSource});
 
   @override
-  Future<Either<Failure, Movie>> addMovieToCachedFavorites(Movie movie) async {
+  Future<Either<Failure, bool>> addMovieToCachedFavorites(Movie movie) async {
     try {
-      await localFavoritesDataSource.addMovieToCachedFavorites(movie);
-      return Right(movie);
+      bool addIsSuccessful =
+          await localFavoritesDataSource.addMovieToCachedFavorites(movie);
+      return Right(addIsSuccessful);
     } on CachedException {
-      return Left(CachedFailure());
+      return Left(CachedToAddFailure());
     }
   }
 
   @override
-  Future<Either<Failure, Movie>> removeMovieOfFavorites(Movie movie) async {
+  Future<Either<Failure, bool>> removeMovieOfFavorites(Movie movie) async {
     try {
-      await localFavoritesDataSource.removeMovieOfFavorites(movie);
-      return Right(movie);
+      bool removeIsSuccessful =
+          await localFavoritesDataSource.removeMovieOfFavorites(movie);
+      return Right(removeIsSuccessful);
     } on CachedException {
-      return Left(CachedFailure());
+      return Left(CachedToRemoveFailure());
     }
   }
 
@@ -36,7 +38,7 @@ class MoviesFavoriteReposiryImpl implements MoviesFavoriteReposiry {
       moviesFavorites = await localFavoritesDataSource.retriveFavoritesMovies();
       return Right(moviesFavorites);
     } on CachedException {
-      return Left(CachedFailure());
+      return Left(CachedToRetriveFailure());
     }
   }
 }

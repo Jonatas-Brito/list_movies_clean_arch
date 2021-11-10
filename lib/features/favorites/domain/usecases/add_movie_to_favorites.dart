@@ -4,14 +4,14 @@ import 'package:movies_list/core/usecases/usecases.dart';
 import 'package:movies_list/features/favorites/domain/repositories/movies_favorite_repository.dart';
 import 'package:movies_list/features/favorites/domain/usecases/params/favorite_params.dart';
 
-typedef ThisAddUsecase = UseCase<void, FavoriteParams>;
+typedef ThisAddUsecase = UseCase<bool, FavoriteParams>;
 
-class AddMovieToFavorite implements ThisAddUsecase {
+class AddMovieToFavorites implements ThisAddUsecase {
   final MoviesFavoriteReposiry favoriteReposiry;
-  const AddMovieToFavorite(this.favoriteReposiry);
+  const AddMovieToFavorites(this.favoriteReposiry);
 
   @override
-  Future<Either<Failure, void>> call(FavoriteParams params) async {
+  Future<Either<Failure, bool>> call(FavoriteParams params) async {
     return await favoriteReposiry.addMovieToCachedFavorites(params.movie);
   }
 }

@@ -20,23 +20,23 @@ void main() {
   test('should removed movie of favorites list', () async {
     // arrange
     when(tRepository.removeMovieOfFavorites(any))
-        .thenAnswer((_) async => Right(movie));
+        .thenAnswer((_) async => Right(true));
     // act
     final result = await usecase(FavoriteParams(movie: movie));
     // assert
     expect(result.isRight(), true);
-    expect(result, Right(movie));
+    expect(result, Right(true));
   });
 
   test('should return [CachedFailure] if removed proccess fails', () async {
     // arrange
     when(tRepository.removeMovieOfFavorites(any))
-        .thenAnswer((_) async => Left(CachedFailure()));
+        .thenAnswer((_) async => Left(CachedToRemoveFailure()));
     //act
     final result = await usecase(FavoriteParams(movie: movie));
     //assert
     expect(result.isLeft(), true);
-    expect(result.fold((l) => Left(CachedFailure), (r) => null),
-        Left(CachedFailure));
+    expect(result.fold((l) => Left(CachedToRemoveFailure), (r) => null),
+        Left(CachedToRemoveFailure));
   });
 }

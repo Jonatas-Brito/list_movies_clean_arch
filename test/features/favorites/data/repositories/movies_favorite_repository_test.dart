@@ -25,13 +25,13 @@ void main() {
     test('should return [Movie] if cached is successful', () async {
       // arrange
       when(localFavoritesDataSource.addMovieToCachedFavorites(any))
-          .thenAnswer((_) async => movie);
+          .thenAnswer((_) async => true);
       // act
       final result =
           await favoriteReposiryImpl.addMovieToCachedFavorites(movie);
       // assert
       verify(localFavoritesDataSource.addMovieToCachedFavorites(movie));
-      expect(result, Right(movie));
+      expect(result, Right(true));
     });
 
     test('should return [CachedFailure] if the chached process fails ',
@@ -44,9 +44,9 @@ void main() {
           await favoriteReposiryImpl.addMovieToCachedFavorites(movie);
       // assert
       verify(localFavoritesDataSource.addMovieToCachedFavorites(movie));
-      expect(result.fold(id, id), isA<CachedFailure>());
-      expect(result.fold((l) => Left(CachedFailure), (r) => null),
-          Left(CachedFailure));
+      expect(result.fold(id, id), isA<CachedToAddFailure>());
+      expect(result.fold((l) => Left(CachedToAddFailure), (r) => null),
+          Left(CachedToAddFailure));
     });
   });
 
@@ -66,7 +66,7 @@ void main() {
       final result = await favoriteReposiryImpl.removeMovieOfFavorites(movie);
       // assert
       verify(localFavoritesDataSource.removeMovieOfFavorites(movie));
-      expect(result, Right(movie));
+      expect(result, Right(true));
     });
 
     test('should return [CachedFailure] if the chached process fails ',
@@ -78,9 +78,9 @@ void main() {
       final result = await favoriteReposiryImpl.removeMovieOfFavorites(movie);
       // assert
       verify(localFavoritesDataSource.removeMovieOfFavorites(movie));
-      expect(result.fold(id, id), isA<CachedFailure>());
-      expect(result.fold((l) => Left(CachedFailure), (r) => null),
-          Left(CachedFailure));
+      expect(result.fold(id, id), isA<CachedToRemoveFailure>());
+      expect(result.fold((l) => Left(CachedToRemoveFailure), (r) => null),
+          Left(CachedToRemoveFailure));
     });
   });
 
@@ -113,9 +113,9 @@ void main() {
       // act
       final result = await favoriteReposiryImpl.retriveMoviesFavorites();
       // assert
-      expect(result.fold(id, id), isA<CachedFailure>());
-      expect(result.fold((l) => Left(CachedFailure), (r) => null),
-          Left(CachedFailure));
+      expect(result.fold(id, id), isA<CachedToRetriveFailure>());
+      expect(result.fold((l) => Left(CachedToRetriveFailure), (r) => null),
+          Left(CachedToRetriveFailure));
     });
   });
 }

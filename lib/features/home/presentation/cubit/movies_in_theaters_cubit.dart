@@ -27,16 +27,16 @@ class MoviesInTheatersCubit extends Cubit<MoviesInTheatersState> {
   }
 
   _eitherLoadedOrErrorState(
-    Either<Failure, List<Movie>> failureOrMovie,
+    Either<Failure, List<Movie>> failureOrMovies,
   ) async {
-    failureOrMovie.fold(
+    failureOrMovies.fold(
         (failure) => emit(GetMoviesInTheatersIsError(
-            errorMessage: _mapFailureMessage(failure))),
+            errorMessage: _setFailureMessage(failure))),
         (listMovies) =>
             emit(GetMoviesInTheatersIsSuccessful(movies: listMovies)));
   }
 
-  String _mapFailureMessage(Failure failure) {
+  String _setFailureMessage(Failure failure) {
     switch (failure.runtimeType) {
       case UnconnectedDevice:
         return NETWORK_FAILURE_MESSAGE;

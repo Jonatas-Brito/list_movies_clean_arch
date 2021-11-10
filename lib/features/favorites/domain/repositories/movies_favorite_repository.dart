@@ -7,6 +7,6 @@ import 'package:movies_list/features/home/domain/entities/movie.dart';
 
 abstract class MoviesFavoriteReposiry {
   Future<Either<Failure, List<Movie>>> retriveMoviesFavorites();
-  Future<Either<Failure, Movie>> addMovieToCachedFavorites(Movie movie);
-  Future<Either<Failure, Movie>> removeMovieOfFavorites(Movie movie);
+  Future<Either<Failure, bool>> addMovieToCachedFavorites(Movie movie);
+  Future<Either<Failure, bool>> removeMovieOfFavorites(Movie movie);
 }
