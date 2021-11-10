@@ -8,7 +8,7 @@ typedef ThisAddUsecase = UseCase<bool, FavoriteParams>;
 
 class AddMovieToFavorites implements ThisAddUsecase {
   final MoviesFavoriteReposiry favoriteReposiry;
-  const AddMovieToFavorites(this.favoriteReposiry);
+  const AddMovieToFavorites({required this.favoriteReposiry});
 
   @override
   Future<Either<Failure, bool>> call(FavoriteParams params) async {

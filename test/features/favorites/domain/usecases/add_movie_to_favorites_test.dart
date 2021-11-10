@@ -13,7 +13,8 @@ import 'add_movie_to_favorites_test.mocks.dart';
 @GenerateMocks([MoviesFavoriteReposiry])
 void main() {
   MockMoviesFavoriteReposiry tRepository = MockMoviesFavoriteReposiry();
-  AddMovieToFavorites useCase = AddMovieToFavorites(tRepository);
+  AddMovieToFavorites useCase =
+      AddMovieToFavorites(favoriteReposiry: tRepository);
   final movie = Movie.empty(id: 1, title: 'Movie Test');
 
   test('should return movie if successful', () async {
