@@ -30,9 +30,8 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
     Movie selecMovie = moviefavoriteToChache;
     List<Movie> listFavoriteCache = [];
     try {
+      selecMovie.isFavorite = true;
       if (checkForKey) {
-        selecMovie.isFavorite = true;
-
         List dynamicList = jsonDecode(
             sharedPreferences.getString(CACHED_MOVIE_FAVORITE_LIST)!);
 
@@ -47,11 +46,10 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
           listFavoriteCache.add(selecMovie);
         }
       } else {
-        var a = "Cached successful";
         print("nesse caso não entrei");
         listFavoriteCache = [selecMovie];
       }
-
+      print("Local: ${listFavoriteCache[0].isFavorite}");
       await sharedPreferences.setString(
           CACHED_MOVIE_FAVORITE_LIST, jsonEncode(listFavoriteCache));
     } catch (e) {
@@ -65,6 +63,8 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
 
   @override
   Future<Movie> removeMovieOfFavorites(Movie moviefavoriteToChache) async {
+    await sharedPreferences.clear();
+
     final checkForKey =
         sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
     Movie selecMovie = moviefavoriteToChache;
@@ -121,8 +121,12 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
       if (checkForKey) {
         dynamicList = jsonDecode(
             sharedPreferences.getString(CACHED_MOVIE_FAVORITE_LIST)!);
-        listFavoriteCache =
-            dynamicList.map((e) => MovieModel.fromJson(e)).toList();
+        dynamicList.forEach((movie) {
+          Movie movieForFavorites = MovieModel.fromJson(movie);
+          movieForFavorites.isFavorite = true;
+          print("Model: ${movieForFavorites.isFavorite}");
+          listFavoriteCache.add(movieForFavorites);
+        });
       }
       return Future.value(listFavoriteCache);
     } catch (e) {

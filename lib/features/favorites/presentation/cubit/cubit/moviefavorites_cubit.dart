@@ -21,12 +21,14 @@ class ManagerFavoritesMoviesCubit extends Cubit<ManagerFavoritesMoviesState> {
       : super(ManagerFavoritesMoviesInitial());
 
   void addMovieToFavorites(Movie movie) async {
+    print("ADICIONANDO");
     FavoriteParams params = FavoriteParams(movie: movie);
     final failureOrSuccess = await addToFavorites.call(params);
     _eitherSuccussOrErrorState(failureOrSuccess);
   }
 
   void removeMovieOfFavorites(Movie movie) async {
+    print("REMOVENDO");
     FavoriteParams params = FavoriteParams(movie: movie);
     final failureOrSuccess = await removeOfFavorites.call(params);
     _eitherSuccussOrErrorState(failureOrSuccess);

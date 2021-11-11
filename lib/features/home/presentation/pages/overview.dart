@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters_cubit.dart';
+import 'package:movies_list/features/home/presentation/cubit/movies_popular_cubit.dart';
 
-import '../../../../injection_container.dart';
 import '../../../favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 import '../../../favorites/presentation/cubit/cubit/moviefavorites_cubit.dart';
 import '../../domain/entities/movie.dart';
@@ -28,12 +29,17 @@ class _OverviewPageState extends State<OverviewPage> {
   void initState() {
     isFavorite =
         widget.movie.isFavorite != null ? widget.movie.isFavorite! : isFavorite;
+    print("FF: $isFavorite");
 
     popIsFavorite = widget.popIsFavorite;
     super.initState();
   }
 
-  addToFavorite(BuildContext context, Movie movie) {}
+  executeBlocs() {
+    context.read<MoviesFavoritesListCubit>().getListFavorites();
+    context.read<MoviesPopularCubit>().getListPopularMovies();
+    context.read<MoviesInTheatersCubit>().getListMoviesInTheaters();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +97,11 @@ class _OverviewPageState extends State<OverviewPage> {
                       children: [
                         FloatingActionButton(
                           heroTag: 'toPo',
-                          onPressed: () {
+                          onPressed: () async {
+                            context
+                                .read<MoviesFavoritesListCubit>()
+                                .getListFavorites();
+                            await Future.delayed(Duration(milliseconds: 200));
                             Navigator.of(context).pop();
                           },
                           child: Icon(Icons.arrow_back_ios_rounded),
@@ -100,7 +110,7 @@ class _OverviewPageState extends State<OverviewPage> {
                             ? SizedBox()
                             : FavoriteButton(
                                 isFavorite: isFavorite,
-                                onTap: () {
+                                onTap: () async {
                                   isFavorite
                                       ? context
                                           .read<ManagerFavoritesMoviesCubit>()
@@ -108,9 +118,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                       : context
                                           .read<ManagerFavoritesMoviesCubit>()
                                           .addMovieToFavorites(movie);
-                                  context
-                                      .read<MoviesFavoritesListCubit>()
-                                      .getListFavorites();
+                                  executeBlocs();
                                 },
                               )
                       ],
@@ -144,7 +152,6 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Widget banner() {
     Size size = MediaQuery.of(context).size;
-    bool horizontalBanner;
     String setImage = "";
     if (size.width > 600) {
       setImage = widget.movie.bannerPath;

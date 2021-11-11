@@ -49,27 +49,10 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
                     bloc: context.read<MoviesFavoritesListCubit>(),
                     builder: (context, state) {
                       if (state is GetMoviesFavoritesIsSuccessful) {
-                        print("${state.movies[0].isFavorite}");
-                        // print("${state.movies[1].isFavorite}");
-                        return ListView.builder(
-                            itemCount: state.movies.length,
-                            itemBuilder: (context, index) {
-                              Movie movie = state.movies[index];
-                              return Column(
-                                children: [
-                                  if (index == 0) ...[Container(height: 20)],
-                                  listFavorite(movie, index),
-                                  if (index == state.movies.length - 1) ...[
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 24, vertical: 10),
-                                      child: customDivider(),
-                                    ),
-                                    Container(height: 150)
-                                  ],
-                                ],
-                              );
-                            });
+                        return buildFavorites(state.movies);
+                      }
+                      if (state is GetMoviesFavoritesReturnedListEmpy) {
+                        return listIsEmpty();
                       }
                       if (state is GetPopularMoviesIsError) {}
 
@@ -79,6 +62,63 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
                     }),
           ),
         ));
+  }
+
+  Widget listIsEmpty() {
+    Size size = MediaQuery.of(context).size;
+    return Center(
+      child: Container(
+        width: size.width * .8,
+        child: Text(
+          'Adicione um filme aos favoritos e ele ficara disponivel aqui!',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              color: Colors.white.withOpacity(0.7)),
+        ),
+      ),
+    );
+  }
+
+  Widget buildFavorites(List<Movie> movies) {
+    return ListView.builder(
+        itemCount: movies.length,
+        itemBuilder: (context, index) {
+          Movie movie = movies[index];
+          return Column(
+            children: [
+              if (index == 0) ...[Container(height: 20)],
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                child: Column(
+                  children: [
+                    if (index > 0) ...[customDivider()],
+                    CardFavorite(
+                      movie: movie,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => OverviewPage(
+                                    popIsFavorite: true, movie: movie)));
+                      },
+                    )
+                  ],
+                ),
+              ),
+              if (index == movies.length - 1) ...[
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                  child: customDivider(),
+                ),
+                Container(height: 150)
+              ],
+            ],
+          );
+        });
   }
 
   Widget listFavorite(Movie movie, int index) {

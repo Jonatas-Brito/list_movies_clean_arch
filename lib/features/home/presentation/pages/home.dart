@@ -43,9 +43,10 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   title('Mais populares'),
                   BlocBuilder<MoviesPopularCubit, MoviePopularState>(
-                      bloc: context.read<MoviesPopularCubit>(),
+                      bloc: context.watch<MoviesPopularCubit>(),
                       builder: (context, state) {
                         if (state is GetPopularMoviesIsSuccessful) {
+                          print("popular movies success");
                           return popularList(state.movies);
                         }
                         if (state is GetPopularMoviesIsError) {}
@@ -56,10 +57,11 @@ class _HomePageState extends State<HomePage> {
                       }),
                   title('Assista nos cinemas'),
                   BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
-                      bloc: context.read<MoviesInTheatersCubit>(),
+                      bloc: context.watch<MoviesInTheatersCubit>(),
                       builder: (context, state) {
                         print(state.runtimeType);
                         if (state is GetMoviesInTheatersIsSuccessful) {
+                          print("teather movies success");
                           return Column(
                             children: [
                               inTheaterList(state.movies),
@@ -71,17 +73,17 @@ class _HomePageState extends State<HomePage> {
                           height: 150,
                         );
                       }),
-                  BlocBuilder<MoviesFavoritesListCubit,
-                          MoviesFavoritesListState>(
-                      bloc: context.read<MoviesFavoritesListCubit>(),
-                      builder: (context, state) {
-                        if (state is GetMoviesFavoritesIsSuccessful) {
-                          moviesFavorite = state.movies;
-                          print(moviesFavorite.length);
-                        }
-                        return SizedBox();
-                      }),
-                  SizedBox(height: 30),
+                  BlocListener<MoviesFavoritesListCubit,
+                      MoviesFavoritesListState>(
+                    bloc: context.watch<MoviesFavoritesListCubit>(),
+                    listener: (context, state) {
+                      if (state is GetMoviesFavoritesIsSuccessful) {
+                        moviesFavorite = state.movies;
+                        print("FavoritesHomeLenght: ${moviesFavorite.length}");
+                      }
+                    },
+                    child: SizedBox(),
+                  ),
                 ],
               ),
               Positioned(left: 0, right: 0, bottom: 0, child: gradientLayer()),
@@ -110,32 +112,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Movie checkMovieInFavorites(Movie selectedMovie) {
-    print("Entrou: ${selectedMovie.id}");
     Movie movieSelected = Movie.empty();
     movieSelected = selectedMovie;
-    int count = 0; // print('Foi selecionado: ${movieSelected.id}');
-    // print("É favorito: ${selectedMovie.isFavorite}");
-    // print("Leng${moviesFavorite.length}");
-    if (movieSelected.isFavorite == false) {
-      // print("${movieSelected.id} i'm ${movieSelected.isFavorite}");
-      moviesFavorite.forEach((movie) {
-        count++;
-        bool equalsId = movie.id == movieSelected.id;
-        if (equalsId) {
-          print("$count - ${movie.id} | ${movieSelected.id}");
-          print("To aqui e sou ${movie.id}");
-
+    moviesFavorite.forEach((movie) {
+      bool equalsId = movie.id == movieSelected.id;
+      if (equalsId) {
+        if (movie.isFavorite == true) {
+          print("Sou veerdadeiro");
           movieSelected = movie;
-          print("Agr  sou ${movie.id}");
         }
-        // movieSelected = selectMovie;
-      });
-      print("${movieSelected.id}");
-
-      print("Saiu: ${movieSelected.isFavorite}");
-    }
-    print("Quem está entrando é favorito? ${movieSelected.isFavorite}");
-    print("O id é ${movieSelected.id}");
+      }
+    });
 
     return movieSelected;
   }
