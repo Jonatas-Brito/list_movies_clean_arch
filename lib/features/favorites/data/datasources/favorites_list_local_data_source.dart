@@ -63,7 +63,7 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
 
   @override
   Future<Movie> removeMovieOfFavorites(Movie moviefavoriteToChache) async {
-    await sharedPreferences.clear();
+    // await sharedPreferences.clear();
 
     final checkForKey =
         sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
