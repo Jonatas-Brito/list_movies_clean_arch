@@ -42,8 +42,6 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
         print("Tamanho: ${listFavoriteCache[0].isFavorite}");
         bool containIdMovie =
             listFavoriteCache.any((movie) => movie.id == selecMovie.id);
-        // bool containTitleMovie =
-        //     listFavoriteCache.any((movie) => movie.id == selecMovie.id);
         if (!containIdMovie) {
           print("nesse caso entrei");
           listFavoriteCache.add(selecMovie);
