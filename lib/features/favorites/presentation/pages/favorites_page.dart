@@ -49,6 +49,8 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
                     bloc: context.read<MoviesFavoritesListCubit>(),
                     builder: (context, state) {
                       if (state is GetMoviesFavoritesIsSuccessful) {
+                        print("${state.movies[0].isFavorite}");
+                        // print("${state.movies[1].isFavorite}");
                         return ListView.builder(
                             itemCount: state.movies.length,
                             itemBuilder: (context, index) {

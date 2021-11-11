@@ -23,40 +23,44 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
 
   @override
   Future<Movie> addMovieToCachedFavorites(Movie moviefavoriteToChache) async {
-    await sharedPreferences.clear();
-    // final checkForKey =
-    //     sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
+    // await sharedPreferences.clear();
+    final checkForKey =
+        sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
+    print("Contain Chace:$checkForKey");
     Movie selecMovie = moviefavoriteToChache;
-    // List<Movie> listFavoriteCache = [];
-    // try {
-    //   if (checkForKey) {
-    //     List dynamicList = jsonDecode(
-    //         sharedPreferences.getString(CACHED_MOVIE_FAVORITE_LIST)!);
+    List<Movie> listFavoriteCache = [];
+    try {
+      if (checkForKey) {
+        selecMovie.isFavorite = true;
 
-    //     dynamicList.forEach((movie) {
-    //       listFavoriteCache.add(MovieModel.fromJson(movie));
-    //     });
-    //     bool containIdMovie =
-    //         listFavoriteCache.any((movie) => movie.id == selecMovie.id);
-    //     // bool containTitleMovie =
-    //     //     listFavoriteCache.any((movie) => movie.id == selecMovie.id);
-    //     if (!containIdMovie) {
-    //       selecMovie.isFavorite = true;
-    //       listFavoriteCache.add(selecMovie);
-    //     }
-    //   } else {
-    //     selecMovie.isFavorite = true;
-    //     listFavoriteCache = [selecMovie];
-    //   }
+        List dynamicList = jsonDecode(
+            sharedPreferences.getString(CACHED_MOVIE_FAVORITE_LIST)!);
 
-    //   print('Favorite: ${selecMovie.isFavorite}');
+        dynamicList.forEach((movie) {
+          listFavoriteCache.add(MovieModel.fromJson(movie));
+        });
+        print("Tamanho: ${listFavoriteCache[0].isFavorite}");
+        bool containIdMovie =
+            listFavoriteCache.any((movie) => movie.id == selecMovie.id);
+        // bool containTitleMovie =
+        //     listFavoriteCache.any((movie) => movie.id == selecMovie.id);
+        if (!containIdMovie) {
+          print("nesse caso entrei");
+          listFavoriteCache.add(selecMovie);
+        }
+      } else {
+        var a = "Cached successful";
+        print("nesse caso não entrei");
+        listFavoriteCache = [selecMovie];
+      }
 
-    //   await sharedPreferences.setString(
-    //       CACHED_MOVIE_FAVORITE_LIST, jsonEncode(listFavoriteCache));
-    // } catch (e) {
-    //   selecMovie.isFavorite = false;
-    //   throw CachedException();
-    // }
+      await sharedPreferences.setString(
+          CACHED_MOVIE_FAVORITE_LIST, jsonEncode(listFavoriteCache));
+    } catch (e) {
+      print("deu ruim");
+      selecMovie.isFavorite = false;
+      throw CachedException();
+    }
 
     return selecMovie;
   }

@@ -110,25 +110,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   Movie checkMovieInFavorites(Movie selectedMovie) {
-    print("Alteração feita: ${selectedMovie.isFavorite}");
+    print("Entrou: ${selectedMovie.id}");
     Movie movieSelected = Movie.empty();
     movieSelected = selectedMovie;
-    // print('Foi selecionado: ${movieSelected.id}');
+    int count = 0; // print('Foi selecionado: ${movieSelected.id}');
     // print("É favorito: ${selectedMovie.isFavorite}");
     // print("Leng${moviesFavorite.length}");
     if (movieSelected.isFavorite == false) {
-      print("${movieSelected.id} i'm ${movieSelected.isFavorite}");
+      // print("${movieSelected.id} i'm ${movieSelected.isFavorite}");
       moviesFavorite.forEach((movie) {
-        bool isFavorite =
-            moviesFavorite.any((movieAny) => movieAny.id == selectedMovie.id);
-        if (isFavorite) {
-          print('O id do item favorito é: ${movie.id}');
-          print("To aqui e sou ${movie.isFavorite}");
+        count++;
+        bool equalsId = movie.id == movieSelected.id;
+        if (equalsId) {
+          print("$count - ${movie.id} | ${movieSelected.id}");
+          print("To aqui e sou ${movie.id}");
 
           movieSelected = movie;
+          print("Agr  sou ${movie.id}");
         }
         // movieSelected = selectMovie;
       });
+      print("${movieSelected.id}");
+
+      print("Saiu: ${movieSelected.isFavorite}");
     }
     print("Quem está entrando é favorito? ${movieSelected.isFavorite}");
     print("O id é ${movieSelected.id}");

@@ -44,6 +44,7 @@ class _OverviewPageState extends State<OverviewPage> {
       bloc: context.read<ManagerFavoritesMoviesCubit>(),
       builder: (context, state) {
         if (state is CachedToFavoritesSuccess) {
+          context.read<MoviesFavoritesListCubit>().getListFavorites();
           isFavorite = state.movie.isFavorite!;
         }
         return Scaffold(
@@ -91,7 +92,6 @@ class _OverviewPageState extends State<OverviewPage> {
                         FloatingActionButton(
                           heroTag: 'toPop',
                           onPressed: () {
-                            sl<MoviesFavoritesListCubit>().getListFavorites();
                             Navigator.of(context).pop();
                           },
                           child: Icon(Icons.arrow_back_ios_rounded),

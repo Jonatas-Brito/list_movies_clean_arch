@@ -30,7 +30,9 @@ class MoviesFavoritesListCubit extends Cubit<MoviesFavoritesListState> {
     failureOrMovies.fold(
         (failure) => emit(GetMoviesFavoritesIsError(
             errorMessage: CACHED_RETRIVE_IS_FAIULURE)), (listMovies) {
-      print('passei');
+      if (listMovies.isNotEmpty) {
+        print('Primero é ${listMovies[0].isFavorite}');
+      }
       emit(GetMoviesFavoritesIsSuccessful(movies: listMovies));
     });
   }
