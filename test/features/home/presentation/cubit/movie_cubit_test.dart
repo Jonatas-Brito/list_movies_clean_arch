@@ -36,6 +36,7 @@ void main() {
     test('should return list movies', () async {
       // arrange
       // act
+
       expect(
         bloc.stream,
         emitsInOrder([
@@ -43,8 +44,10 @@ void main() {
           GetPopularMoviesIsSuccessful(movies: <Movie>[])
         ]),
       );
-      // assert
+
       bloc.getListPopularMovies();
+
+      // assert
       //assert later        final expected = [          LoadingState(),          LoadedState(projectList: tListProject),        ];        expectLater(favoriteBloc.stream, emitsInOrder(expected));        // act        favoriteBloc.add(GetListFavoriteProjects())
     });
   });

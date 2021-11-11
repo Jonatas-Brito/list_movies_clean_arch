@@ -8,12 +8,14 @@ import 'animated_progress.dart';
 class MovieCard extends StatelessWidget {
   final Movie movie;
   final double? width;
+  final VoidCallback? onTap;
   final double? heigth;
   final double? fontSizeTitle;
   final double? fontSizeSubtitle;
   const MovieCard({
     Key? key,
     required this.movie,
+    this.onTap,
     this.width = 180,
     this.heigth = 250,
     this.fontSizeTitle = 14,
@@ -26,7 +28,7 @@ class MovieCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: GestureDetector(
-        onTap: () {},
+        onTap: onTap,
         child: Column(
           children: [
             Container(

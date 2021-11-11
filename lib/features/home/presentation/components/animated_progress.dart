@@ -46,7 +46,6 @@ class _AnimatedProgressState extends State<AnimatedProgress>
     if (animation < 0) animation = 0;
     if (percent < 0) percent = 0;
     if (percent > 1) percent = 1;
-    print("${widget.movie!.title}: Popularity: ${percent * 100}");
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, _) {

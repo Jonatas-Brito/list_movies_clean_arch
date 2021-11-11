@@ -9,20 +9,30 @@ class MovieModel extends Movie {
     required String releaseDate,
     required String overview,
     required int voteCount,
+    bool? isFavorite,
+    required double? voteAverage,
+    required String bannerPath,
   }) : super(
-          id: id,
-          title: title,
-          imagePath: imagePath,
-          popularity: popularity,
-          releaseDate: releaseDate,
-          overview: overview,
-          voteCount: voteCount,
-        );
+            id: id,
+            title: title,
+            imagePath: imagePath,
+            voteAverage: voteAverage!,
+            popularity: popularity,
+            releaseDate: releaseDate,
+            voteCount: voteCount,
+            overview: overview,
+            bannerPath: bannerPath,
+            isFavorite: isFavorite);
 
   factory MovieModel.fromJson(Map<String, dynamic> map) {
     return MovieModel(
         id: map['id'] != null ? map['id'] : null,
         title: map['title'] != null ? map['title'] : null,
+        voteAverage: map['vote_average'] != null
+            ? (map['vote_average'] as num).toDouble()
+            : null,
+        isFavorite: map['is_favorite'] != null ? map['is_favorite'] : false,
+        bannerPath: map['backdrop_path'] != null ? map['backdrop_path'] : null,
         imagePath: map['poster_path'] != null ? map['poster_path'] : null,
         popularity: map['popularity'] != null ? map['popularity'] : null,
         releaseDate: map['release_date'] != null ? map['release_date'] : null,
@@ -36,7 +46,9 @@ class MovieModel extends Movie {
       'title': title,
       'poster_path': imagePath,
       'popularity': popularity,
+      'vote_average': voteAverage,
       'release_date': releaseDate,
+      'backdrop_path': bannerPath,
       'overview': overview,
       'vote_count': voteCount
     };

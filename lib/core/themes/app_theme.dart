@@ -25,7 +25,7 @@ ThemeData appTheme(BuildContext context) {
           bodyText2: GoogleFonts.montserrat(
               fontSize: 14, fontWeight: FontWeight.w300, color: Colors.white),
           button: GoogleFonts.montserrat(
-              fontSize: 18, fontWeight: FontWeight.w400, color: Colors.white),
+              fontSize: 18, fontWeight: FontWeight.w200, color: Colors.white),
           subtitle1:
               GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w500),
           subtitle2:

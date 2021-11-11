@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class IconAnimated extends StatefulWidget {
   final bool? sizeAnimation;
+  final bool? isFavorite;
   final double? size;
   final Color? color;
   final IconData? iconOutline;
@@ -13,6 +15,7 @@ class IconAnimated extends StatefulWidget {
       this.iconOutline,
       this.iconFull,
       this.size,
+      this.isFavorite,
       this.color,
       this.sizeAnimation = false,
       this.onTap})
@@ -25,12 +28,13 @@ class _IconAnimatedState extends State<IconAnimated>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late double _scale;
-
-  var visible;
+  TapDownDetails tapDownDetails = TapDownDetails();
+  TapUpDetails tapUpDetails = TapUpDetails(kind: PointerDeviceKind.touch);
+  bool isFavorite = false;
 
   @override
   void initState() {
-    visible = false;
+    isFavorite = widget.isFavorite != null ? widget.isFavorite! : isFavorite;
     super.initState();
     _controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: 200), upperBound: 0.08)
@@ -39,8 +43,8 @@ class _IconAnimatedState extends State<IconAnimated>
 
   void _onTapDown(TapDownDetails details) {
     Future.delayed(Duration(milliseconds: 100), () => _controller.forward());
-    Future.delayed(
-        Duration(milliseconds: 400), () => setState(() => visible = !visible));
+    Future.delayed(Duration(milliseconds: 400),
+        () => setState(() => isFavorite = !isFavorite));
   }
 
   void _onTapUp(TapUpDetails details) {
@@ -58,7 +62,7 @@ class _IconAnimatedState extends State<IconAnimated>
             size: widget.size,
           ),
         ),
-        visible
+        isFavorite
             ? TweenAnimationBuilder(
                 tween: Tween(begin: 0.0, end: 1.0),
                 duration: Duration(milliseconds: 180),

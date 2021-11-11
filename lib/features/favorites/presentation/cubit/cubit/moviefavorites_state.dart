@@ -9,7 +9,10 @@ abstract class ManagerFavoritesMoviesState extends Equatable {
 
 class ManagerFavoritesMoviesInitial extends ManagerFavoritesMoviesState {}
 
-class CachedToFavoritesSuccess extends ManagerFavoritesMoviesState {}
+class CachedToFavoritesSuccess extends ManagerFavoritesMoviesState {
+  final Movie movie;
+  const CachedToFavoritesSuccess({required this.movie});
+}
 
 class CachedToFavoritesFailure extends ManagerFavoritesMoviesState {
   final String errorMessage;

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/home/presentation/components/app_bar.dart';
-import 'package:movies_list/features/home/presentation/components/movie_card.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters_cubit.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_popular_cubit.dart';
-import 'package:movies_list/features/home/presentation/widgets/navigation_bar.dart';
+
+import '../../../../core/themes/app_colors.dart';
+import '../../../favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
+import '../../domain/entities/movie.dart';
+import '../components/app_bar.dart';
+import '../components/movie_card.dart';
+import '../cubit/movies_in_theaters_cubit.dart';
+import '../cubit/movies_popular_cubit.dart';
+import '../widgets/navigation_bar.dart';
+import 'overview.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,10 +20,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool loading = true;
-
+  List<Movie> moviesFavorite = [];
   @override
   void initState() {
     context.read<MoviesInTheatersCubit>().getListMoviesInTheaters();
+    context.read<MoviesFavoritesListCubit>().getListFavorites();
     context.read<MoviesPopularCubit>().getListPopularMovies();
     super.initState();
   }
@@ -54,6 +58,7 @@ class _HomePageState extends State<HomePage> {
                   BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
                       bloc: context.read<MoviesInTheatersCubit>(),
                       builder: (context, state) {
+                        print(state.runtimeType);
                         if (state is GetMoviesInTheatersIsSuccessful) {
                           return Column(
                             children: [
@@ -66,7 +71,17 @@ class _HomePageState extends State<HomePage> {
                           height: 150,
                         );
                       }),
-                  SizedBox(height: 150)
+                  BlocBuilder<MoviesFavoritesListCubit,
+                          MoviesFavoritesListState>(
+                      bloc: context.read<MoviesFavoritesListCubit>(),
+                      builder: (context, state) {
+                        if (state is GetMoviesFavoritesIsSuccessful) {
+                          moviesFavorite = state.movies;
+                          print(moviesFavorite.length);
+                        }
+                        return SizedBox();
+                      }),
+                  SizedBox(height: 30),
                 ],
               ),
               Positioned(left: 0, right: 0, bottom: 0, child: gradientLayer()),
@@ -94,8 +109,34 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Movie checkMovieInFavorites(Movie selectedMovie) {
+    print("Alteração feita: ${selectedMovie.isFavorite}");
+    Movie movieSelected = Movie.empty();
+    movieSelected = selectedMovie;
+    // print('Foi selecionado: ${movieSelected.id}');
+    // print("É favorito: ${selectedMovie.isFavorite}");
+    // print("Leng${moviesFavorite.length}");
+    if (movieSelected.isFavorite == false) {
+      print("${movieSelected.id} i'm ${movieSelected.isFavorite}");
+      moviesFavorite.forEach((movie) {
+        bool isFavorite =
+            moviesFavorite.any((movieAny) => movieAny.id == selectedMovie.id);
+        if (isFavorite) {
+          print('O id do item favorito é: ${movie.id}');
+          print("To aqui e sou ${movie.isFavorite}");
+
+          movieSelected = movie;
+        }
+        // movieSelected = selectMovie;
+      });
+    }
+    print("Quem está entrando é favorito? ${movieSelected.isFavorite}");
+    print("O id é ${movieSelected.id}");
+
+    return movieSelected;
+  }
+
   Widget popularList(List<Movie> list) {
-    print(list.length);
     return Container(
       color: Colors.transparent,
       child: Container(
@@ -106,30 +147,46 @@ class _HomePageState extends State<HomePage> {
             scrollDirection: Axis.horizontal,
             itemCount: list.length,
             itemBuilder: (context, index) {
-              Movie item = list[index];
-              print(item.imagePath);
-              return MovieCard(movie: item);
+              Movie movie = list[index];
+              return MovieCard(
+                movie: movie,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => OverviewPage(
+                                movie: checkMovieInFavorites(movie),
+                              )));
+                },
+              );
             }),
       ),
     );
   }
 
   Widget inTheaterList(List<Movie> list) {
-    print(list.length);
     return Container(
       height: 320,
       child: ListView.builder(
           itemCount: list.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            Movie item = list[index];
+            Movie movie = list[index];
 
             return MovieCard(
               fontSizeTitle: 13,
               fontSizeSubtitle: 11,
               heigth: 200,
               width: 150,
-              movie: item,
+              movie: movie,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => OverviewPage(
+                              movie: checkMovieInFavorites(movie),
+                            )));
+              },
             );
           }),
     );

@@ -11,98 +11,114 @@ abstract class FavoritesListLocalDataSource {
   /// Throws [CachedException] if no cached data is present.
   Future<List<Movie>> retriveFavoritesMovies();
 
-  Future<bool> addMovieToCachedFavorites(Movie moviefavoriteToChache);
-  Future<bool> removeMovieOfFavorites(Movie moviefavoriteToChache);
+  Future<Movie> addMovieToCachedFavorites(Movie moviefavoriteToChache);
+  Future<Movie> removeMovieOfFavorites(Movie moviefavoriteToChache);
 }
 
-const CACHED_NUMBER_FAVORITE_LIST = 'CACHED_NUMBER_FAVORITE_LIST';
+const CACHED_MOVIE_FAVORITE_LIST = 'CACHED_MOVIE_FAVORITE_LIST';
 
 class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
   final SharedPreferences sharedPreferences;
   const FavoritesListLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<bool> addMovieToCachedFavorites(Movie moviefavoriteToChache) async {
-    final checkForKey =
-        sharedPreferences.containsKey(CACHED_NUMBER_FAVORITE_LIST);
-    bool addIsSuccessful = false;
+  Future<Movie> addMovieToCachedFavorites(Movie moviefavoriteToChache) async {
+    await sharedPreferences.clear();
+    // final checkForKey =
+    //     sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
     Movie selecMovie = moviefavoriteToChache;
-    List<Movie> listFavoriteCache = [];
-    try {
-      if (checkForKey) {
-        // dynamicList =
-        //     jsonDecode(sharedPreferences.getString(CACHED_NUMBER_FAVORITE_LIST)!);
-        // print("Type: ${dynamicList[0].runtimeType}");
-        listFavoriteCache = jsonDecode(
-            sharedPreferences.getString(CACHED_NUMBER_FAVORITE_LIST)!);
-        // listFavoriteCache =
+    // List<Movie> listFavoriteCache = [];
+    // try {
+    //   if (checkForKey) {
+    //     List dynamicList = jsonDecode(
+    //         sharedPreferences.getString(CACHED_MOVIE_FAVORITE_LIST)!);
 
-        //     dynamicList.map((e) => MovieModel.fromJson(e)).toList();
-        bool containMovie =
-            listFavoriteCache.any((movie) => movie.id == selecMovie.id);
-        if (!containMovie) {
-          listFavoriteCache.add(selecMovie);
-        }
-      } else {
-        listFavoriteCache = [selecMovie];
-      }
-      addIsSuccessful = await sharedPreferences.setString(
-          CACHED_NUMBER_FAVORITE_LIST, jsonEncode(listFavoriteCache));
-    } catch (e) {
-      throw CachedException();
-    }
+    //     dynamicList.forEach((movie) {
+    //       listFavoriteCache.add(MovieModel.fromJson(movie));
+    //     });
+    //     bool containIdMovie =
+    //         listFavoriteCache.any((movie) => movie.id == selecMovie.id);
+    //     // bool containTitleMovie =
+    //     //     listFavoriteCache.any((movie) => movie.id == selecMovie.id);
+    //     if (!containIdMovie) {
+    //       selecMovie.isFavorite = true;
+    //       listFavoriteCache.add(selecMovie);
+    //     }
+    //   } else {
+    //     selecMovie.isFavorite = true;
+    //     listFavoriteCache = [selecMovie];
+    //   }
 
-    return addIsSuccessful;
+    //   print('Favorite: ${selecMovie.isFavorite}');
+
+    //   await sharedPreferences.setString(
+    //       CACHED_MOVIE_FAVORITE_LIST, jsonEncode(listFavoriteCache));
+    // } catch (e) {
+    //   selecMovie.isFavorite = false;
+    //   throw CachedException();
+    // }
+
+    return selecMovie;
   }
 
   @override
-  Future<bool> removeMovieOfFavorites(Movie moviefavoriteToChache) async {
+  Future<Movie> removeMovieOfFavorites(Movie moviefavoriteToChache) async {
     final checkForKey =
-        sharedPreferences.containsKey(CACHED_NUMBER_FAVORITE_LIST);
+        sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
     Movie selecMovie = moviefavoriteToChache;
-    bool removeIsSuccessful = false;
-    // List dynamicList;
     List<Movie> listFavoriteCache = [];
+
     try {
       if (checkForKey) {
-        // dynamicList =
-        //     jsonDecode(sharedPreferences.getString(CACHED_NUMBER_FAVORITE_LIST)!);
-        listFavoriteCache = jsonDecode(
-            sharedPreferences.getString(CACHED_NUMBER_FAVORITE_LIST)!);
+        List dynamicList = jsonDecode(
+            sharedPreferences.getString(CACHED_MOVIE_FAVORITE_LIST)!);
+
+        listFavoriteCache =
+            dynamicList.map((e) => MovieModel.fromJson(e)).toList();
 
         if (listFavoriteCache.length > 0) {
-          // listFavoriteCache =
-          //     dynamicList.map((e) => MovieModel.fromJson(e)).toList();
-          bool containMovie =
+          bool containIdMovie =
               listFavoriteCache.any((movie) => movie.id == selecMovie.id);
-          if (containMovie) {
+          if (containIdMovie) {
+            listFavoriteCache.forEach((movie) {
+              if (movie.id == selecMovie.id) {
+                movie.isFavorite = false;
+                selecMovie.isFavorite = movie.isFavorite;
+              }
+            });
+            print("Favorite: ${selecMovie.isFavorite}");
             listFavoriteCache.removeWhere((movie) => movie.id == selecMovie.id);
+            listFavoriteCache.forEach((movie) {
+              if (movie.id == selecMovie.id) {
+                print("O id: ${[movie.id]} não foi removido.");
+              }
+            });
             if (listFavoriteCache.length == 0) {
-              removeIsSuccessful =
-                  await sharedPreferences.remove(CACHED_NUMBER_FAVORITE_LIST);
+              await sharedPreferences.remove(CACHED_MOVIE_FAVORITE_LIST);
             } else {
-              removeIsSuccessful = await sharedPreferences.setString(
-                  CACHED_NUMBER_FAVORITE_LIST, jsonEncode(listFavoriteCache));
+              await sharedPreferences.setString(
+                  CACHED_MOVIE_FAVORITE_LIST, jsonEncode(listFavoriteCache));
             }
           }
         }
       }
-      return removeIsSuccessful;
     } catch (e) {
+      selecMovie.isFavorite = false;
       throw CachedException();
     }
+    return selecMovie;
   }
 
   @override
   Future<List<Movie>> retriveFavoritesMovies() async {
     final checkForKey =
-        sharedPreferences.containsKey(CACHED_NUMBER_FAVORITE_LIST);
+        sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
     List dynamicList;
     List<Movie> listFavoriteCache = [];
     try {
       if (checkForKey) {
         dynamicList = jsonDecode(
-            sharedPreferences.getString(CACHED_NUMBER_FAVORITE_LIST)!);
+            sharedPreferences.getString(CACHED_MOVIE_FAVORITE_LIST)!);
         listFavoriteCache =
             dynamicList.map((e) => MovieModel.fromJson(e)).toList();
       }

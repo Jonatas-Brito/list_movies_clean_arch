@@ -45,6 +45,8 @@ void main() {
         id: 1,
         overview: 'as',
         voteCount: 1,
+        voteAverage: 0.0,
+        bannerPath: 'image2.jpeg',
         title: 'Test Text',
         imagePath: 'image.jpeg',
         popularity: 1.2,
@@ -116,7 +118,9 @@ void main() {
         id: 1,
         overview: 'as',
         voteCount: 1,
+        voteAverage: 0.0,
         title: 'Test Text',
+        bannerPath: 'image2.jpeg',
         imagePath: 'image.jpeg',
         popularity: 1.2,
         releaseDate: '2020/05/25');

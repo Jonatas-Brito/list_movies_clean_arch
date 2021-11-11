@@ -1,16 +1,15 @@
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:movies_list/features/favorites/data/repositories/movies_favorite_repository_impl.dart';
-import 'package:movies_list/features/favorites/domain/usecases/remove_movie_of_favorites.dart';
-import 'package:movies_list/features/favorites/domain/usecases/retrive_movies_favorites.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/network/network_info.dart';
 import 'features/favorites/data/datasources/favorites_list_local_data_source.dart';
+import 'features/favorites/data/repositories/movies_favorite_repository_impl.dart';
 import 'features/favorites/domain/repositories/movies_favorite_repository.dart';
 import 'features/favorites/domain/usecases/add_movie_to_favorites.dart';
+import 'features/favorites/domain/usecases/remove_movie_of_favorites.dart';
+import 'features/favorites/domain/usecases/retrive_movies_favorites.dart';
 import 'features/favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 import 'features/favorites/presentation/cubit/cubit/moviefavorites_cubit.dart';
 import 'features/home/data/datasources/movies_remote_data_source.dart';
@@ -58,11 +57,11 @@ Future<void> init() async {
   ///
   ///
 
-  //! Feature - Home
+  //! Feature - Favorites
   // Bloc
   sl.registerFactory(() => ManagerFavoritesMoviesCubit(
       addToFavorites: sl(), removeOfFavorites: sl()));
-  sl.registerFactory(() => MoviesFavoritesListStateCubit(retriveMovies: sl()));
+  sl.registerFactory(() => MoviesFavoritesListCubit(retriveMovies: sl()));
 
   // User cases
   sl.registerLazySingleton(() => AddMovieToFavorites(favoriteReposiry: sl()));

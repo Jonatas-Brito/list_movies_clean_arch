@@ -7,11 +7,17 @@ class Movie extends Equatable {
   final double popularity;
   final String overview;
   final int voteCount;
+  bool? isFavorite;
   final String releaseDate;
+  final String bannerPath;
+  final double voteAverage;
 
-  const Movie({
+  Movie({
     required this.id,
     required this.title,
+    required this.isFavorite,
+    required this.voteAverage,
+    required this.bannerPath,
     required this.imagePath,
     required this.overview,
     required this.popularity,
@@ -19,23 +25,30 @@ class Movie extends Equatable {
     required this.releaseDate,
   });
 
-  const Movie.empty(
-      {this.title = '',
-      this.imagePath = '',
-      this.popularity = 0.0,
-      this.overview = '',
-      this.voteCount = 0,
-      this.releaseDate = '',
-      this.id = 0});
+  Movie.empty({
+    this.id = 0,
+    this.title = '',
+    this.imagePath = '',
+    this.isFavorite = false,
+    this.bannerPath = '',
+    this.voteAverage = 0,
+    this.releaseDate = '',
+    this.popularity = 0.0,
+    this.overview = '',
+    this.voteCount = 0,
+  });
 
   @override
   List<Object?> get props => [
         id,
         title,
         imagePath,
+        isFavorite,
+        bannerPath,
+        voteAverage,
         releaseDate,
         popularity,
-        voteCount,
         overview,
+        voteCount,
       ];
 }
