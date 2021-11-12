@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     context.read<MoviesInTheatersCubit>().getListMoviesInTheaters();
     context.read<MoviesFavoritesListCubit>().getListFavorites();
     context.read<MoviesPopularCubit>().getListPopularMovies();
+    print('Carreguei');
     super.initState();
   }
 
@@ -33,69 +34,70 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: MoviesAppBar(),
-        backgroundColor: AppColors.woodsmoke,
-        body: Container(
-          height: size.height,
-          child: Stack(
-            children: [
-              ListView(
-                children: [
-                  title('Mais populares'),
-                  BlocBuilder<MoviesPopularCubit, MoviePopularState>(
-                      bloc: context.watch<MoviesPopularCubit>(),
-                      builder: (context, state) {
-                        if (state is GetPopularMoviesIsSuccessful) {
-                          print("popular movies success");
-                          return popularList(state.movies);
-                        }
-                        if (state is GetPopularMoviesIsError) {}
-
-                        return Container(
-                          height: 150,
-                        );
-                      }),
-                  title('Assista nos cinemas'),
-                  BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
-                      bloc: context.watch<MoviesInTheatersCubit>(),
-                      builder: (context, state) {
-                        print(state.runtimeType);
-                        if (state is GetMoviesInTheatersIsSuccessful) {
-                          print("teather movies success");
-                          return Column(
-                            children: [
-                              inTheaterList(state.movies),
-                            ],
-                          );
-                        }
-
-                        return Container(
-                          height: 150,
-                        );
-                      }),
-                  BlocListener<MoviesFavoritesListCubit,
-                      MoviesFavoritesListState>(
-                    bloc: context.watch<MoviesFavoritesListCubit>(),
-                    listener: (context, state) {
-                      if (state is GetMoviesFavoritesIsSuccessful) {
-                        moviesFavorite = state.movies;
-                        print("FavoritesHomeLenght: ${moviesFavorite.length}");
+      appBar: MoviesAppBar(),
+      backgroundColor: AppColors.woodsmoke,
+      body: Container(
+        height: size.height,
+        child: Stack(
+          children: [
+            ListView(
+              children: [
+                title('Mais populares'),
+                BlocBuilder<MoviesPopularCubit, MoviePopularState>(
+                    bloc: context.watch<MoviesPopularCubit>(),
+                    builder: (context, state) {
+                      if (state is GetPopularMoviesIsSuccessful) {
+                        print("popular movies success");
+                        return popularList(state.movies);
                       }
-                    },
-                    child: SizedBox(),
-                  ),
-                ],
-              ),
-              Positioned(left: 0, right: 0, bottom: 0, child: gradientLayer()),
-              Positioned(
-                bottom: size.height * .035,
-                left: 24,
-                right: 24,
-                child: CustomNavigationBar(),
-              )
-            ],
-          ),
-        ));
+                      if (state is GetPopularMoviesIsError) {}
+
+                      return Container(
+                        height: 150,
+                      );
+                    }),
+                title('Assista nos cinemas'),
+                BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
+                    bloc: context.watch<MoviesInTheatersCubit>(),
+                    builder: (context, state) {
+                      print(state.runtimeType);
+                      if (state is GetMoviesInTheatersIsSuccessful) {
+                        print("teather movies success");
+                        return Column(
+                          children: [
+                            inTheaterList(state.movies),
+                          ],
+                        );
+                      }
+
+                      return Container(
+                        height: 150,
+                      );
+                    }),
+                BlocListener<MoviesFavoritesListCubit,
+                    MoviesFavoritesListState>(
+                  bloc: context.watch<MoviesFavoritesListCubit>(),
+                  listener: (context, state) {
+                    if (state is GetMoviesFavoritesIsSuccessful) {
+                      moviesFavorite = state.movies;
+                      print("FavoritesHomeLenght: ${moviesFavorite.length}");
+                    }
+                  },
+                  child: SizedBox(),
+                ),
+              ],
+            ),
+            // Positioned(left: 0, right: 0, bottom: 0, child: gradientLayer()),
+            // Positioned(
+            //   bottom: size.height * .035,
+            //   left: 24,
+            //   right: 24,
+            //   child: CustomNavigationBar(),
+            // )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget title(String tile) {
