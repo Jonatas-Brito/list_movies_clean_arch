@@ -40,7 +40,6 @@ class ManagerFavoritesMoviesCubit extends Cubit<ManagerFavoritesMoviesState> {
     failureOrSuccess.fold(
         (failure) => emit(CachedToFavoritesFailure(
             errorMessage: _setFailureMessage(failure))), (movie) async {
-      print("Cached successful: ${movie.isFavorite}");
       emit(CachedToFavoritesSuccess(movie: movie));
       await Future.delayed(Duration(milliseconds: 100));
       emit(ManagerFavoritesMoviesInitial());

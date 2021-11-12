@@ -26,7 +26,6 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
     // await sharedPreferences.clear();
     final checkForKey =
         sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
-    print("Contain Chace:$checkForKey");
     Movie selecMovie = moviefavoriteToChache;
     List<Movie> listFavoriteCache = [];
     try {
@@ -38,22 +37,17 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
         dynamicList.forEach((movie) {
           listFavoriteCache.add(MovieModel.fromJson(movie));
         });
-        print("Tamanho: ${listFavoriteCache[0].isFavorite}");
         bool containIdMovie =
             listFavoriteCache.any((movie) => movie.id == selecMovie.id);
         if (!containIdMovie) {
-          print("nesse caso entrei");
           listFavoriteCache.add(selecMovie);
         }
       } else {
-        print("nesse caso não entrei");
         listFavoriteCache = [selecMovie];
       }
-      print("Local: ${listFavoriteCache[0].isFavorite}");
       await sharedPreferences.setString(
           CACHED_MOVIE_FAVORITE_LIST, jsonEncode(listFavoriteCache));
     } catch (e) {
-      print("deu ruim");
       selecMovie.isFavorite = false;
       throw CachedException();
     }
@@ -88,12 +82,9 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
                 selecMovie.isFavorite = movie.isFavorite;
               }
             });
-            print("Favorite: ${selecMovie.isFavorite}");
             listFavoriteCache.removeWhere((movie) => movie.id == selecMovie.id);
             listFavoriteCache.forEach((movie) {
-              if (movie.id == selecMovie.id) {
-                print("O id: ${[movie.id]} não foi removido.");
-              }
+              if (movie.id == selecMovie.id) {}
             });
             if (listFavoriteCache.length == 0) {
               await sharedPreferences.remove(CACHED_MOVIE_FAVORITE_LIST);
@@ -124,7 +115,6 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
         dynamicList.forEach((movie) {
           Movie movieForFavorites = MovieModel.fromJson(movie);
           movieForFavorites.isFavorite = true;
-          print("Model: ${movieForFavorites.isFavorite}");
           listFavoriteCache.add(movieForFavorites);
         });
       }
