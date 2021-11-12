@@ -1,13 +1,12 @@
+import 'injection_container.dart';
+import 'core/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_popular_cubit.dart';
-import 'package:movies_list/features/home/presentation/pages/home.dart';
-import 'core/themes/app_theme.dart';
-import 'features/favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
-import 'features/favorites/presentation/cubit/cubit/moviefavorites_cubit.dart';
-import 'features/home/presentation/cubit/movies_in_theaters_cubit.dart';
 import 'features/home/presentation/widgets/navigation.dart';
-import 'injection_container.dart';
+import 'features/home/presentation/cubit/movies_in_theaters_cubit.dart';
+import 'features/favorites/presentation/cubit/cubit/moviefavorites_cubit.dart';
+import 'package:movies_list/features/home/presentation/cubit/movies_popular_cubit.dart';
+import 'features/favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
