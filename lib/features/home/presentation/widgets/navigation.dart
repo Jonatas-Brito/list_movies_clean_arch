@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
-import 'package:movies_list/features/favorites/presentation/pages/favorites_page.dart';
 import 'package:movies_list/features/home/presentation/pages/home.dart';
-import 'package:movies_list/features/home/presentation/widgets/navigation_bar.dart';
+import 'package:movies_list/features/favorites/presentation/pages/favorites_page.dart';
 import 'package:movies_list/features/home/presentation/widgets/page_in_construction.dart';
 
 class Navigation extends StatefulWidget {
@@ -108,107 +107,6 @@ class _NavigationState extends State<Navigation> {
               }),
         ],
       ),
-      // bottomNavigationBar: Container(
-      //   padding: EdgeInsets.all(15),
-      //   child: ClipRRect(
-      //       borderRadius: BorderRadius.all(Radius.circular(50)),
-      //       child: Container(
-      //         color: Colors.black38,
-
-      //         child: TabBar(
-      //             unselectedLabelColor: Colors.white,
-      //             controller: tabController,
-      //             overlayColor: MaterialStateProperty.all(Colors.transparent),
-      //             indicator: UnderlineTabIndicator(
-      //               borderSide: BorderSide.none,
-      //               insets: EdgeInsets.fromLTRB(
-      //                 50.0,
-      //                 0.0,
-      //                 50.0,
-      //                 5.0,
-      //               ),
-      //             ),
-      //             onTap: (tab) {
-      //               print(
-      //                   "==================== Taaab: $tab ====================");
-      //               setState(() => selectedIndex = tab);
-      //             },
-      //             tabs: [
-      //               Tab(
-      //                 icon: Icon(
-      //                   Icons.home_filled,
-      //                   size: 32,
-      //                   color: colorIndex(0),
-      //                 ),
-      //               ),
-      //               Tab(
-      //                 icon: Icon(
-      //                   Icons.favorite,
-      //                   size: 30,
-      //                   color: colorIndex(1),
-      //                 ),
-      //               ),
-      //               Tab(
-      //                 icon: Icon(
-      //                   Icons.favorite,
-      //                   size: 30,
-      //                   color: colorIndex(2),
-      //                 ),
-      //               ),
-      //               Tab(
-      //                 icon: Icon(
-      //                   Icons.person_outline_rounded,
-      //                   size: 32,
-      //                   color: colorIndex(3),
-      //                 ),
-      //               ),
-      //             ]),
-      //         //  BottomNavigationBar(
-      //         //     backgroundColor: AppColors.red,
-      //         //     currentIndex: tabController.page != null
-      //         //         ? tabController.page!.round()
-      //         //         : 0,
-      //         //     onTap: (page) {
-      //         //       tabController.animateToPage(page,
-      //         //           duration: Duration(milliseconds: 600),
-      //         //           curve: Curves.linearToEaseOut);
-      //         //     },
-      //         //     items: [
-      //         //       BottomNavigationBarItem(
-      //         //         icon: Icon(
-      //         //           Icons.home_filled,
-      //         //           size: 32,
-      //         //           color: Colors.black,
-      //         //         ),
-      //         //         label: '',
-      //         //       ),
-      //         //       BottomNavigationBarItem(
-      //         //         icon: Icon(
-      //         //           Icons.favorite,
-      //         //           size: 30,
-      //         //           color: Colors.black,
-      //         //         ),
-      //         //         label: '',
-      //         //       ),
-      //         //       BottomNavigationBarItem(
-      //         //         icon: Icon(
-      //         //           Icons.download_rounded,
-      //         //           size: 32,
-      //         //           color: Colors.black,
-      //         //         ),
-      //         //         label: '',
-      //         //       ),
-      //         //       BottomNavigationBarItem(
-      //         //         icon: Icon(
-      //         //           Icons.person_outline_rounded,
-      //         //           size: 32,
-      //         //           color: Colors.black,
-      //         //         ),
-      //         //         label: '',
-      //         //       ),
-      //         //     ]),
-      //       )),
-      // ),
     );
   }
 }
