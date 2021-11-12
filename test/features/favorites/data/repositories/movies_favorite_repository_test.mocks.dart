@@ -2,12 +2,12 @@
 // in movies_list/test/features/favorites/data/repositories/movies_favorite_repository_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:movies_list/features/favorites/data/datasources/favorites_list_local_data_source.dart'
-    as _i3;
-import 'package:movies_list/features/home/domain/entities/movie.dart' as _i5;
+    as _i4;
+import 'package:movies_list/features/home/domain/entities/movie.dart' as _i3;
 import 'package:shared_preferences/shared_preferences.dart' as _i2;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -21,11 +21,13 @@ import 'package:shared_preferences/shared_preferences.dart' as _i2;
 class _FakeSharedPreferences_0 extends _i1.Fake
     implements _i2.SharedPreferences {}
 
+class _FakeMovie_1 extends _i1.Fake implements _i3.Movie {}
+
 /// A class which mocks [FavoritesListLocalDataSourceImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFavoritesListLocalDataSourceImpl extends _i1.Mock
-    implements _i3.FavoritesListLocalDataSourceImpl {
+    implements _i4.FavoritesListLocalDataSourceImpl {
   MockFavoritesListLocalDataSourceImpl() {
     _i1.throwOnMissingStub(this);
   }
@@ -35,22 +37,26 @@ class MockFavoritesListLocalDataSourceImpl extends _i1.Mock
       (super.noSuchMethod(Invocation.getter(#sharedPreferences),
           returnValue: _FakeSharedPreferences_0()) as _i2.SharedPreferences);
   @override
-  _i4.Future<bool> addMovieToCachedFavorites(
-          _i5.Movie? moviefavoriteToChache) =>
+  _i5.Future<_i3.Movie> addMovieToCachedFavorites(
+          _i3.Movie? moviefavoriteToChache) =>
       (super.noSuchMethod(
-          Invocation.method(
-              #addMovieToCachedFavorites, [moviefavoriteToChache]),
-          returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
+              Invocation.method(
+                  #addMovieToCachedFavorites, [moviefavoriteToChache]),
+              returnValue: Future<_i3.Movie>.value(_FakeMovie_1()))
+          as _i5.Future<_i3.Movie>);
   @override
-  _i4.Future<bool> removeMovieOfFavorites(_i5.Movie? moviefavoriteToChache) =>
+  _i5.Future<_i3.Movie> removeMovieOfFavorites(
+          _i3.Movie? moviefavoriteToChache) =>
       (super.noSuchMethod(
           Invocation.method(#removeMovieOfFavorites, [moviefavoriteToChache]),
-          returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
+          returnValue:
+              Future<_i3.Movie>.value(_FakeMovie_1())) as _i5
+          .Future<_i3.Movie>);
   @override
-  _i4.Future<List<_i5.Movie>> retriveFavoritesMovies() =>
+  _i5.Future<List<_i3.Movie>> retriveFavoritesMovies() =>
       (super.noSuchMethod(Invocation.method(#retriveFavoritesMovies, []),
-              returnValue: Future<List<_i5.Movie>>.value(<_i5.Movie>[]))
-          as _i4.Future<List<_i5.Movie>>);
+              returnValue: Future<List<_i3.Movie>>.value(<_i3.Movie>[]))
+          as _i5.Future<List<_i3.Movie>>);
   @override
   String toString() => super.toString();
 }

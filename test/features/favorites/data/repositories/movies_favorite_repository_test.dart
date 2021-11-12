@@ -25,13 +25,13 @@ void main() {
     test('should return [Movie] if cached is successful', () async {
       // arrange
       when(localFavoritesDataSource.addMovieToCachedFavorites(any))
-          .thenAnswer((_) async => true);
+          .thenAnswer((_) async => movie);
       // act
       final result =
           await favoriteReposiryImpl.addMovieToCachedFavorites(movie);
       // assert
       verify(localFavoritesDataSource.addMovieToCachedFavorites(movie));
-      expect(result, Right(true));
+      expect(result, Right(movie));
     });
 
     test('should return [CachedFailure] if the chached process fails ',
@@ -61,12 +61,12 @@ void main() {
     test('should return [Movie] if cached is successful', () async {
       // arrange
       when(localFavoritesDataSource.removeMovieOfFavorites(any))
-          .thenAnswer((_) async => true);
+          .thenAnswer((_) async => movie);
       // act
       final result = await favoriteReposiryImpl.removeMovieOfFavorites(movie);
       // assert
       verify(localFavoritesDataSource.removeMovieOfFavorites(movie));
-      expect(result, Right(true));
+      expect(result, Right(movie));
     });
 
     test('should return [CachedFailure] if the chached process fails ',

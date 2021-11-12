@@ -20,12 +20,12 @@ void main() {
   test('should removed movie of favorites list', () async {
     // arrange
     when(tRepository.removeMovieOfFavorites(any))
-        .thenAnswer((_) async => Right(true));
+        .thenAnswer((_) async => Right(movie));
     // act
     final result = await usecase(FavoriteParams(movie: movie));
     // assert
     expect(result.isRight(), true);
-    expect(result, Right(true));
+    expect(result, Right(movie));
   });
 
   test('should return [CachedFailure] if removed proccess fails', () async {

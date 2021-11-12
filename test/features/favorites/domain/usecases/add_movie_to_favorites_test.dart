@@ -20,11 +20,11 @@ void main() {
   test('should return movie if successful', () async {
     // arrange
     when(tRepository.addMovieToCachedFavorites(any))
-        .thenAnswer((_) async => Right(true));
+        .thenAnswer((_) async => Right(movie));
     // act
     final result = await useCase(FavoriteParams(movie: movie));
     // assert
-    expect(result, Right(true));
+    expect(result, Right(movie));
   });
 
   test('should return [CachedFailure] if the chached process fails', () async {
