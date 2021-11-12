@@ -35,7 +35,6 @@ class MoviesPopularCubit extends Cubit<MoviePopularState> {
         (failure) => emit(
             GetPopularMoviesIsError(errorMessage: _mapFailureMessage(failure))),
         (listMovies) {
-      print("Popular lenght: ${listMovies.length}");
       emit(GetPopularMoviesIsSuccessful(movies: listMovies));
     });
   }

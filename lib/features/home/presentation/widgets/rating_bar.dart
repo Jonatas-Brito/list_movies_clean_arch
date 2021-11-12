@@ -24,9 +24,7 @@ class RatingBarWidget extends StatelessWidget {
                   Icons.star,
                   color: Colors.amber.shade400,
                 ),
-            onRatingUpdate: (rating) {
-              print('Rating: $rating');
-            }),
+            onRatingUpdate: (rating) {}),
         SizedBox(width: 4),
         Container(
           alignment: Alignment.bottomCenter,

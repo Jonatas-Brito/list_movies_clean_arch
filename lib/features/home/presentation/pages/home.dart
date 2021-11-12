@@ -8,7 +8,6 @@ import '../components/app_bar.dart';
 import '../components/movie_card.dart';
 import '../cubit/movies_in_theaters_cubit.dart';
 import '../cubit/movies_popular_cubit.dart';
-import '../widgets/navigation_bar.dart';
 import 'overview.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,7 +25,6 @@ class _HomePageState extends State<HomePage> {
     context.read<MoviesInTheatersCubit>().getListMoviesInTheaters();
     context.read<MoviesFavoritesListCubit>().getListFavorites();
     context.read<MoviesPopularCubit>().getListPopularMovies();
-    print('Carreguei');
     super.initState();
   }
 
@@ -42,12 +40,10 @@ class _HomePageState extends State<HomePage> {
           children: [
             ListView(
               children: [
-                title('Mais populares'),
                 BlocBuilder<MoviesPopularCubit, MoviePopularState>(
                     bloc: context.watch<MoviesPopularCubit>(),
                     builder: (context, state) {
                       if (state is GetPopularMoviesIsSuccessful) {
-                        print("popular movies success");
                         return popularList(state.movies);
                       }
                       if (state is GetPopularMoviesIsError) {}
@@ -56,13 +52,10 @@ class _HomePageState extends State<HomePage> {
                         height: 150,
                       );
                     }),
-                title('Assista nos cinemas'),
                 BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
                     bloc: context.watch<MoviesInTheatersCubit>(),
                     builder: (context, state) {
-                      print(state.runtimeType);
                       if (state is GetMoviesInTheatersIsSuccessful) {
-                        print("teather movies success");
                         return Column(
                           children: [
                             inTheaterList(state.movies),
@@ -80,7 +73,6 @@ class _HomePageState extends State<HomePage> {
                   listener: (context, state) {
                     if (state is GetMoviesFavoritesIsSuccessful) {
                       moviesFavorite = state.movies;
-                      print("FavoritesHomeLenght: ${moviesFavorite.length}");
                     }
                   },
                   child: SizedBox(),
@@ -120,7 +112,6 @@ class _HomePageState extends State<HomePage> {
       bool equalsId = movie.id == movieSelected.id;
       if (equalsId) {
         if (movie.isFavorite == true) {
-          print("Sou veerdadeiro");
           movieSelected = movie;
         }
       }

@@ -29,7 +29,6 @@ class _OverviewPageState extends State<OverviewPage> {
   void initState() {
     isFavorite =
         widget.movie.isFavorite != null ? widget.movie.isFavorite! : isFavorite;
-    print("FF: $isFavorite");
 
     popIsFavorite = widget.popIsFavorite;
     super.initState();
