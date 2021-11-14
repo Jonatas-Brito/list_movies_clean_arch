@@ -40,7 +40,7 @@ class MovieCard extends StatelessWidget {
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: CachedNetworkImageProvider(
-                        'http://image.tmdb.org/t/p/w500${movie!.imagePath}',
+                        'http://image.tmdb.org/t/p/original${movie!.imagePath}',
                       )),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               child: Stack(

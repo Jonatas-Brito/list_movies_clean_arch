@@ -45,6 +45,7 @@ void main() {
         id: 1,
         overview: 'as',
         voteCount: 1,
+        trailerId: '',
         voteAverage: 0.0,
         bannerPath: 'image2.jpeg',
         title: 'Test Text',
@@ -117,6 +118,7 @@ void main() {
     final tMovieModel = MovieModel(
         id: 1,
         overview: 'as',
+        trailerId: '',
         voteCount: 1,
         voteAverage: 0.0,
         title: 'Test Text',

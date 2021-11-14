@@ -24,101 +24,100 @@ class CardFavorite extends StatelessWidget {
     double scale = mockupWidth / width;
 
     return Container(
-      color: Colors.transparent,
-      child: LayoutBuilder(builder: (context, constrains) {
-        return Column(
+        color: Colors.transparent,
+        child: Column(
           children: [
-            Row(
-              children: [
-                Container(
-                  height: height * .2439,
-                  width: width * .365,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(
-                              'http://image.tmdb.org/t/p/w500${movie.imagePath}',
-                              scale: scale)),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 20),
-                  height: size.height * .24,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 7),
-                        width: size.width * .4,
-                        child: Text(
-                          movie.title,
-                          textScaleFactor: textScaleFactor,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(
-                                  fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      RatingBar.builder(
-                          minRating: 5,
-                          initialRating: movie.voteAverage / 2,
-                          ignoreGestures: true,
-                          itemCount: 5,
-                          glowColor: Colors.amber.shade600,
-                          unratedColor: AppColors.bastille,
-                          glowRadius: 5,
-                          itemSize: 30,
-                          itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber.shade600,
-                              ),
-                          onRatingUpdate: (rating) {
-                            print('Rating: $rating');
-                          }),
-                      Padding(
-                        padding: EdgeInsets.only(left: 7),
-                        child: Text(
-                          "${movie.voteAverage}",
-                          textScaleFactor: textScaleFactor,
-                        ),
-                      ),
-                      SizedBox(height: 3),
-                      Padding(
-                        padding: EdgeInsets.only(left: 7),
-                        child: SizedBox(
-                            width: size.width * .4,
-                            height: size.height * .06,
-                            child: Text(
-                              "${movie.overview}",
-                              textScaleFactor: textScaleFactor,
-                            )),
-                      ),
-                      TextButton(
-                          style: ButtonStyle(
-                              overlayColor: MaterialStateProperty.all(
-                                  Colors.transparent)),
-                          onPressed: onTap,
+            Container(
+              child: Row(
+                children: [
+                  Container(
+                    height: height * .275,
+                    width: width * .365,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: CachedNetworkImageProvider(
+                                'http://image.tmdb.org/t/p/w500${movie.imagePath}',
+                                scale: scale)),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20),
+                    height: size.height * .275,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(left: 7),
+                          width: size.width * .4,
                           child: Text(
-                            '''Toque para continuar \nlendo''',
+                            movie.title,
                             textScaleFactor: textScaleFactor,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1!
                                 .copyWith(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                          ))
-                    ],
-                  ),
-                )
-              ],
+                                    fontWeight: FontWeight.bold, fontSize: 14),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        RatingBar.builder(
+                            minRating: 5,
+                            initialRating: movie.voteAverage / 2,
+                            ignoreGestures: true,
+                            itemCount: 5,
+                            glowColor: Colors.amber.shade600,
+                            unratedColor: AppColors.bastille,
+                            glowRadius: 5,
+                            itemSize: 30,
+                            itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber.shade600,
+                                ),
+                            onRatingUpdate: (rating) {
+                              print('Rating: $rating');
+                            }),
+                        Padding(
+                          padding: EdgeInsets.only(left: 7),
+                          child: Text(
+                            "${movie.voteAverage}",
+                            textScaleFactor: textScaleFactor,
+                          ),
+                        ),
+                        SizedBox(height: 3),
+                        Padding(
+                          padding: EdgeInsets.only(left: 7),
+                          child: SizedBox(
+                              width: size.width * .4,
+                              height: size.height * .06,
+                              child: Text(
+                                "${movie.overview}",
+                                textScaleFactor: textScaleFactor,
+                              )),
+                        ),
+                        TextButton(
+                            style: ButtonStyle(
+                                overlayColor: MaterialStateProperty.all(
+                                    Colors.transparent)),
+                            onPressed: onTap,
+                            child: Text(
+                              '''Toque para continuar \nlendo''',
+                              textScaleFactor: textScaleFactor,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                            ))
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
-        );
-      }),
-    );
+        ));
   }
 }

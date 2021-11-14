@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/core/themes/app_colors.dart';
+import 'package:movies_list/core/utils/show_message.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_popular_cubit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../main.dart';
 import '../../../favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 import '../../../favorites/presentation/cubit/cubit/moviefavorites_cubit.dart';
 import '../../domain/entities/movie.dart';
@@ -24,9 +28,11 @@ class OverviewPage extends StatefulWidget {
 class _OverviewPageState extends State<OverviewPage> {
   bool popIsFavorite = false;
   bool isFavorite = false;
+  Movie movie = Movie.empty();
 
   @override
   void initState() {
+    movie = widget.movie;
     isFavorite =
         widget.movie.isFavorite != null ? widget.movie.isFavorite! : isFavorite;
 
@@ -54,78 +60,87 @@ class _OverviewPageState extends State<OverviewPage> {
         }
         return Scaffold(
           backgroundColor: Colors.black,
-          body: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Positioned(
-                child: banner(),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: gradientLayer(),
-              ),
-              Positioned(
-                  bottom: size.height * 0.23,
+          body: Container(
+            height: size.height,
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Positioned(
+                  child: banner(),
+                ),
+                // Positioned(
+                //     top: size.height * .25,
+                //     child: Icon(
+                //       Icons.play_circle_outline_outlined,
+                //       size: 55,
+                //     )),
+                // Positioned(
+                //   bottom: 0,
+                //   left: 0,
+                //   right: 0,
+                //   child: gradientLayer(),
+                // ),
+                // Positioned(
+                //     bottom: size.height * 0.23,
+                //     left: 0,
+                //     right: 0,
+                //     child: gradientLayer2()),
+                Positioned(
+                  bottom: 00,
                   left: 0,
                   right: 0,
-                  child: gradientLayer2()),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Column(
-                  children: [
-                    RatingBarWidget(movie: movie),
-                    overviewText(movie),
-                  ],
-                ),
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                left: 0,
-                child: Container(
-                  alignment: Alignment.bottomCenter,
-                  height: size.height * 0.17,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        FloatingActionButton(
-                          heroTag: 'toPo',
-                          onPressed: () async {
-                            context
-                                .read<MoviesFavoritesListCubit>()
-                                .getListFavorites();
-                            await Future.delayed(Duration(milliseconds: 200));
-                            Navigator.of(context).pop();
-                          },
-                          child: Icon(Icons.arrow_back_ios_rounded),
-                        ),
-                        popIsFavorite
-                            ? SizedBox()
-                            : FavoriteButton(
-                                isFavorite: isFavorite,
-                                onTap: () async {
-                                  isFavorite
-                                      ? context
-                                          .read<ManagerFavoritesMoviesCubit>()
-                                          .removeMovieOfFavorites(movie)
-                                      : context
-                                          .read<ManagerFavoritesMoviesCubit>()
-                                          .addMovieToFavorites(movie);
-                                  executeBlocs();
-                                },
-                              )
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      RatingBarWidget(movie: movie),
+                      overviewText(movie),
+                    ],
                   ),
                 ),
-              )
-            ],
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  left: 0,
+                  child: Container(
+                    alignment: Alignment.bottomCenter,
+                    height: size.height * 0.17,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FloatingActionButton(
+                            heroTag: 'toPo',
+                            onPressed: () async {
+                              context
+                                  .read<MoviesFavoritesListCubit>()
+                                  .getListFavorites();
+                              await Future.delayed(Duration(milliseconds: 200));
+                              Navigator.of(context).pop();
+                            },
+                            child: Icon(Icons.arrow_back_ios_rounded),
+                          ),
+                          popIsFavorite
+                              ? SizedBox()
+                              : FavoriteButton(
+                                  isFavorite: isFavorite,
+                                  onTap: () async {
+                                    isFavorite
+                                        ? context
+                                            .read<ManagerFavoritesMoviesCubit>()
+                                            .removeMovieOfFavorites(movie)
+                                        : context
+                                            .read<ManagerFavoritesMoviesCubit>()
+                                            .addMovieToFavorites(movie);
+                                    executeBlocs();
+                                  },
+                                )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         );
       },
@@ -134,12 +149,15 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Widget overviewText(Movie movie) {
     Size size = MediaQuery.of(context).size;
+    double width = size.width;
+    double textScaleFactor = width / mockupWidth;
     return Container(
-      height: size.height * 0.3,
+      height: size.height * 0.33,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Text(
           movie.overview,
+          textScaleFactor: textScaleFactor,
           style: Theme.of(context)
               .textTheme
               .button!
@@ -149,6 +167,19 @@ class _OverviewPageState extends State<OverviewPage> {
     );
   }
 
+  routeToYoutube() async {
+    bool trailerIdExist = movie.trailerId.isNotEmpty;
+    if (trailerIdExist) {
+      final youtubeUrl =
+          'https://www.youtube.com/embed/${widget.movie.trailerId}';
+
+      await launch(youtubeUrl);
+    } else
+      showScaffoldMessage(context,
+          message: 'Não temos um link para este trailer',
+          color: AppColors.equator);
+  }
+
   Widget banner() {
     Size size = MediaQuery.of(context).size;
     String setImage = "";
@@ -156,19 +187,26 @@ class _OverviewPageState extends State<OverviewPage> {
       setImage = widget.movie.bannerPath;
     } else
       setImage = widget.movie.imagePath;
-    return
-        // SizedBox();
-        OverflowBox(
-      maxWidth: 500,
-      child: Transform.scale(
-        scale: 0.8,
-        child: Transform.translate(
-          offset: Offset(0.0, -size.height * .240),
-          child: CachedNetworkImage(
-              imageUrl:
-                  'http://image.tmdb.org/t/p/w500${widget.movie.imagePath}'),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        CachedNetworkImage(
+            imageUrl:
+                'http://image.tmdb.org/t/p/original${widget.movie.bannerPath}',
+            height: size.height * .6,
+            width: double.infinity,
+            fit: BoxFit.cover),
+        GestureDetector(
+          onTap: () {
+            routeToYoutube();
+          },
+          child: Container(
+            height: 60,
+            width: 60,
+            child: Image.asset('assets/icons/play1.png'),
+          ),
         ),
-      ),
+      ],
     );
   }
 
@@ -198,7 +236,7 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Widget gradientLayer() {
     return Container(
-      height: 500,
+      height: 400,
       decoration: BoxDecoration(
           gradient: LinearGradient(
               end: Alignment.bottomCenter,

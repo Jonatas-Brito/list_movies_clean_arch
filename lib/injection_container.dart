@@ -17,6 +17,7 @@ import 'features/home/data/repositories/movies_repository.dart';
 import 'features/home/domain/repositories/movies_repository.dart';
 import 'features/home/domain/usecases/get_movies_in_theaters.dart';
 import 'features/home/domain/usecases/get_popular_movies.dart';
+import 'features/home/domain/usecases/get_youtube_id.dart';
 import 'features/home/presentation/cubit/movies_in_theaters_cubit.dart';
 import 'features/home/presentation/cubit/movies_popular_cubit.dart';
 
@@ -32,6 +33,7 @@ Future<void> init() async {
   // User cases
   sl.registerLazySingleton(() => GetPopularMovies(sl()));
   sl.registerLazySingleton(() => GetMoviesInTheaters(sl()));
+  // sl.registerLazySingleton(() => GetTrailerId(sl()));
 
   // Repository
   sl.registerLazySingleton<MoviesRepository>(

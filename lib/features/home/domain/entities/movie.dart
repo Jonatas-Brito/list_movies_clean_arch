@@ -11,9 +11,11 @@ class Movie extends Equatable {
   final String releaseDate;
   final String bannerPath;
   final double voteAverage;
+  String trailerId;
 
   Movie({
     required this.id,
+    required this.trailerId,
     required this.title,
     required this.isFavorite,
     required this.voteAverage,
@@ -29,6 +31,7 @@ class Movie extends Equatable {
     this.id = 0,
     this.title = '',
     this.imagePath = '',
+    this.trailerId = '',
     this.isFavorite = false,
     this.bannerPath = '',
     this.voteAverage = 0,
@@ -47,6 +50,7 @@ class Movie extends Equatable {
         bannerPath,
         voteAverage,
         releaseDate,
+        trailerId,
         popularity,
         overview,
         voteCount,

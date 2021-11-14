@@ -11,9 +11,11 @@ class MovieModel extends Movie {
     required int voteCount,
     bool? isFavorite,
     required double? voteAverage,
+    required String? trailerId,
     required String bannerPath,
   }) : super(
             id: id,
+            trailerId: trailerId!,
             title: title,
             imagePath: imagePath,
             voteAverage: voteAverage!,
@@ -27,6 +29,7 @@ class MovieModel extends Movie {
   factory MovieModel.fromJson(Map<String, dynamic> map) {
     return MovieModel(
         id: map['id'] != null ? map['id'] : null,
+        trailerId: map['trailer_id'] != null ? map['trailer_id'] : '',
         title: map['title'] != null ? map['title'] : null,
         voteAverage: map['vote_average'] != null
             ? (map['vote_average'] as num).toDouble()
@@ -44,6 +47,7 @@ class MovieModel extends Movie {
     return {
       'id': id,
       'title': title,
+      'trailer_id': trailerId,
       'poster_path': imagePath,
       'popularity': popularity,
       'vote_average': voteAverage,

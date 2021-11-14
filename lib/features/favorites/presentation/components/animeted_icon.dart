@@ -107,10 +107,11 @@ class _IconAnimatedState extends State<IconAnimated>
         child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(80)),
-            width: 40,
-            height: 40,
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(80),
+            ),
+            width: 50,
+            height: 50,
             child: _iconAnimated()),
       ),
       onTap: onTap,
