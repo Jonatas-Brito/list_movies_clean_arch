@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/themes/app_colors.dart';
+import '../../../../main.dart';
 import '../../../favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 import '../../domain/entities/movie.dart';
 import '../components/app_bar.dart';
@@ -40,6 +41,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             ListView(
               children: [
+                title('Mais populares'),
                 BlocBuilder<MoviesPopularCubit, MoviePopularState>(
                     bloc: context.watch<MoviesPopularCubit>(),
                     builder: (context, state) {
@@ -48,10 +50,9 @@ class _HomePageState extends State<HomePage> {
                       }
                       if (state is GetPopularMoviesIsError) {}
 
-                      return Container(
-                        height: 150,
-                      );
+                      return SizedBox(height: 150);
                     }),
+                title('Assistir nos cinemas'),
                 BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
                     bloc: context.watch<MoviesInTheatersCubit>(),
                     builder: (context, state) {
@@ -63,9 +64,7 @@ class _HomePageState extends State<HomePage> {
                         );
                       }
 
-                      return Container(
-                        height: 150,
-                      );
+                      return SizedBox(height: 150);
                     }),
                 BlocListener<MoviesFavoritesListCubit,
                     MoviesFavoritesListState>(
@@ -77,15 +76,9 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: SizedBox(),
                 ),
+                SizedBox(height: 45)
               ],
             ),
-            // Positioned(left: 0, right: 0, bottom: 0, child: gradientLayer()),
-            // Positioned(
-            //   bottom: size.height * .035,
-            //   left: 24,
-            //   right: 24,
-            //   child: CustomNavigationBar(),
-            // )
           ],
         ),
       ),
@@ -93,10 +86,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget title(String tile) {
+    Size size = MediaQuery.of(context).size;
+    double width = size.width;
+    double textScaleFactor = width / mockupWidth;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Text(
         tile,
+        textScaleFactor: textScaleFactor,
         style: Theme.of(context)
             .textTheme
             .bodyText1!
@@ -121,47 +118,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget popularList(List<Movie> list) {
-    return Container(
-      color: Colors.transparent,
-      child: Container(
-        color: Colors.transparent,
-        height: 320,
-        width: double.infinity,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: list.length,
-            itemBuilder: (context, index) {
-              Movie movie = list[index];
-              return MovieCard(
-                movie: movie,
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => OverviewPage(
-                                movie: checkMovieInFavorites(movie),
-                              )));
-                },
-              );
-            }),
-      ),
-    );
-  }
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
 
-  Widget inTheaterList(List<Movie> list) {
     return Container(
-      height: 320,
+      height: height * .39,
+      width: double.infinity,
       child: ListView.builder(
-          itemCount: list.length,
           scrollDirection: Axis.horizontal,
+          itemCount: list.length,
           itemBuilder: (context, index) {
             Movie movie = list[index];
-
             return MovieCard(
-              fontSizeTitle: 13,
-              fontSizeSubtitle: 11,
-              heigth: 200,
-              width: 150,
+              height: height * .30,
+              width: width * .43,
               movie: movie,
               onTap: () {
                 Navigator.push(
@@ -176,24 +147,34 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget gradientLayer() {
+  Widget inTheaterList(List<Movie> list) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return Container(
-      height: 110,
-      decoration: BoxDecoration(
-          color: Colors.red,
-          gradient: LinearGradient(
-              end: Alignment.bottomCenter,
-              begin: Alignment.topCenter,
-              colors: [
-                Colors.transparent,
-                Colors.black.withOpacity(0.1),
-                Colors.black.withOpacity(0.2),
-                Colors.black.withOpacity(0.3),
-                Colors.black.withOpacity(0.4),
-                Colors.black.withOpacity(0.45),
-                Colors.black.withOpacity(0.5),
-                Colors.black.withOpacity(0.5),
-              ])),
+      height: height * .39,
+      child: ListView.builder(
+          itemCount: list.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            Movie movie = list[index];
+
+            return MovieCard(
+              fontSizeTitle: 13,
+              fontSizeSubtitle: 11,
+              height: height * .2439,
+              width: width * .365,
+              movie: movie,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => OverviewPage(
+                              movie: checkMovieInFavorites(movie),
+                            )));
+              },
+            );
+          }),
     );
   }
 }

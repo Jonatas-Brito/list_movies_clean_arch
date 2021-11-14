@@ -3,28 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:movies_list/core/utils/release_data_converter.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 
+import '../../../../main.dart';
 import 'animated_progress.dart';
 
 class MovieCard extends StatelessWidget {
-  final Movie movie;
+  final Movie? movie;
   final double? width;
   final VoidCallback? onTap;
-  final double? heigth;
+  final double? height;
   final double? fontSizeTitle;
   final double? fontSizeSubtitle;
   const MovieCard({
     Key? key,
     required this.movie,
     this.onTap,
-    this.width = 180,
-    this.heigth = 250,
+    required this.width,
+    required this.height,
     this.fontSizeTitle = 14,
     this.fontSizeSubtitle = 14,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var percent = movie.popularity / 10000;
+    var percent = movie!.popularity / 10000;
+    Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: GestureDetector(
@@ -33,12 +35,12 @@ class MovieCard extends StatelessWidget {
           children: [
             Container(
               width: width,
-              height: heigth,
+              height: height,
               decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: CachedNetworkImageProvider(
-                        'http://image.tmdb.org/t/p/w500${movie.imagePath}',
+                        'http://image.tmdb.org/t/p/w500${movie!.imagePath}',
                       )),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               child: Stack(
@@ -62,7 +64,7 @@ class MovieCard extends StatelessWidget {
                   width: width,
                   color: Colors.transparent,
                   child: Text(
-                    movie.title,
+                    movie!.title,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontWeight: FontWeight.bold, fontSize: fontSizeTitle),
                   ),
@@ -75,7 +77,7 @@ class MovieCard extends StatelessWidget {
                 Container(
                     width: width,
                     child: Text(
-                      dateNumberToAbbreviationMonth(movie.releaseDate),
+                      dateNumberToAbbreviationMonth(movie!.releaseDate),
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontWeight: FontWeight.w300,
                           fontSize: fontSizeSubtitle),
