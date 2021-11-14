@@ -191,11 +191,12 @@ class _OverviewPageState extends State<OverviewPage> {
       alignment: Alignment.center,
       children: [
         CachedNetworkImage(
-            imageUrl:
-                'http://image.tmdb.org/t/p/original${widget.movie.bannerPath}',
-            height: size.height * .6,
-            width: double.infinity,
-            fit: BoxFit.cover),
+          imageUrl:
+              'http://image.tmdb.org/t/p/original${widget.movie.bannerPath}',
+          height: size.height * .6,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
         GestureDetector(
           onTap: () {
             routeToYoutube();

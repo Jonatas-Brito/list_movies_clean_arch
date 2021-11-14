@@ -28,8 +28,8 @@ ThemeData appTheme(BuildContext context) {
               fontSize: 18, fontWeight: FontWeight.w200, color: Colors.white),
           subtitle1:
               GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w500),
-          subtitle2:
-              GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w500),
+          subtitle2: GoogleFonts.montserrat(
+              fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white),
         ),
   );
 }

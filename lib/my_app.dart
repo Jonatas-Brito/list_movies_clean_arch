@@ -27,9 +27,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => sl<MoviesFavoritesListCubit>(),
         ),
-        // BlocProvider(
-        //   create: (_) => sl<SetyoutubetraileridCubit>(),
-        // ),
       ],
       child: MaterialApp(
         theme: appTheme(context),

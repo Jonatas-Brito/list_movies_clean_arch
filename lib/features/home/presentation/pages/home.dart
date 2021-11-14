@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/features/home/presentation/components/tile_component.dart';
+import 'package:movies_list/features/home/presentation/widgets/model_detais.dart';
 
 import '../../../../core/themes/app_colors.dart';
 import '../../../../main.dart';
@@ -117,6 +120,23 @@ class _HomePageState extends State<HomePage> {
     return movieSelected;
   }
 
+  openBottomSheet(Movie movie) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        barrierColor: Colors.transparent,
+        backgroundColor: AppColors.bastille,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+        context: context,
+        elevation: 0,
+        builder: (context) {
+          return ModalDetais(
+            movie: movie,
+          );
+        });
+  }
+
   Widget popularList(List<Movie> list) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
@@ -134,14 +154,7 @@ class _HomePageState extends State<HomePage> {
               height: height * .30,
               width: width * .43,
               movie: movie,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => OverviewPage(
-                              movie: checkMovieInFavorites(movie),
-                            )));
-              },
+              onTap: () => openBottomSheet(checkMovieInFavorites(movie)),
             );
           }),
     );
@@ -165,14 +178,7 @@ class _HomePageState extends State<HomePage> {
               height: height * .2439,
               width: width * .365,
               movie: movie,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => OverviewPage(
-                              movie: checkMovieInFavorites(movie),
-                            )));
-              },
+              onTap: () => checkMovieInFavorites(movie),
             );
           }),
     );
