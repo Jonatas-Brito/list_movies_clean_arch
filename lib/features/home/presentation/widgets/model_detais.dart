@@ -19,7 +19,7 @@ class ModalDetais extends StatelessWidget {
     double height = size.height;
     double textScaleFactor = width / mockupWidth;
     print("Vote: $voteAverage");
-    print("Movie: ${movie.title} - Vote ${movie.voteAverage}");
+    print("Movie: ${movie.id} - Vote ${movie.voteAverage}");
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(

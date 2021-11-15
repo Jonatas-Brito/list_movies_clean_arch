@@ -33,6 +33,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  showErrorMessage({String errorMessage = ''}) async {
+    await Future.delayed(Duration(milliseconds: 100));
+    showScaffoldMessage(context, message: errorMessage, color: AppColors.red);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,8 +49,7 @@ class _HomePageState extends State<HomePage> {
           if (state is GetPopularMoviesIsLoading) loadingPopularMovies = true;
           if (state is GetPopularMoviesIsError) {
             loadingPopularMovies = false;
-            showScaffoldMessage(context,
-                message: state.errorMessage, color: AppColors.red);
+            showErrorMessage(errorMessage: state.errorMessage);
           }
           if (state is GetPopularMoviesIsSuccessful)
             loadingPopularMovies = false;
@@ -57,8 +61,7 @@ class _HomePageState extends State<HomePage> {
                   loadingTheaterMovies = true;
                 if (state is GetMoviesInTheatersIsError) {
                   loadingTheaterMovies = false;
-                  showScaffoldMessage(context,
-                      message: state.errorMessage, color: AppColors.red);
+                  showErrorMessage(errorMessage: state.errorMessage);
                 }
                 if (state is GetMoviesInTheatersIsSuccessful)
                   loadingTheaterMovies = false;

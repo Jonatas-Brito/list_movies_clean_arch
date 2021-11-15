@@ -5,7 +5,7 @@ String dateNumberToAbbreviationMonth(String releaseDate) {
 
   month = monthName(int.parse(month));
 
-  String converted = "$month $day, $year";
+  String converted = " $day $month, $year";
 
   return converted;
 }

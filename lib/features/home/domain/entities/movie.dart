@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:movies_list/features/home/domain/entities/people_credits.dart';
 
 class Movie extends Equatable {
   final int id;
@@ -10,6 +11,7 @@ class Movie extends Equatable {
   bool? isFavorite;
   final String releaseDate;
   final String bannerPath;
+  List<PeopleCredits> peopleCredits;
   final double voteAverage;
   String trailerId;
 
@@ -17,6 +19,7 @@ class Movie extends Equatable {
     required this.id,
     required this.trailerId,
     required this.title,
+    required this.peopleCredits,
     required this.isFavorite,
     required this.voteAverage,
     required this.bannerPath,
@@ -33,6 +36,7 @@ class Movie extends Equatable {
     this.imagePath = '',
     this.trailerId = '',
     this.isFavorite = false,
+    this.peopleCredits = const <PeopleCredits>[],
     this.bannerPath = '',
     this.voteAverage = 0,
     this.releaseDate = '',

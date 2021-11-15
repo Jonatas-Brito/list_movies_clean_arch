@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:movies_list/core/utils/release_data_converter.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 
-import '../../../../main.dart';
 import 'animated_progress.dart';
 
 class MovieCard extends StatelessWidget {

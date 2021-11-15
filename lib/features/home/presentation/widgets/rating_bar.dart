@@ -14,11 +14,12 @@ class RatingBarWidget extends StatelessWidget {
       children: [
         RatingBar.builder(
             minRating: 5,
+            itemSize: 25,
             initialRating: movie.voteAverage / 2,
             ignoreGestures: true,
             itemCount: 5,
             glowColor: Colors.amber.shade600,
-            unratedColor: AppColors.bastille,
+            unratedColor: AppColors.equator.withOpacity(0.1),
             glowRadius: 5,
             itemBuilder: (context, _) => Icon(
                   Icons.star,
@@ -27,7 +28,7 @@ class RatingBarWidget extends StatelessWidget {
             onRatingUpdate: (rating) {}),
         SizedBox(width: 4),
         Container(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.center,
           height: size.height * .04,
           child: Text(
             "${movie.voteAverage}",

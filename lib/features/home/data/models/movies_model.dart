@@ -1,3 +1,4 @@
+import 'package:movies_list/features/home/data/models/people_credits_models.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 
 class MovieModel extends Movie {
@@ -9,6 +10,7 @@ class MovieModel extends Movie {
     required String releaseDate,
     required String overview,
     required int voteCount,
+    required List<PeopleCreditsModel> peopleCredits,
     bool? isFavorite,
     required double? voteAverage,
     required String? trailerId,
@@ -16,6 +18,7 @@ class MovieModel extends Movie {
   }) : super(
             id: id,
             trailerId: trailerId!,
+            peopleCredits: peopleCredits,
             title: title,
             imagePath: imagePath,
             voteAverage: voteAverage!,
@@ -30,6 +33,9 @@ class MovieModel extends Movie {
     return MovieModel(
         id: map['id'] != null ? map['id'] : null,
         trailerId: map['trailer_id'] != null ? map['trailer_id'] : '',
+        peopleCredits: map['known_for_department'] != null
+            ? map['known_for_department']
+            : <PeopleCreditsModel>[],
         title: map['title'] != null ? map['title'] : null,
         voteAverage: map['vote_average'] != null
             ? (map['vote_average'] as num).toDouble()
@@ -49,6 +55,7 @@ class MovieModel extends Movie {
       'title': title,
       'trailer_id': trailerId,
       'poster_path': imagePath,
+      'known_for_department': peopleCredits,
       'popularity': popularity,
       'vote_average': voteAverage,
       'release_date': releaseDate,
