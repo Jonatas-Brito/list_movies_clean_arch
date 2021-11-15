@@ -31,9 +31,10 @@ class MoviesInTheatersCubit extends Cubit<MoviesInTheatersState> {
   ) async {
     failureOrMovies.fold(
         (failure) => emit(GetMoviesInTheatersIsError(
-            errorMessage: _setFailureMessage(failure))),
-        (listMovies) =>
-            emit(GetMoviesInTheatersIsSuccessful(movies: listMovies)));
+            errorMessage: _setFailureMessage(failure))), (listMovies) async {
+      await Future.delayed(Duration(seconds: 3));
+      emit(GetMoviesInTheatersIsSuccessful(movies: listMovies));
+    });
   }
 
   String _setFailureMessage(Failure failure) {

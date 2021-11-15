@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/core/components/skeleton_container.dart';
 import 'package:movies_list/features/home/presentation/components/tile_component.dart';
 import 'package:movies_list/features/home/presentation/widgets/model_detais.dart';
 
@@ -12,6 +13,7 @@ import '../components/app_bar.dart';
 import '../components/movie_card.dart';
 import '../cubit/movies_in_theaters_cubit.dart';
 import '../cubit/movies_popular_cubit.dart';
+import 'home_skeleton.dart';
 import 'overview.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,8 +24,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool loading = true;
   List<Movie> moviesFavorite = [];
+  bool loadingTheaterMovies = false;
+  bool loadingPopularMovies = false;
   @override
   void initState() {
     context.read<MoviesInTheatersCubit>().getListMoviesInTheaters();
@@ -34,56 +37,86 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: MoviesAppBar(),
       backgroundColor: AppColors.woodsmoke,
-      body: Container(
-        height: size.height,
-        child: Stack(
-          children: [
-            ListView(
-              children: [
-                title('Mais populares'),
-                BlocBuilder<MoviesPopularCubit, MoviePopularState>(
-                    bloc: context.watch<MoviesPopularCubit>(),
-                    builder: (context, state) {
-                      if (state is GetPopularMoviesIsSuccessful) {
-                        return popularList(state.movies);
-                      }
-                      if (state is GetPopularMoviesIsError) {}
+      body: BlocBuilder<MoviesPopularCubit, MoviePopularState>(
+        bloc: context.watch<MoviesPopularCubit>(),
+        builder: (context, state) {
+          if (state is GetPopularMoviesIsLoading) loadingPopularMovies = true;
+          if (state is GetPopularMoviesIsError) loadingPopularMovies = false;
+          if (state is GetPopularMoviesIsSuccessful)
+            loadingPopularMovies = false;
 
-                      return SizedBox(height: 150);
-                    }),
-                title('Assistir nos cinemas'),
-                BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
-                    bloc: context.watch<MoviesInTheatersCubit>(),
-                    builder: (context, state) {
-                      if (state is GetMoviesInTheatersIsSuccessful) {
-                        return Column(
-                          children: [
-                            inTheaterList(state.movies),
-                          ],
-                        );
-                      }
+          return BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
+              bloc: context.watch<MoviesInTheatersCubit>(),
+              builder: (context, state) {
+                if (state is GetMoviesInTheatersIsLoading)
+                  loadingTheaterMovies = true;
+                if (state is GetMoviesInTheatersIsError)
+                  loadingTheaterMovies = false;
+                if (state is GetMoviesInTheatersIsSuccessful)
+                  loadingTheaterMovies = false;
+                if (loadingTheaterMovies && loadingPopularMovies) {
+                  return HomeSkeleton();
+                } else {
+                  return buildListMovies();
+                }
+              });
+        },
+      ),
+    );
+  }
 
-                      return SizedBox(height: 150);
-                    }),
-                BlocListener<MoviesFavoritesListCubit,
-                    MoviesFavoritesListState>(
-                  bloc: context.watch<MoviesFavoritesListCubit>(),
-                  listener: (context, state) {
-                    if (state is GetMoviesFavoritesIsSuccessful) {
-                      moviesFavorite = state.movies;
+  Widget buildListMovies() {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height,
+      child: Stack(
+        children: [
+          ListView(
+            children: [
+              title('Mais populares'),
+              BlocBuilder<MoviesPopularCubit, MoviePopularState>(
+                  bloc: context.watch<MoviesPopularCubit>(),
+                  builder: (context, state) {
+                    if (state is GetPopularMoviesIsSuccessful) {
+                      return Column(
+                        children: [
+                          popularList(state.movies),
+                        ],
+                      );
                     }
-                  },
-                  child: SizedBox(),
-                ),
-                SizedBox(height: 45)
-              ],
-            ),
-          ],
-        ),
+
+                    return SizedBox(height: 150);
+                  }),
+              title('Assistir nos cinemas'),
+              BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
+                  bloc: context.watch<MoviesInTheatersCubit>(),
+                  builder: (context, state) {
+                    if (state is GetMoviesInTheatersIsSuccessful) {
+                      return Column(
+                        children: [
+                          inTheaterList(state.movies),
+                        ],
+                      );
+                    }
+
+                    return SizedBox(height: 150);
+                  }),
+              BlocListener<MoviesFavoritesListCubit, MoviesFavoritesListState>(
+                bloc: context.watch<MoviesFavoritesListCubit>(),
+                listener: (context, state) {
+                  if (state is GetMoviesFavoritesIsSuccessful) {
+                    moviesFavorite = state.movies;
+                  }
+                },
+                child: SizedBox(),
+              ),
+              SizedBox(height: 45)
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -160,6 +193,30 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  skeletonWidget({bool isMoviesInTheater = false}) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
+    return Container(
+      height: isMoviesInTheater ? height * .2439 : height * .30,
+      width: width,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 7,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: SkeletonContainer.square(
+                height: isMoviesInTheater ? height * .2439 : height * .30,
+                width: isMoviesInTheater ? width * .365 : width * .43,
+                borderRadius: BorderRadius.circular(20),
+              ),
+            );
+          }),
+    );
+  }
+
   Widget inTheaterList(List<Movie> list) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
@@ -178,7 +235,7 @@ class _HomePageState extends State<HomePage> {
               height: height * .2439,
               width: width * .365,
               movie: movie,
-              onTap: () => checkMovieInFavorites(movie),
+              onTap: () => openBottomSheet(checkMovieInFavorites(movie)),
             );
           }),
     );

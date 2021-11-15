@@ -34,7 +34,9 @@ class MoviesPopularCubit extends Cubit<MoviePopularState> {
     failureOrMovies.fold(
         (failure) => emit(
             GetPopularMoviesIsError(errorMessage: _mapFailureMessage(failure))),
-        (listMovies) {
+        (listMovies) async {
+      await Future.delayed(Duration(seconds: 3));
+
       emit(GetPopularMoviesIsSuccessful(movies: listMovies));
     });
   }
