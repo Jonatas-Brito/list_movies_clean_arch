@@ -1,8 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_list/core/components/skeleton_container.dart';
-import 'package:movies_list/features/home/presentation/components/tile_component.dart';
+import 'package:movies_list/core/utils/show_message.dart';
 import 'package:movies_list/features/home/presentation/widgets/model_detais.dart';
 
 import '../../../../core/themes/app_colors.dart';
@@ -14,7 +12,6 @@ import '../components/movie_card.dart';
 import '../cubit/movies_in_theaters_cubit.dart';
 import '../cubit/movies_popular_cubit.dart';
 import 'home_skeleton.dart';
-import 'overview.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   List<Movie> moviesFavorite = [];
   bool loadingTheaterMovies = false;
   bool loadingPopularMovies = false;
+
   @override
   void initState() {
     context.read<MoviesInTheatersCubit>().getListMoviesInTheaters();
@@ -44,7 +42,11 @@ class _HomePageState extends State<HomePage> {
         bloc: context.watch<MoviesPopularCubit>(),
         builder: (context, state) {
           if (state is GetPopularMoviesIsLoading) loadingPopularMovies = true;
-          if (state is GetPopularMoviesIsError) loadingPopularMovies = false;
+          if (state is GetPopularMoviesIsError) {
+            loadingPopularMovies = false;
+            showScaffoldMessage(context,
+                message: state.errorMessage, color: AppColors.red);
+          }
           if (state is GetPopularMoviesIsSuccessful)
             loadingPopularMovies = false;
 
@@ -53,8 +55,11 @@ class _HomePageState extends State<HomePage> {
               builder: (context, state) {
                 if (state is GetMoviesInTheatersIsLoading)
                   loadingTheaterMovies = true;
-                if (state is GetMoviesInTheatersIsError)
+                if (state is GetMoviesInTheatersIsError) {
                   loadingTheaterMovies = false;
+                  showScaffoldMessage(context,
+                      message: state.errorMessage, color: AppColors.red);
+                }
                 if (state is GetMoviesInTheatersIsSuccessful)
                   loadingTheaterMovies = false;
                 if (loadingTheaterMovies && loadingPopularMovies) {
@@ -153,23 +158,6 @@ class _HomePageState extends State<HomePage> {
     return movieSelected;
   }
 
-  openBottomSheet(Movie movie) {
-    showModalBottomSheet(
-        isScrollControlled: true,
-        barrierColor: Colors.transparent,
-        backgroundColor: AppColors.bastille,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12), topRight: Radius.circular(12))),
-        context: context,
-        elevation: 0,
-        builder: (context) {
-          return ModalDetais(
-            movie: movie,
-          );
-        });
-  }
-
   Widget popularList(List<Movie> list) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
@@ -188,30 +176,6 @@ class _HomePageState extends State<HomePage> {
               width: width * .43,
               movie: movie,
               onTap: () => openBottomSheet(checkMovieInFavorites(movie)),
-            );
-          }),
-    );
-  }
-
-  skeletonWidget({bool isMoviesInTheater = false}) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
-    return Container(
-      height: isMoviesInTheater ? height * .2439 : height * .30,
-      width: width,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 7,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: SkeletonContainer.square(
-                height: isMoviesInTheater ? height * .2439 : height * .30,
-                width: isMoviesInTheater ? width * .365 : width * .43,
-                borderRadius: BorderRadius.circular(20),
-              ),
             );
           }),
     );
@@ -239,5 +203,22 @@ class _HomePageState extends State<HomePage> {
             );
           }),
     );
+  }
+
+  openBottomSheet(Movie movie) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        barrierColor: Colors.transparent,
+        backgroundColor: AppColors.bastille,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+        context: context,
+        elevation: 0,
+        builder: (context) {
+          return ModalDetais(
+            movie: movie,
+          );
+        });
   }
 }
