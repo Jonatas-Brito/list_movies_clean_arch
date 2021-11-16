@@ -34,7 +34,7 @@ class MovieModel extends Movie {
         id: map['id'] != null ? map['id'] : null,
         trailerId: map['trailer_id'] != null ? map['trailer_id'] : '',
         peopleCredits: map['known_for_department'] != null
-            ? map['known_for_department']
+            ? <PeopleCreditsModel>[]
             : <PeopleCreditsModel>[],
         title: map['title'] != null ? map['title'] : null,
         voteAverage: map['vote_average'] != null

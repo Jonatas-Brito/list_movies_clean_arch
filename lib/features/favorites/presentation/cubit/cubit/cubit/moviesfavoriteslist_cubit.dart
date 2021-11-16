@@ -32,8 +32,10 @@ class MoviesFavoritesListCubit extends Cubit<MoviesFavoritesListState> {
             errorMessage: CACHED_RETRIVE_IS_FAIULURE)), (listMovies) {
       if (listMovies.isEmpty) {
         emit(GetMoviesFavoritesReturnedListEmpy());
-      } else
+      } else {
+        print(listMovies.length);
         emit(GetMoviesFavoritesIsSuccessful(movies: listMovies));
+      }
     });
   }
 }

@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:movies_list/core/error/failure.dart';
 import 'package:movies_list/core/key/tmdb_key.dart';
+import 'package:movies_list/features/home/data/repositories/movies_repository.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 import 'package:movies_list/features/home/domain/usecases/get_movies_in_theaters.dart';
 

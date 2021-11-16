@@ -27,10 +27,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    context.read<MoviesInTheatersCubit>().getListMoviesInTheaters();
-    context.read<MoviesFavoritesListCubit>().getListFavorites();
-    context.read<MoviesPopularCubit>().getListPopularMovies();
     super.initState();
+    executeBlocs();
+  }
+
+  executeBlocs() async {
+    context.read<MoviesInTheatersCubit>().getListMoviesInTheaters();
+    context.read<MoviesPopularCubit>().getListPopularMovies();
+    await Future.delayed(Duration(milliseconds: 100));
+    context.read<MoviesFavoritesListCubit>().getListFavorites();
   }
 
   showErrorMessage({String errorMessage = ''}) async {
@@ -112,14 +117,15 @@ class _HomePageState extends State<HomePage> {
 
                     return SizedBox(height: 150);
                   }),
-              BlocListener<MoviesFavoritesListCubit, MoviesFavoritesListState>(
+              BlocBuilder<MoviesFavoritesListCubit, MoviesFavoritesListState>(
                 bloc: context.watch<MoviesFavoritesListCubit>(),
-                listener: (context, state) {
+                builder: (context, state) {
                   if (state is GetMoviesFavoritesIsSuccessful) {
+                    print("Tamanho: ${state.movies.length}");
                     moviesFavorite = state.movies;
                   }
+                  return SizedBox();
                 },
-                child: SizedBox(),
               ),
               SizedBox(height: 45)
             ],
@@ -149,14 +155,15 @@ class _HomePageState extends State<HomePage> {
   Movie checkMovieInFavorites(Movie selectedMovie) {
     Movie movieSelected = Movie.empty();
     movieSelected = selectedMovie;
+    // print("Tamanho: ${moviesFavorite.length}");
     moviesFavorite.forEach((movie) {
       bool equalsId = movie.id == movieSelected.id;
       if (equalsId) {
-        if (movie.isFavorite == true) {
-          movieSelected = movie;
-        }
+        movieSelected = movie;
       }
     });
+
+    print("Is favorite: ${movieSelected.isFavorite}");
 
     return movieSelected;
   }

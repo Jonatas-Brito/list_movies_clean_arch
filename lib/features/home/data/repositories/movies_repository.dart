@@ -9,7 +9,7 @@ import 'package:movies_list/features/home/domain/usecases/get_youtube_id.dart';
 
 typedef FutureYoutubeId = Future<Either<Failure, String>>;
 typedef _GetPopularOrInTheatersMovies = Future<List<Movie>> Function();
-typedef _GetTrailerId = Future<String> Function();
+// typedef _GetTrailerId = Future<String> Function();
 
 class MoviesRepositoryImpl implements MoviesRepository {
   final MoviesRemoteDataSource remoteDataSource;
