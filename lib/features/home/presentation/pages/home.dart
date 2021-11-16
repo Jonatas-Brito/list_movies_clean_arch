@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_list/core/utils/show_message.dart';
+import 'package:movies_list/features/home/presentation/cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
+import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
+import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
 import 'package:movies_list/features/home/presentation/widgets/model_detais.dart';
 
 import '../../../../core/themes/app_colors.dart';
@@ -9,8 +12,6 @@ import '../../../favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cu
 import '../../domain/entities/movie.dart';
 import '../components/app_bar.dart';
 import '../components/movie_card.dart';
-import '../cubit/movies_in_theaters_cubit.dart';
-import '../cubit/movies_popular_cubit.dart';
 import 'home_skeleton.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,9 +22,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Movie> moviesFavorite = [];
+  List<Movie> favoriteMovies = [];
+  List<Movie> popularMovies = [];
+  List<Movie> inTheaterMovies = [];
+
   bool loadingTheaterMovies = false;
   bool loadingPopularMovies = false;
+  bool loadingTrailerForPopularMovies = false;
+  bool loadingTrailerForTheatersMovies = false;
 
   @override
   void initState() {
@@ -122,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, state) {
                   if (state is GetMoviesFavoritesIsSuccessful) {
                     print("Tamanho: ${state.movies.length}");
-                    moviesFavorite = state.movies;
+                    favoriteMovies = state.movies;
                   }
                   return SizedBox();
                 },
@@ -155,15 +161,14 @@ class _HomePageState extends State<HomePage> {
   Movie checkMovieInFavorites(Movie selectedMovie) {
     Movie movieSelected = Movie.empty();
     movieSelected = selectedMovie;
-    // print("Tamanho: ${moviesFavorite.length}");
-    moviesFavorite.forEach((movie) {
+    favoriteMovies.forEach((movie) {
       bool equalsId = movie.id == movieSelected.id;
       if (equalsId) {
         movieSelected = movie;
       }
     });
 
-    print("Is favorite: ${movieSelected.isFavorite}");
+    print("Is favorite | HomePage: ${movieSelected.isFavorite}");
 
     return movieSelected;
   }
@@ -185,7 +190,13 @@ class _HomePageState extends State<HomePage> {
               height: height * .30,
               width: width * .43,
               movie: movie,
-              onTap: () => openBottomSheet(checkMovieInFavorites(movie)),
+              onTap: () {
+                context
+                    .read<GetTrailerIdCubit>()
+                    .getIdFromTrailer(checkMovieInFavorites(movie));
+                openBottomSheet(checkMovieInFavorites(movie));
+                // openBottomSheet();
+              },
             );
           }),
     );
@@ -209,13 +220,19 @@ class _HomePageState extends State<HomePage> {
               height: height * .2439,
               width: width * .365,
               movie: movie,
-              onTap: () => openBottomSheet(checkMovieInFavorites(movie)),
+              onTap: () {
+                context
+                    .read<GetTrailerIdCubit>()
+                    .getIdFromTrailer(checkMovieInFavorites(movie));
+                openBottomSheet(checkMovieInFavorites(movie));
+              },
             );
           }),
     );
   }
 
   openBottomSheet(Movie movie) {
+    // Movie movie = Movie.empty();
     showModalBottomSheet(
         isScrollControlled: true,
         barrierColor: Colors.transparent,

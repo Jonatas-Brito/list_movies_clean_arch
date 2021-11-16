@@ -5,33 +5,33 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movies_list/core/error/failure.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/home/domain/usecases/get_popular_movies.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
+import 'package:movies_list/features/home/domain/usecases/get_movies_in_theaters.dart';
+import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
 
-import 'movie_cubit_test.mocks.dart';
+import 'movies_in_theaters_cubit_test.mocks.dart';
 
-@GenerateMocks([GetPopularMovies])
+@GenerateMocks([GetMoviesInTheaters])
 void main() {
-  MockGetPopularMovies getPopularMovies = MockGetPopularMovies();
+  MockGetMoviesInTheaters getMoviesInTheaters = MockGetMoviesInTheaters();
 
-  MoviesPopularCubit bloc =
-      MoviesPopularCubit(getPopularMovies: getPopularMovies);
+  MoviesInTheatersCubit bloc =
+      MoviesInTheatersCubit(getMoviesInTheaters: getMoviesInTheaters);
 
-  group('GetMoviesPopular is successful', () {
+  group('GetMoviesInTheaters is successful', () {
     setUp(() {
-      bloc = MoviesPopularCubit(getPopularMovies: getPopularMovies);
-      when(getPopularMovies(any)).thenAnswer((_) async => Right(<Movie>[]));
+      bloc = MoviesInTheatersCubit(getMoviesInTheaters: getMoviesInTheaters);
+      when(getMoviesInTheaters(any)).thenAnswer((_) async => Right(<Movie>[]));
     });
-    blocTest<MoviesPopularCubit, MoviePopularState>(
+    blocTest<MoviesInTheatersCubit, MoviesInTheatersState>(
       '[BlocTest] should return list movies',
       build: () {
         return bloc;
       },
-      act: (bloc) => bloc.getListPopularMovies(),
+      act: (bloc) => bloc.getListMoviesInTheaters(),
       wait: Duration(seconds: 3),
       expect: () => [
-        isA<GetPopularMoviesIsLoading>(),
-        isA<GetPopularMoviesIsSuccessful>()
+        isA<GetMoviesInTheatersIsLoading>(),
+        isA<GetMoviesInTheatersIsSuccessful>()
       ],
     );
     test('should return list movies', () async {
@@ -41,12 +41,12 @@ void main() {
       expect(
         bloc.stream,
         emitsInOrder([
-          GetPopularMoviesIsLoading(),
-          GetPopularMoviesIsSuccessful(movies: <Movie>[])
+          GetMoviesInTheatersIsLoading(),
+          GetMoviesInTheatersIsSuccessful(movies: <Movie>[])
         ]),
       );
 
-      bloc.getListPopularMovies();
+      bloc.getListMoviesInTheaters();
 
       // assert
       //assert later        final expected = [          LoadingState(),          LoadedState(projectList: tListProject),        ];        expectLater(favoriteBloc.stream, emitsInOrder(expected));        // act        favoriteBloc.add(GetListFavoriteProjects())
@@ -55,8 +55,8 @@ void main() {
 
   group(('GetMoviesPopular is failure'), () {
     setUp(() {
-      bloc = MoviesPopularCubit(getPopularMovies: getPopularMovies);
-      when(getPopularMovies(any))
+      bloc = MoviesInTheatersCubit(getMoviesInTheaters: getMoviesInTheaters);
+      when(getMoviesInTheaters(any))
           .thenAnswer((_) async => Left(ServerFailure()));
     });
     test('should return Failure', () async {
@@ -64,11 +64,11 @@ void main() {
       expect(
           bloc.stream,
           emitsInOrder([
-            GetPopularMoviesIsLoading(),
-            GetPopularMoviesIsError(errorMessage: 'errorMessage')
+            GetMoviesInTheatersIsLoading(),
+            GetMoviesInTheatersIsError(errorMessage: 'errorMessage')
           ]));
       // assert
-      bloc.getListPopularMovies();
+      bloc.getListMoviesInTheaters();
     });
   });
 }

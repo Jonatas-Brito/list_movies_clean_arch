@@ -1,25 +1,42 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 import 'package:movies_list/features/home/presentation/components/tile_component.dart';
+import 'package:movies_list/features/home/presentation/cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
 import 'package:movies_list/features/home/presentation/pages/overview.dart';
 
 import '../../../../main.dart';
 
-class ModalDetais extends StatelessWidget {
+class ModalDetais extends StatefulWidget {
   final Movie movie;
   const ModalDetais({Key? key, required this.movie}) : super(key: key);
 
   @override
+  _ModalDetaisState createState() => _ModalDetaisState();
+}
+
+class _ModalDetaisState extends State<ModalDetais> {
+  Movie movie = Movie.empty();
+
+  @override
+  void initState() {
+    movie = widget.movie;
+
+    print("ID TRAILER: ${widget.movie.trailerId.isEmpty}");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double voteAverage = movie.voteAverage;
+    double voteAverage = widget.movie.voteAverage;
     Size size = MediaQuery.of(context).size;
     double width = size.width;
     double height = size.height;
     double textScaleFactor = width / mockupWidth;
     print("Vote: $voteAverage");
-    print("Movie: ${movie.id} - Vote ${movie.voteAverage}");
+    print("Movie: ${widget.movie.id} - Vote ${widget.movie.voteAverage}");
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(

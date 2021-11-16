@@ -7,6 +7,7 @@ import 'package:movies_list/core/error/failure.dart';
 import 'package:movies_list/core/network/network_info.dart';
 import 'package:movies_list/features/home/data/datasources/movies_remote_data_source.dart';
 import 'package:movies_list/features/home/data/models/movies_model.dart';
+import 'package:movies_list/features/home/data/models/people_credits_models.dart';
 import 'package:movies_list/features/home/data/repositories/movies_repository.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 
@@ -44,6 +45,8 @@ void main() {
     final tMovieModel = MovieModel(
         id: 1,
         overview: 'as',
+        peopleCredits: <PeopleCreditsModel>[],
+        isFavorite: false,
         voteCount: 1,
         trailerId: '',
         voteAverage: 0.0,
@@ -119,6 +122,8 @@ void main() {
         id: 1,
         overview: 'as',
         trailerId: '',
+        peopleCredits: <PeopleCreditsModel>[],
+        isFavorite: false,
         voteCount: 1,
         voteAverage: 0.0,
         title: 'Test Text',

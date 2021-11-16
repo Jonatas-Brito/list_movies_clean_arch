@@ -42,6 +42,8 @@ void main() {
       'vote_count': 1597,
       "popularity": 6093.846,
       'overview': "$overview",
+      'known_for_department': [],
+      'trailer_id': '',
       "poster_path": "/h5UzYZquMwO9FVn15R2eK2itmHu.jpg",
       "release_date": "2021-09-30",
       "backdrop_path": "/lNyLSOKMMeUPr1RsL4KcRuIXwHt.jpg",

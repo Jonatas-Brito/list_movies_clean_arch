@@ -14,7 +14,7 @@ abstract class MoviesRemoteDataSource {
 
   FutureMovies getMoviesInTheaters(String key);
 
-  // Future<String> getYoutubeId(int id, String key);
+  Future<String> getYoutubeId(int id, String key);
 }
 
 class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
@@ -30,6 +30,11 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
   @override
   FutureMovies getMoviesPopular(String key) => _getMovies(
         'popular',
+        key,
+      );
+  @override
+  Future<String> getYoutubeId(int id, String key) => _getTrailersId(
+        id,
         key,
       );
 
@@ -57,7 +62,7 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
     return peoples;
   }
 
-  Future<String> _getYoutubeId(int id, String key) async {
+  Future<String> _getTrailersId(int id, String key) async {
     String trailerId = '';
     final response = await client.get(Uri.parse(
         'https://api.themoviedb.org/3/movie/$id/videos?api_key=$key&language=en-US'));
@@ -89,10 +94,10 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
 
       _movies = _dynamicList.map((e) => MovieModel.fromJson(e)).toList();
 
-      _movies.forEach((movie) async {
-        movie.trailerId = await _getYoutubeId(movie.id, key);
-        movie.peopleCredits = await _getPeopleCredits(movie.id, key);
-      });
+      // _movies.forEach((movie) async {
+      //   // movie.trailerId = await _getYoutubeId(movie.id, key);
+      //   // movie.peopleCredits = await _getPeopleCredits(movie.id, key);
+      // });
 
       return _movies;
     } else {
@@ -101,4 +106,24 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
 
     // return response
   }
+
+  // Future<String> getYoutubeId(int id, String key) async {
+  //   String trailerId = '';
+  //   final response = await client.get(Uri.parse(
+  //       'https://api.themoviedb.org/3/movie/$id/videos?api_key=$key&language=en-US'));
+
+  //   if (response.statusCode == 200) {
+  //     Map<String, dynamic> map = jsonDecode(response.body);
+
+  //     List dynamicList = map['results'];
+
+  //     if (dynamicList.isNotEmpty) {
+  //       trailerId = dynamicList[0]['key'];
+  //     }
+  //   } else {
+  //     throw ServerException();
+  //   }
+  //   return trailerId;
+  // }
+
 }

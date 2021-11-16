@@ -5,8 +5,8 @@ import 'package:movies_list/core/themes/app_colors.dart';
 import 'package:movies_list/core/utils/release_data_converter.dart';
 import 'package:movies_list/core/utils/show_message.dart';
 import 'package:movies_list/features/home/domain/entities/people_credits.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters_cubit.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_popular_cubit.dart';
+import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
+import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../main.dart';
@@ -37,7 +37,7 @@ class _OverviewPageState extends State<OverviewPage> {
     movie = widget.movie;
     isFavorite =
         widget.movie.isFavorite != null ? widget.movie.isFavorite! : isFavorite;
-    print("Is favorite: ${movie.isFavorite}");
+    print("Is favorite: ${movie.trailerId}");
 
     popIsFavorite = widget.popIsFavorite;
     super.initState();
