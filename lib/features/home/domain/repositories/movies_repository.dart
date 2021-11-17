@@ -4,6 +4,7 @@ import '../../../../core/error/failure.dart';
 import '../entities/movie.dart';
 
 typedef FutureGetMovies = Future<Either<Failure, List<Movie>>>;
+typedef FutureGetCast = Future<Either<Failure, List<Movie>>>;
 typedef FutureYoutubeId = Future<Either<Failure, String>>;
 
 abstract class MoviesRepository {

@@ -10,7 +10,7 @@ class MovieModel extends Movie {
     required String releaseDate,
     required String overview,
     required int voteCount,
-    required List<PeopleCreditsModel> peopleCredits,
+    required List<CastPeopleModel> castPeople,
     bool? isFavorite,
     required double? voteAverage,
     required String? trailerId,
@@ -18,7 +18,7 @@ class MovieModel extends Movie {
   }) : super(
             id: id,
             trailerId: trailerId!,
-            peopleCredits: peopleCredits,
+            castPeople: castPeople,
             title: title,
             imagePath: imagePath,
             voteAverage: voteAverage!,
@@ -33,9 +33,9 @@ class MovieModel extends Movie {
     return MovieModel(
         id: map['id'] != null ? map['id'] : null,
         trailerId: map['trailer_id'] != null ? map['trailer_id'] : '',
-        peopleCredits: map['known_for_department'] != null
-            ? <PeopleCreditsModel>[]
-            : <PeopleCreditsModel>[],
+        castPeople: map['known_for_department'] != null
+            ? <CastPeopleModel>[]
+            : <CastPeopleModel>[],
         title: map['title'] != null ? map['title'] : null,
         voteAverage: map['vote_average'] != null
             ? (map['vote_average'] as num).toDouble()
@@ -55,7 +55,7 @@ class MovieModel extends Movie {
       'title': title,
       'trailer_id': trailerId,
       'poster_path': imagePath,
-      'known_for_department': peopleCredits,
+      'known_for_department': castPeople,
       'popularity': popularity,
       'vote_average': voteAverage,
       'release_date': releaseDate,

@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class PeopleCredits extends Equatable {
+class CastPeople extends Equatable {
   final int? id;
   final String? department;
   final String? name;
   final String? imagePath;
 
-  PeopleCredits({
+  CastPeople({
     required this.id,
     required this.department,
     required this.name,

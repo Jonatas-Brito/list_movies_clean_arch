@@ -38,8 +38,8 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
         key,
       );
 
-  Future<List<PeopleCredits>> _getPeopleCredits(int id, String key) async {
-    List<PeopleCredits> peoples = <PeopleCredits>[];
+  Future<List<CastPeople>> _getCastPeople(int id, String key) async {
+    List<CastPeople> peoples = <CastPeople>[];
     final response = await client.get(Uri.parse(
         'https://api.themoviedb.org/3/movie/$id/credits?api_key=$key&language=en-US'));
 
@@ -48,7 +48,7 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
       List dynamicList = map['cast'];
 
       peoples = dynamicList
-          .map((people) => PeopleCreditsModel.fromJson(people))
+          .map((people) => CastPeopleModel.fromJson(people))
           .toList();
 
       // peoples.forEach((people) {
@@ -96,7 +96,7 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
 
       // _movies.forEach((movie) async {
       //   // movie.trailerId = await _getYoutubeId(movie.id, key);
-      //   // movie.peopleCredits = await _getPeopleCredits(movie.id, key);
+      //   // movie.CastPeople = await _getCastPeople(movie.id, key);
       // });
 
       return _movies;

@@ -11,7 +11,7 @@ class Movie extends Equatable {
   bool? isFavorite;
   final String releaseDate;
   final String bannerPath;
-  List<PeopleCredits> peopleCredits;
+  List<CastPeople> castPeople;
   final double voteAverage;
   String trailerId;
 
@@ -19,7 +19,7 @@ class Movie extends Equatable {
     required this.id,
     required this.trailerId,
     required this.title,
-    required this.peopleCredits,
+    required this.castPeople,
     required this.isFavorite,
     required this.voteAverage,
     required this.bannerPath,
@@ -36,7 +36,7 @@ class Movie extends Equatable {
     this.imagePath = '',
     this.trailerId = '',
     this.isFavorite = false,
-    this.peopleCredits = const <PeopleCredits>[],
+    this.castPeople = const <CastPeople>[],
     this.bannerPath = '',
     this.voteAverage = 0,
     this.releaseDate = '',

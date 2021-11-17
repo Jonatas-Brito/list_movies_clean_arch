@@ -45,7 +45,7 @@ void main() {
     final tMovieModel = MovieModel(
         id: 1,
         overview: 'as',
-        peopleCredits: <PeopleCreditsModel>[],
+        castPeople: <CastPeopleModel>[],
         isFavorite: false,
         voteCount: 1,
         trailerId: '',
@@ -122,7 +122,7 @@ void main() {
         id: 1,
         overview: 'as',
         trailerId: '',
-        peopleCredits: <PeopleCreditsModel>[],
+        castPeople: <CastPeopleModel>[],
         isFavorite: false,
         voteCount: 1,
         voteAverage: 0.0,

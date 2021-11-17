@@ -1,7 +1,7 @@
 import 'package:movies_list/features/home/domain/entities/people_credits.dart';
 
-class PeopleCreditsModel extends PeopleCredits {
-  PeopleCreditsModel({
+class CastPeopleModel extends CastPeople {
+  CastPeopleModel({
     required int id,
     required String department,
     required String name,
@@ -13,8 +13,8 @@ class PeopleCreditsModel extends PeopleCredits {
           name: name,
         );
 
-  factory PeopleCreditsModel.fromJson(Map<String, dynamic> map) {
-    return PeopleCreditsModel(
+  factory CastPeopleModel.fromJson(Map<String, dynamic> map) {
+    return CastPeopleModel(
       id: map['id'] != null ? map['id'] : null,
       department: map['known_for_department'] != null
           ? map['known_for_department']

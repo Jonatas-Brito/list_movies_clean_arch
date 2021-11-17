@@ -212,10 +212,10 @@ class _OverviewPageState extends State<OverviewPage> {
           Container(
             height: size.height * .3,
             child: ListView.builder(
-              itemCount: movie.peopleCredits.length,
+              itemCount: movie.castPeople.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                PeopleCredits people = movie.peopleCredits[index];
+                CastPeople people = movie.castPeople[index];
                 return people.imagePath!.isEmpty
                     ? SizedBox()
                     : Padding(
