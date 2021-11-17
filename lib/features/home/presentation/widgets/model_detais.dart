@@ -78,10 +78,10 @@ class _ModalDetaisState extends State<ModalDetais> {
                                     textScaleFactor: textScaleFactor,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText1!
+                                        .subtitle2!
                                         .copyWith(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 16),
+                                            fontSize: 18),
                                   ),
                                 ),
                                 GestureDetector(
@@ -116,7 +116,7 @@ class _ModalDetaisState extends State<ModalDetais> {
                                       .bodyText1!
                                       .copyWith(
                                           fontWeight: FontWeight.w300,
-                                          fontSize: 14),
+                                          fontSize: 15.5),
                                 ),
                               ],
                             ),

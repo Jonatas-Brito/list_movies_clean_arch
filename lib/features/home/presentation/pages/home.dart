@@ -245,8 +245,11 @@ class _HomePageState extends State<HomePage> {
         barrierColor: Colors.transparent,
         backgroundColor: AppColors.bastille,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+          ),
+        ),
         context: context,
         elevation: 0,
         builder: (context) {
