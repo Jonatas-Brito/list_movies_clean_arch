@@ -4,20 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 import 'package:movies_list/features/home/presentation/components/tile_component.dart';
-import 'package:movies_list/features/home/presentation/cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
 import 'package:movies_list/features/home/presentation/pages/overview.dart';
 
 import '../../../../main.dart';
 
-class ModalDetais extends StatefulWidget {
+class ModalDetail extends StatefulWidget {
   final Movie movie;
-  const ModalDetais({Key? key, required this.movie}) : super(key: key);
+  const ModalDetail({Key? key, required this.movie}) : super(key: key);
 
   @override
-  _ModalDetaisState createState() => _ModalDetaisState();
+  _ModalDetailState createState() => _ModalDetailState();
 }
 
-class _ModalDetaisState extends State<ModalDetais> {
+class _ModalDetailState extends State<ModalDetail> {
   Movie movie = Movie.empty();
 
   @override

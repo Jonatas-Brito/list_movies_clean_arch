@@ -5,7 +5,7 @@ import 'package:movies_list/features/home/presentation/cubit/get_cast_people/get
 import 'package:movies_list/features/home/presentation/cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
-import 'package:movies_list/features/home/presentation/widgets/model_detais.dart';
+import 'package:movies_list/features/home/presentation/widgets/modal_detail.dart';
 
 import '../../../../core/themes/app_colors.dart';
 import '../../../../main.dart';
@@ -253,7 +253,7 @@ class _HomePageState extends State<HomePage> {
         context: context,
         elevation: 0,
         builder: (context) {
-          return ModalDetais(
+          return ModalDetail(
             movie: movie,
           );
         });
