@@ -52,6 +52,8 @@ class _OverviewPageState extends State<OverviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double screenHeigh = size.height - MediaQuery.of(context).padding.top;
     Movie movie = widget.movie;
     return BlocBuilder<ManagerFavoritesMoviesCubit,
         ManagerFavoritesMoviesState>(
@@ -210,8 +212,9 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Widget listCast() {
     Size size = MediaQuery.of(context).size;
+    double screenHeigh = size.height - MediaQuery.of(context).padding.top;
     return Container(
-      height: size.height * .23,
+      height: screenHeigh * .25,
       child: BlocBuilder<GetCastPeopleCubit, GetCastPeopleState>(
         bloc: context.read<GetCastPeopleCubit>(),
         builder: (context, state) {

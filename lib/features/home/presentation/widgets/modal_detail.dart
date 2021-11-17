@@ -34,7 +34,9 @@ class _ModalDetailState extends State<ModalDetail> {
     double height = size.height;
     double textScaleFactor = width / mockupWidth;
     print("Vote: $voteAverage");
-    print("Movie: ${widget.movie.id} - Vote ${widget.movie.voteAverage}");
+    print(
+        "Movie: ${widget.movie.title.length} - Vote ${widget.movie.voteAverage}");
+    int titleLength = widget.movie.title.length;
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(
@@ -45,7 +47,7 @@ class _ModalDetailState extends State<ModalDetail> {
             children: [
               Container(
                 width: width * .32,
-                height: height * .28,
+                height: height * .35,
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
@@ -57,7 +59,7 @@ class _ModalDetailState extends State<ModalDetail> {
               Padding(
                 padding: EdgeInsets.only(left: width * .035),
                 child: Container(
-                  height: height * .28,
+                  height: height * .35,
                   child: Stack(
                     children: [
                       Column(
@@ -102,7 +104,7 @@ class _ModalDetailState extends State<ModalDetail> {
                           SizedBox(height: 10),
                           Container(
                             height:
-                                voteAverage > 7.5 ? height * .155 : height * .2,
+                                heightForTitleLength(titleLength, voteAverage),
                             width: width * .53,
                             child: ListView(
                               children: [
@@ -118,7 +120,7 @@ class _ModalDetailState extends State<ModalDetail> {
                                 ),
                               ],
                             ),
-                          ),
+                          )
                         ],
                       ),
                       if (voteAverage > 7.5) ...[
@@ -174,5 +176,28 @@ class _ModalDetailState extends State<ModalDetail> {
         ],
       ),
     );
+  }
+
+  double heightForTitleLength(int titleLength, double voteAverage) {
+    Size size = MediaQuery.of(context).size;
+    double height = 0.0;
+
+    if (titleLength >= 30 && voteAverage >= 7.5)
+      height = size.height * .18;
+    else if (titleLength >= 30)
+      height = size.height * .22;
+    else if (titleLength >= 25 && voteAverage >= 7.5)
+      height = size.height * .22;
+    else if (titleLength >= 25)
+      height = size.height * .25;
+    else if (titleLength >= 16 && voteAverage >= 7.5)
+      height = size.height * .24;
+    else if (titleLength >= 16)
+      height = size.height * .23;
+    else if (titleLength >= 1 && voteAverage >= 7.5)
+      height = size.height * .24;
+    else if (titleLength >= 1) height = size.height * .28;
+
+    return height;
   }
 }
