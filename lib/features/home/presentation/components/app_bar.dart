@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
+import 'package:movies_list/core/utils/navigation.dart';
+import 'package:movies_list/features/search/presenter/pages/search_page.dart';
 
 import '../../../../main.dart';
 
 class MoviesAppBar extends StatelessWidget with PreferredSizeWidget {
-  const MoviesAppBar();
+  final VoidCallback onTapIcon;
+  const MoviesAppBar({required this.onTapIcon});
 
   @override
   Size get preferredSize => Size.fromHeight(100);
@@ -52,7 +55,7 @@ class MoviesAppBar extends StatelessWidget with PreferredSizeWidget {
                   scale: scale,
                   color: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: onTapIcon,
               ))
         ],
       ),

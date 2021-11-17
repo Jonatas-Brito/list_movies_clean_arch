@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/core/utils/navigation.dart';
 import 'package:movies_list/core/utils/show_message.dart';
 import 'package:movies_list/features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
 import 'package:movies_list/features/home/presentation/widgets/modal_detail.dart';
+import 'package:movies_list/features/search/presenter/pages/search_page.dart';
 
 import '../../../../core/themes/app_colors.dart';
 import '../../../../main.dart';
@@ -53,7 +55,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MoviesAppBar(),
+      appBar: MoviesAppBar(
+        onTapIcon: () =>
+            createRoute(context, builder: SearchPage(movies: popularMovies)),
+      ),
       backgroundColor: AppColors.woodsmoke,
       body: BlocBuilder<MoviesPopularCubit, MoviePopularState>(
         bloc: context.watch<MoviesPopularCubit>(),
@@ -101,6 +106,7 @@ class _HomePageState extends State<HomePage> {
                   bloc: context.watch<MoviesPopularCubit>(),
                   builder: (context, state) {
                     if (state is GetPopularMoviesIsSuccessful) {
+                      popularMovies = state.movies;
                       return Column(
                         children: [
                           popularList(state.movies),
