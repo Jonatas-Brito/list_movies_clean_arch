@@ -8,7 +8,6 @@ import 'package:movies_list/features/home/data/datasources/movies_remote_data_so
 import 'package:http/http.dart' as http;
 import 'package:movies_list/features/home/data/models/movies_model.dart';
 import 'package:movies_list/features/home/data/models/people_credits_models.dart';
-import 'package:movies_list/features/home/domain/entities/cast_people.dart';
 import '../../../../fixtures/fixtures_reader.dart';
 import 'movies_remote_data_source_test.mocks.dart';
 

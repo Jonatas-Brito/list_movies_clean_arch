@@ -145,7 +145,7 @@ class _OverviewPageState extends State<OverviewPage> {
         movie.title,
         textScaleFactor: textScaleFactor,
         style: Theme.of(context).textTheme.subtitle2!.copyWith(
-              fontSize: 18,
+              fontSize: 25,
               color: Colors.white,
             ),
       ),
@@ -192,67 +192,74 @@ class _OverviewPageState extends State<OverviewPage> {
               ],
             ),
           ),
+          SizedBox(height: 10),
           Text(
             movie.overview,
             textScaleFactor: textScaleFactor,
             style: Theme.of(context)
                 .textTheme
                 .button!
-                .copyWith(fontSize: 12, fontWeight: FontWeight.bold),
+                .copyWith(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          Container(
-            height: size.height * .3,
-            child: BlocBuilder<GetCastPeopleCubit, GetCastPeopleState>(
-              bloc: context.read<GetCastPeopleCubit>(),
-              builder: (context, state) {
-                if (state is GetCastPeopleIsSuccessful) {
-                  movie.castPeople = state.listCast;
-                }
-                return ListView.builder(
-                  itemCount: movie.castPeople.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    CastPeople people = movie.castPeople[index];
-                    return people.imagePath!.isEmpty
-                        ? SizedBox()
-                        : Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: size.width * .18,
-                                  child: ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                          'http://image.tmdb.org/t/p/original/${people.imagePath}',
-                                      placeholder: (context, string) {
-                                        return Container(
-                                          height: size.height * .165,
-                                          width: size.width * .18,
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 3),
-                                Container(
-                                  width: size.width * .2,
-                                  child: Text(
-                                    people.name!,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                  },
-                );
-              },
-            ),
-          )
+          SizedBox(height: 5),
+          listCast(),
         ],
+      ),
+    );
+  }
+
+  Widget listCast() {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height * .23,
+      child: BlocBuilder<GetCastPeopleCubit, GetCastPeopleState>(
+        bloc: context.read<GetCastPeopleCubit>(),
+        builder: (context, state) {
+          if (state is GetCastPeopleIsSuccessful) {
+            movie.castPeople = state.listCast;
+          }
+          return ListView.builder(
+            itemCount: movie.castPeople.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              CastPeople people = movie.castPeople[index];
+              return people.imagePath!.isEmpty
+                  ? SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: size.width * .18,
+                            child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12)),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    'http://image.tmdb.org/t/p/original/${people.imagePath}',
+                                placeholder: (context, string) {
+                                  return Container(
+                                    height: size.height * .165,
+                                    width: size.width * .18,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 3),
+                          Container(
+                            width: size.width * .2,
+                            child: Text(
+                              people.name!,
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+            },
+          );
+        },
       ),
     );
   }
