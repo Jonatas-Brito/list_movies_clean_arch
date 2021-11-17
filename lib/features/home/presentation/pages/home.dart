@@ -193,11 +193,11 @@ class _HomePageState extends State<HomePage> {
               movie: movie,
               onTap: () {
                 context
-                    .read<GetTrailerIdCubit>()
-                    .getIdFromTrailer(checkMovieInFavorites(movie));
-                context
                     .read<GetCastPeopleCubit>()
                     .getPeopleCast(checkMovieInFavorites(movie));
+                context
+                    .read<GetTrailerIdCubit>()
+                    .getIdFromTrailer(checkMovieInFavorites(movie));
                 openBottomSheet(checkMovieInFavorites(movie));
                 // openBottomSheet();
               },
@@ -225,6 +225,9 @@ class _HomePageState extends State<HomePage> {
               width: width * .365,
               movie: movie,
               onTap: () {
+                context
+                    .read<GetCastPeopleCubit>()
+                    .getPeopleCast(checkMovieInFavorites(movie));
                 context
                     .read<GetTrailerIdCubit>()
                     .getIdFromTrailer(checkMovieInFavorites(movie));
