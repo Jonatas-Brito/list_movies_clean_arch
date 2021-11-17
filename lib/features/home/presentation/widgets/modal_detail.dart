@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 import 'package:movies_list/features/home/presentation/components/tile_component.dart';
