@@ -1,3 +1,4 @@
+import 'features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
 import 'features/home/presentation/cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
 import 'features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
 import 'features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => sl<GetTrailerIdCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => sl<GetCastPeopleCubit>(),
         ),
       ],
       child: MaterialApp(

@@ -5,9 +5,10 @@ import 'package:movies_list/core/error/exceptions.dart';
 import 'package:movies_list/features/home/data/models/movies_model.dart';
 import 'package:movies_list/features/home/data/models/people_credits_models.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/home/domain/entities/people_credits.dart';
+import 'package:movies_list/features/home/domain/entities/cast_people.dart';
 
 typedef FutureMovies = Future<List<Movie>>;
+typedef FutureCast = Future<List<CastPeople>>;
 
 abstract class MoviesRemoteDataSource {
   FutureMovies getMoviesPopular(String key);
@@ -15,6 +16,8 @@ abstract class MoviesRemoteDataSource {
   FutureMovies getMoviesInTheaters(String key);
 
   Future<String> getYoutubeId(int id, String key);
+
+  FutureCast getCastPeople(int id, String key);
 }
 
 class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
@@ -32,14 +35,21 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
         'popular',
         key,
       );
+
   @override
   Future<String> getYoutubeId(int id, String key) => _getTrailersId(
         id,
         key,
       );
 
-  Future<List<CastPeople>> _getCastPeople(int id, String key) async {
-    List<CastPeople> peoples = <CastPeople>[];
+  @override
+  FutureCast getCastPeople(int id, String key) => _getCastPeople(
+        id,
+        key,
+      );
+
+  FutureCast _getCastPeople(int id, String key) async {
+    List<CastPeople> people = <CastPeople>[];
     final response = await client.get(Uri.parse(
         'https://api.themoviedb.org/3/movie/$id/credits?api_key=$key&language=en-US'));
 
@@ -47,19 +57,13 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
       Map<String, dynamic> map = jsonDecode(response.body);
       List dynamicList = map['cast'];
 
-      peoples = dynamicList
+      people = dynamicList
           .map((people) => CastPeopleModel.fromJson(people))
           .toList();
-
-      // peoples.forEach((people) {
-      //   print(people.department);
-      //   // peoples
-      //   //     .removeWhere((removePeople) => removePeople.department != 'Acting');
-      // });
     } else
       throw ServerException();
 
-    return peoples;
+    return people;
   }
 
   Future<String> _getTrailersId(int id, String key) async {
@@ -94,17 +98,10 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
 
       _movies = _dynamicList.map((e) => MovieModel.fromJson(e)).toList();
 
-      // _movies.forEach((movie) async {
-      //   // movie.trailerId = await _getYoutubeId(movie.id, key);
-      //   // movie.CastPeople = await _getCastPeople(movie.id, key);
-      // });
-
       return _movies;
     } else {
       throw ServerException();
     }
-
-    // return response
   }
 
   // Future<String> getYoutubeId(int id, String key) async {

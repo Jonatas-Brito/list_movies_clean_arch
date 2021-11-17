@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
 import 'package:movies_list/core/utils/release_data_converter.dart';
 import 'package:movies_list/core/utils/show_message.dart';
-import 'package:movies_list/features/home/domain/entities/people_credits.dart';
+import 'package:movies_list/features/home/domain/entities/cast_people.dart';
+import 'package:movies_list/features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -168,16 +169,6 @@ class _OverviewPageState extends State<OverviewPage> {
               Text(dateNumberToAbbreviationMonth(movie.releaseDate)),
               SizedBox(width: 5),
               RatingBarWidget(movie: movie)
-              // Row(
-              //   children: [
-              //     Image.asset(
-              //       'assets/icons/like.png',
-              //       height: 17,
-              //     ),
-              //     SizedBox(width: 5),
-              //     Text("${movie.voteAverage}")
-              //   ],
-              // ),
             ],
           ),
           SizedBox(height: 10),
@@ -211,45 +202,53 @@ class _OverviewPageState extends State<OverviewPage> {
           ),
           Container(
             height: size.height * .3,
-            child: ListView.builder(
-              itemCount: movie.castPeople.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                CastPeople people = movie.castPeople[index];
-                return people.imagePath!.isEmpty
-                    ? SizedBox()
-                    : Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Container(
-                              width: size.width * .18,
-                              child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      'http://image.tmdb.org/t/p/original/${people.imagePath}',
-                                  placeholder: (context, string) {
-                                    return Container(
-                                      height: size.height * .165,
-                                      width: size.width * .18,
-                                    );
-                                  },
+            child: BlocBuilder<GetCastPeopleCubit, GetCastPeopleState>(
+              bloc: context.read<GetCastPeopleCubit>(),
+              builder: (context, state) {
+                if (state is GetCastPeopleIsSuccessful) {
+                  movie.castPeople = state.listCast;
+                }
+                return ListView.builder(
+                  itemCount: movie.castPeople.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    CastPeople people = movie.castPeople[index];
+                    return people.imagePath!.isEmpty
+                        ? SizedBox()
+                        : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: size.width * .18,
+                                  child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          'http://image.tmdb.org/t/p/original/${people.imagePath}',
+                                      placeholder: (context, string) {
+                                        return Container(
+                                          height: size.height * .165,
+                                          width: size.width * .18,
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                SizedBox(height: 3),
+                                Container(
+                                  width: size.width * .2,
+                                  child: Text(
+                                    people.name!,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              ],
                             ),
-                            SizedBox(height: 3),
-                            Container(
-                              width: size.width * .2,
-                              child: Text(
-                                people.name!,
-                                textAlign: TextAlign.center,
-                              ),
-                            )
-                          ],
-                        ),
-                      );
+                          );
+                  },
+                );
               },
             ),
           )

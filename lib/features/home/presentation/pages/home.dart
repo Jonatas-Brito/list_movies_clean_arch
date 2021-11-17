@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_list/core/utils/show_message.dart';
+import 'package:movies_list/features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
@@ -194,6 +195,9 @@ class _HomePageState extends State<HomePage> {
                 context
                     .read<GetTrailerIdCubit>()
                     .getIdFromTrailer(checkMovieInFavorites(movie));
+                context
+                    .read<GetCastPeopleCubit>()
+                    .getPeopleCast(checkMovieInFavorites(movie));
                 openBottomSheet(checkMovieInFavorites(movie));
                 // openBottomSheet();
               },

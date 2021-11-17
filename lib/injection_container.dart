@@ -16,9 +16,11 @@ import 'features/favorites/presentation/cubit/cubit/moviefavorites_cubit.dart';
 import 'features/home/data/datasources/movies_remote_data_source.dart';
 import 'features/home/data/repositories/movies_repository.dart';
 import 'features/home/domain/repositories/movies_repository.dart';
+import 'features/home/domain/usecases/get_cast.dart';
 import 'features/home/domain/usecases/get_movies_in_theaters.dart';
 import 'features/home/domain/usecases/get_popular_movies.dart';
 import 'features/home/domain/usecases/get_youtube_id.dart';
+import 'features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
 import 'features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
 import 'features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
 
@@ -31,11 +33,13 @@ Future<void> init() async {
   sl.registerFactory(() => MoviesPopularCubit(getPopularMovies: sl()));
   sl.registerFactory(() => MoviesInTheatersCubit(getMoviesInTheaters: sl()));
   sl.registerFactory(() => GetTrailerIdCubit(getTrailerId: sl()));
+  sl.registerFactory(() => GetCastPeopleCubit(getCastPeople: sl()));
 
   // User cases
   sl.registerLazySingleton(() => GetPopularMovies(sl()));
   sl.registerLazySingleton(() => GetMoviesInTheaters(sl()));
   sl.registerLazySingleton(() => GetTrailerId(sl()));
+  sl.registerLazySingleton(() => GetCastPeople(sl()));
 
   // Repository
   sl.registerLazySingleton<MoviesRepository>(

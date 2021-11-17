@@ -30,7 +30,6 @@ class GetTrailerIdCubit extends Cubit<GetTrailerIdState> {
         (trailerId) async {
       movie.trailerId = trailerId;
       print(movie.trailerId = trailerId);
-      await Future.delayed(Duration(seconds: 3));
       emit(GetTrailerIdIsSuccessful(movie: movie));
     });
   }
