@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movies_list/core/images/app_images.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
-import 'package:movies_list/core/utils/navigation.dart';
-import 'package:movies_list/features/search/presenter/pages/search_page.dart';
 
+import '../../../../core/images/app_images.dart';
+import '../../../../core/themes/app_colors.dart';
 import '../../../../main.dart';
 
 class MoviesAppBar extends StatelessWidget with PreferredSizeWidget {

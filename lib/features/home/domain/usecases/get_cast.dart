@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/core/usecases/usecases.dart';
-import 'package:movies_list/features/home/domain/entities/cast_people.dart';
-import 'package:movies_list/features/home/domain/repositories/movies_repository.dart';
+
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecases.dart';
+import '../entities/cast_people.dart';
+import '../repositories/movies_repository.dart';
 
 typedef FutureGetMovies = Future<Either<Failure, List<CastPeople>>>;
 typedef Usecase = UseCase<List<CastPeople>, Params>;

@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:movies_list/core/error/exceptions.dart';
-import 'package:movies_list/core/utils/api_strings/features/home/api_strings_remote.dart';
-import 'package:movies_list/features/home/data/models/movies_model.dart';
-import 'package:movies_list/features/home/data/models/people_credits_models.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/home/domain/entities/cast_people.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/utils/api_strings/features/home/api_strings_remote.dart';
+import '../../domain/entities/cast_people.dart';
+import '../../domain/entities/movie.dart';
+import '../models/movies_model.dart';
+import '../models/people_credits_models.dart';
 
 typedef FutureMovies = Future<List<Movie>>;
 typedef FutureCast = Future<List<CastPeople>>;

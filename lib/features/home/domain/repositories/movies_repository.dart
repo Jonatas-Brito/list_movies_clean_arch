@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:movies_list/features/home/domain/entities/cast_people.dart';
 
 import '../../../../core/error/failure.dart';
+import '../entities/cast_people.dart';
 import '../entities/movie.dart';
 
 typedef FutureGetMovies = Future<Either<Failure, List<Movie>>>;

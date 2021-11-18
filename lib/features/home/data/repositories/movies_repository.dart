@@ -1,11 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:movies_list/core/error/exceptions.dart';
-import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/core/network/network_info.dart';
-import 'package:movies_list/features/home/data/datasources/movies_remote_data_source.dart';
-import 'package:movies_list/features/home/domain/entities/cast_people.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/home/domain/repositories/movies_repository.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failure.dart';
+import '../../../../core/network/network_info.dart';
+import '../../domain/entities/cast_people.dart';
+import '../../domain/entities/movie.dart';
+import '../../domain/repositories/movies_repository.dart';
+import '../datasources/movies_remote_data_source.dart';
 
 typedef FutureYoutubeId = Future<Either<Failure, String>>;
 

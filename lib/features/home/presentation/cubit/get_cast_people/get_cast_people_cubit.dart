@@ -1,12 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/core/key/tmdb_key.dart';
-import 'package:movies_list/core/strings/app_strings.dart';
-import 'package:movies_list/features/home/domain/entities/cast_people.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/home/domain/usecases/get_cast.dart';
+
+import '../../../../../core/error/failure.dart';
+import '../../../../../core/key/tmdb_key.dart';
+import '../../../../../core/strings/app_strings.dart';
+import '../../../domain/entities/cast_people.dart';
+import '../../../domain/entities/movie.dart';
+import '../../../domain/usecases/get_cast.dart';
 
 part 'get_cast_people_state.dart';
 

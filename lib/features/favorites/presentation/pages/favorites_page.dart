@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_list/core/strings/app_strings.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
 
+import '../../../../core/strings/app_strings.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../../../home/domain/entities/movie.dart';
+import '../../../home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
 import '../../../home/presentation/pages/overview.dart';
 import '../cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 import '../widgets/card_favorite_widget.dart';

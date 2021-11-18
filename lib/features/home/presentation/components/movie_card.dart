@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_list/core/utils/api_string_images.dart';
-import 'package:movies_list/core/utils/release_data_converter.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
 
+import '../../../../core/utils/api_string_images.dart';
+import '../../../../core/utils/release_data_converter.dart';
+import '../../domain/entities/movie.dart';
 import 'animated_progress.dart';
 
 class MovieCard extends StatelessWidget {

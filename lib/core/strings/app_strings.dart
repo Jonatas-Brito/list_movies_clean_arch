@@ -20,4 +20,7 @@ class AppStrings {
   // Network Connection Message
   static const String NETWORK_FAILURE_MESSAGE =
       'É necessário se connectar a internet para listar os filmes';
+
+  // Search Message
+  static const String SEARCH_FAILURE_MESSAGE = 'Erro ao pesquisar filme';
 }

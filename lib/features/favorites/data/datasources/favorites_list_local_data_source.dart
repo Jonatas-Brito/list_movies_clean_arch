@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:movies_list/core/error/exceptions.dart';
-import 'package:movies_list/core/key/base_key.dart';
-import 'package:movies_list/features/home/data/models/movies_model.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/key/base_key.dart';
+import '../../../home/data/models/movies_model.dart';
+import '../../../home/domain/entities/movie.dart';
 
 abstract class FavoritesListLocalDataSource {
   /// Get the previously [List<Movie>] cached favorite movies list

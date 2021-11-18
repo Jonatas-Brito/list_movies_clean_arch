@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
-import 'package:movies_list/core/utils/change_colors_indicator.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
+
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/utils/change_colors_indicator.dart';
+import '../../domain/entities/movie.dart';
 
 class AnimatedProgress extends StatefulWidget {
   final double percent;

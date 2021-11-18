@@ -1,8 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/search/presenter/widgets/field_typeahead.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/utils/api_string_images.dart';
+import '../../../home/domain/entities/movie.dart';
+import '../cubit/search/cubit/search_movie_cubit.dart';
+import '../widgets/text_field_widget.dart';
 
 class SearchPage extends StatefulWidget {
   final List<Movie> movies;
@@ -13,16 +17,25 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<Movie> movies = [];
+  List<Movie> searchMovies = [];
+  List<Movie> moviesList = [];
+  bool loading = false;
 
   @override
   void initState() {
-    movies = widget.movies;
+    moviesList = widget.movies;
+    searchMovies = moviesList;
     super.initState();
   }
 
   List<Widget> mapListToChildren() {
-    return widget.movies
+    List<Movie> listMovies = [];
+
+    if (searchMovies.isNotEmpty) {
+      listMovies = searchMovies;
+    } else
+      listMovies = moviesList;
+    return listMovies
         .map((movie) => Container(
               width: 20,
               height: 180,
@@ -30,11 +43,29 @@ class _SearchPageState extends State<SearchPage> {
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: CachedNetworkImageProvider(
-                        'http://image.tmdb.org/t/p/original${movie.imagePath}',
+                        ApiStringImage().originalImage(movie.imagePath),
                       )),
                   borderRadius: BorderRadius.all(Radius.circular(10))),
             ))
         .toList();
+  }
+
+  Widget defineIcon(bool loading) {
+    Widget icon = Icon(Icons.dangerous);
+    if (loading) {
+      icon = Padding(
+        padding: const EdgeInsets.only(right: 20, top: 8, bottom: 8),
+        child: Container(
+          height: 15,
+          width: 15,
+          child: CircularProgressIndicator(
+            color: AppColors.white,
+            strokeWidth: 2.5,
+          ),
+        ),
+      );
+    }
+    return icon;
   }
 
   @override
@@ -50,43 +81,66 @@ class _SearchPageState extends State<SearchPage> {
               onPressed: () => Navigator.pop(context),
               icon: Icon(Icons.arrow_back_ios_rounded)),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
-          child: Container(
-            height: size.height,
-            child: Stack(
-              children: [
-                Container(
-                  height: size.height * .06,
-                  child: FieldSearchComponent(
-                    movies: movies,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * .08,
-                  right: 0,
-                  left: 0,
-                  bottom: 5,
-                  child: Container(
-                    height: size.height * 0.77,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                      ),
-                      child: GridView.count(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5,
-                        childAspectRatio: 0.7,
-                        children: mapListToChildren(),
+        body: BlocBuilder<SearchMovieCubit, SearchMovieState>(
+          bloc: context.read<SearchMovieCubit>(),
+          builder: (context, state) {
+            if (state is SearchMovieIsSuccess) {
+              searchMovies = state.movies;
+              loading = false;
+            }
+
+            if (state is SearchMovieIsLoading) {
+              loading = true;
+            }
+            if (state is SearchMovieIsError) {
+              loading = false;
+            }
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: Container(
+                height: size.height,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: size.height * .06,
+                      child: AppTextField(
+                        icon: defineIcon(loading),
+                        onChanged: (text) {
+                          print(text);
+                          context
+                              .read<SearchMovieCubit>()
+                              .searchInListMovies(text, moviesList);
+                        },
                       ),
                     ),
-                  ),
-                )
-              ],
-            ),
-          ),
+                    Positioned(
+                      top: size.height * .08,
+                      right: 0,
+                      left: 0,
+                      bottom: 5,
+                      child: Container(
+                        height: size.height * 0.77,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
+                          child: GridView.count(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5,
+                            childAspectRatio: 0.7,
+                            children: mapListToChildren(),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
         ));
   }
 }

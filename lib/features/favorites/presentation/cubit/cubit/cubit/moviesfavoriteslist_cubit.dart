@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/core/usecases/usecases.dart';
-import 'package:movies_list/features/favorites/domain/usecases/retrive_movies_favorites.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
+
+import '../../../../../../core/error/failure.dart';
+import '../../../../../../core/usecases/usecases.dart';
+import '../../../../../home/domain/entities/movie.dart';
+import '../../../../domain/usecases/retrive_movies_favorites.dart';
 
 part 'moviesfavoriteslist_state.dart';
 

@@ -1,5 +1,5 @@
-import 'package:movies_list/features/home/data/models/people_credits_models.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
+import '../../domain/entities/movie.dart';
+import 'people_credits_models.dart';
 
 class MovieModel extends Movie {
   MovieModel({

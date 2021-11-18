@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:movies_list/features/home/domain/entities/cast_people.dart';
+
+import 'cast_people.dart';
 
 class Movie extends Equatable {
   final int id;

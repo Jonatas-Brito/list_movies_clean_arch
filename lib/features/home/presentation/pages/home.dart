@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_list/core/strings/app_strings.dart';
-import 'package:movies_list/core/utils/navigation.dart';
-import 'package:movies_list/core/utils/show_message.dart';
-import 'package:movies_list/features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
-import 'package:movies_list/features/home/presentation/cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
-import 'package:movies_list/features/home/presentation/widgets/modal_detail.dart';
-import 'package:movies_list/features/search/presenter/pages/search_page.dart';
 
+import '../../../../core/strings/app_strings.dart';
 import '../../../../core/themes/app_colors.dart';
+import '../../../../core/utils/navigation.dart';
+import '../../../../core/utils/show_message.dart';
 import '../../../../main.dart';
 import '../../../favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
+import '../../../search/presenter/pages/search_page.dart';
 import '../../domain/entities/movie.dart';
 import '../components/app_bar.dart';
 import '../components/movie_card.dart';
+import '../cubit/get_cast_people/get_cast_people_cubit.dart';
+import '../cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
+import '../cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
+import '../cubit/movies_popular/movies_popular_cubit.dart';
+import '../widgets/modal_detail.dart';
 import 'home_skeleton.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,6 +28,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Movie> favoriteMovies = [];
   List<Movie> popularMovies = [];
+  List<Movie> inTheaterMovies = [];
 
   bool loadingTheaterMovies = false;
   bool loadingPopularMovies = false;
@@ -119,6 +120,7 @@ class _HomePageState extends State<HomePage> {
                   bloc: context.watch<MoviesInTheatersCubit>(),
                   builder: (context, state) {
                     if (state is GetMoviesInTheatersIsSuccessful) {
+                      inTheaterMovies = state.movies;
                       return Column(
                         children: [
                           inTheaterList(state.movies),

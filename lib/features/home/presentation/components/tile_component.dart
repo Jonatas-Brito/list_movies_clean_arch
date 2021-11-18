@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies_list/core/strings/app_strings.dart';
+
+import '../../../../core/strings/app_strings.dart';
 
 class TileComponent extends StatelessWidget {
   final VoidCallback? onTap;

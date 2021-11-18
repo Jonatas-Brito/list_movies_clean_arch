@@ -1,12 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/core/strings/app_strings.dart';
-import 'package:movies_list/features/favorites/domain/usecases/add_movie_to_favorites.dart';
-import 'package:movies_list/features/favorites/domain/usecases/params/favorite_params.dart';
-import 'package:movies_list/features/favorites/domain/usecases/remove_movie_of_favorites.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
+
+import '../../../../../core/error/failure.dart';
+import '../../../../../core/strings/app_strings.dart';
+import '../../../../home/domain/entities/movie.dart';
+import '../../../domain/usecases/add_movie_to_favorites.dart';
+import '../../../domain/usecases/params/favorite_params.dart';
+import '../../../domain/usecases/remove_movie_of_favorites.dart';
 
 part 'moviefavorites_state.dart';
 

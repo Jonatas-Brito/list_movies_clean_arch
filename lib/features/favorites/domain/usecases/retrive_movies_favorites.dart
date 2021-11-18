@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/core/usecases/usecases.dart';
-import 'package:movies_list/features/favorites/domain/repositories/movies_favorite_repository.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
+
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecases.dart';
+import '../../../home/domain/entities/movie.dart';
+import '../repositories/movies_favorite_repository.dart';
 
 typedef ThisRemoveUseCase = UseCase<List<Movie>, NoParams>;
 

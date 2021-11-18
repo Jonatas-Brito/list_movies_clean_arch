@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:movies_list/core/strings/app_strings.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
-import 'package:movies_list/core/utils/api_string_images.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
 
+import '../../../../core/strings/app_strings.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/utils/api_string_images.dart';
 import '../../../../main.dart';
+import '../../../home/domain/entities/movie.dart';
 
 class CardFavorite extends StatelessWidget {
   final Movie movie;

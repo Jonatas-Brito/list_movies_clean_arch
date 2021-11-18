@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/core/key/tmdb_key.dart';
-import 'package:movies_list/core/strings/app_strings.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/home/domain/usecases/get_youtube_id.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
+
+import '../../../../../../core/error/failure.dart';
+import '../../../../../../core/key/tmdb_key.dart';
+import '../../../../../../core/strings/app_strings.dart';
+import '../../../../domain/entities/movie.dart';
+import '../../../../domain/usecases/get_youtube_id.dart';
 
 part 'gettrailerid_state.dart';
 

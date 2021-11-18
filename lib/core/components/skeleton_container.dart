@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
 import 'package:skeleton_text/skeleton_text.dart';
+
+import '../themes/app_colors.dart';
 
 class SkeletonContainer extends StatelessWidget {
   final double width;

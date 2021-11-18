@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:movies_list/features/home/presentation/cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/network/network_info.dart';
@@ -21,8 +20,12 @@ import 'features/home/domain/usecases/get_movies_in_theaters.dart';
 import 'features/home/domain/usecases/get_popular_movies.dart';
 import 'features/home/domain/usecases/get_youtube_id.dart';
 import 'features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
+import 'features/home/presentation/cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
 import 'features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
 import 'features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
+import 'features/search/domain/repositories/search_movies_repository.dart';
+import 'features/search/domain/usecases/search_movie.dart';
+import 'features/search/presenter/cubit/search/cubit/search_movie_cubit.dart';
 
 // sl == Service Locator
 final sl = GetIt.instance;
@@ -92,4 +95,22 @@ Future<void> init() async {
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
+
+  ///
+  ///
+  ///
+  ///
+
+  //! Feature - Search
+
+  // Bloc
+  sl.registerFactory(() => SearchMovieCubit(searchMovie: sl()));
+
+  // User cases
+  sl.registerLazySingleton(() => SearchMovie(sl()));
+
+  // Repository
+  sl.registerLazySingleton<SearchRepository>(
+    () => SearchRepositoryImpl(),
+  );
 }
