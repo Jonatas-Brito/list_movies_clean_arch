@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/core/strings/app_strings.dart';
 import 'package:movies_list/core/utils/navigation.dart';
 import 'package:movies_list/core/utils/show_message.dart';
 import 'package:movies_list/features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
@@ -27,12 +28,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Movie> favoriteMovies = [];
   List<Movie> popularMovies = [];
-  List<Movie> inTheaterMovies = [];
 
   bool loadingTheaterMovies = false;
   bool loadingPopularMovies = false;
-  bool loadingTrailerForPopularMovies = false;
-  bool loadingTrailerForTheatersMovies = false;
 
   @override
   void initState() {
@@ -101,7 +99,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           ListView(
             children: [
-              title('Mais populares'),
+              title(AppStrings.mostPopular),
               BlocBuilder<MoviesPopularCubit, MoviePopularState>(
                   bloc: context.watch<MoviesPopularCubit>(),
                   builder: (context, state) {
@@ -116,7 +114,7 @@ class _HomePageState extends State<HomePage> {
 
                     return SizedBox(height: 150);
                   }),
-              title('Assistir nos cinemas'),
+              title(AppStrings.watchInTheaters),
               BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
                   bloc: context.watch<MoviesInTheatersCubit>(),
                   builder: (context, state) {

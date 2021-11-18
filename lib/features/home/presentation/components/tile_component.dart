@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_list/core/strings/app_strings.dart';
 
 class TileComponent extends StatelessWidget {
   final VoidCallback? onTap;
@@ -18,7 +19,7 @@ class TileComponent extends StatelessWidget {
             color: Colors.grey[50],
           ),
           title: Text(
-            'Mais informações',
+            AppStrings.moreInformation,
             style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Colors.grey[50],
                 fontSize: 14,

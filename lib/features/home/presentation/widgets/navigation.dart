@@ -20,8 +20,8 @@ class _NavigationState extends State<Navigation> {
   List<Widget> pages = [
     HomePage(),
     MoviesFavoritesPage(),
-    PageInConstructio(),
-    PageInConstructio(page: 2)
+    PageInConstruction(),
+    PageInConstruction(page: 2)
   ];
 
   List<IconData> iconPages = [];
@@ -35,14 +35,6 @@ class _NavigationState extends State<Navigation> {
   void dispose() {
     super.dispose();
     pageController.dispose();
-  }
-
-  Widget buildInConstruction() {
-    return Container(
-      color: AppColors.woodsmoke,
-      alignment: Alignment.center,
-      child: Text('Tela em construcão!'),
-    );
   }
 
   Widget setIconAndIndex({required int index, required IconData icon}) {

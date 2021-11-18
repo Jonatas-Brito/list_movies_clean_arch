@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_list/core/images/app_images.dart';
+import 'package:movies_list/core/strings/app_strings.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
+import 'package:movies_list/core/utils/api_string_images.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 import 'package:movies_list/features/home/presentation/components/tile_component.dart';
 import 'package:movies_list/features/home/presentation/pages/overview.dart';
@@ -33,6 +36,7 @@ class _ModalDetailState extends State<ModalDetail> {
     double width = size.width;
     double height = size.height;
     double textScaleFactor = width / mockupWidth;
+    String imagePath = movie.imagePath;
     print("Vote: $voteAverage");
     print(
         "Movie: ${widget.movie.title.length} - Vote ${widget.movie.voteAverage}");
@@ -52,7 +56,7 @@ class _ModalDetailState extends State<ModalDetail> {
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image: CachedNetworkImageProvider(
-                          'http://image.tmdb.org/t/p/original${movie.imagePath}',
+                          ApiStringImage().originalImage(imagePath),
                         )),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
               ),
@@ -140,11 +144,11 @@ class _ModalDetailState extends State<ModalDetail> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Image.asset(
-                                  'assets/icons/like.png',
+                                  AppImages.like,
                                   height: 17,
                                 ),
                                 Text(
-                                  "Mais curtidos",
+                                  AppStrings.mostLiked,
                                   style: Theme.of(context)
                                       .textTheme
                                       .subtitle2!

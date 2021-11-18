@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/core/strings/app_strings.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
+import 'package:movies_list/core/utils/api_string_images.dart';
+import 'package:movies_list/core/utils/api_string_youtube.dart';
 import 'package:movies_list/core/utils/release_data_converter.dart';
 import 'package:movies_list/core/utils/show_message.dart';
 import 'package:movies_list/features/home/domain/entities/cast_people.dart';
@@ -19,10 +22,7 @@ import '../widgets/rating_bar.dart';
 
 class OverviewPage extends StatefulWidget {
   final Movie movie;
-  final bool popIsFavorite;
-  const OverviewPage(
-      {Key? key, required this.movie, this.popIsFavorite = false})
-      : super(key: key);
+  const OverviewPage({Key? key, required this.movie}) : super(key: key);
 
   @override
   _OverviewPageState createState() => _OverviewPageState();
@@ -35,13 +35,16 @@ class _OverviewPageState extends State<OverviewPage> {
 
   @override
   void initState() {
+    setVariables();
+    print("Is favorite: ${movie.trailerId}");
+
+    super.initState();
+  }
+
+  setVariables() {
     movie = widget.movie;
     isFavorite =
         widget.movie.isFavorite != null ? widget.movie.isFavorite! : isFavorite;
-    print("Is favorite: ${movie.trailerId}");
-
-    popIsFavorite = widget.popIsFavorite;
-    super.initState();
   }
 
   executeBlocs() {
@@ -52,8 +55,6 @@ class _OverviewPageState extends State<OverviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double screenHeigh = size.height - MediaQuery.of(context).padding.top;
     Movie movie = widget.movie;
     return BlocBuilder<ManagerFavoritesMoviesCubit,
         ManagerFavoritesMoviesState>(
@@ -186,7 +187,7 @@ class _OverviewPageState extends State<OverviewPage> {
                   size: 35,
                 ),
                 Text(
-                  'Ver trailer',
+                  AppStrings.watchTrailer,
                   style: Theme.of(context).textTheme.subtitle2!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -226,6 +227,7 @@ class _OverviewPageState extends State<OverviewPage> {
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               CastPeople people = movie.castPeople[index];
+              String pathImage = people.imagePath!;
               return people.imagePath!.isEmpty
                   ? SizedBox()
                   : Padding(
@@ -239,7 +241,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                   BorderRadius.all(Radius.circular(12)),
                               child: CachedNetworkImage(
                                 imageUrl:
-                                    'http://image.tmdb.org/t/p/original/${people.imagePath}',
+                                    ApiStringImage().originalImage(pathImage),
                                 placeholder: (context, string) {
                                   return Container(
                                     height: size.height * .165,
@@ -269,9 +271,9 @@ class _OverviewPageState extends State<OverviewPage> {
 
   routeToYoutube() async {
     bool trailerIdExist = movie.trailerId.isNotEmpty;
+    String trailerPath = widget.movie.trailerId;
     if (trailerIdExist) {
-      final youtubeUrl =
-          'https://www.youtube.com/embed/${widget.movie.trailerId}';
+      String youtubeUrl = ApiStringYoutube().youtubePath(trailerPath);
 
       await launch(youtubeUrl);
     } else
@@ -282,79 +284,18 @@ class _OverviewPageState extends State<OverviewPage> {
 
   Widget banner() {
     Size size = MediaQuery.of(context).size;
+    String bannerPath = widget.movie.bannerPath;
 
     return Stack(
       alignment: Alignment.center,
       children: [
         CachedNetworkImage(
-          imageUrl:
-              'http://image.tmdb.org/t/p/original${widget.movie.bannerPath}',
+          imageUrl: ApiStringImage().originalImage(bannerPath),
           height: size.height * .6,
           width: double.infinity,
           fit: BoxFit.cover,
         ),
-        // Positioned(
-        //     left: 0,
-        //     bottom: 0,
-        //     child: RatingBarWidget(
-        //       movie: widget.movie,
-        //     ))
-        // FloatingActionButton(
-        //   child: Icon(
-        //     Icons.play_arrow_rounded,
-        //     size: 55,
-        //   ),
-        //   onPressed: () => routeToYoutube(),
-        // ),
       ],
-    );
-  }
-
-  Widget gradientLayer2() {
-    Size size = MediaQuery.of(context).size;
-
-    return Container(
-      height: size.height * 0.15,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              end: Alignment.bottomCenter,
-              begin: Alignment.topCenter,
-              colors: [
-            Colors.transparent,
-            Colors.black.withOpacity(0.1),
-            Colors.black.withOpacity(0.2),
-            Colors.black.withOpacity(0.3),
-            Colors.black.withOpacity(0.4),
-            Colors.black.withOpacity(0.6),
-            Colors.black.withOpacity(0.7),
-            Colors.black.withOpacity(0.8),
-            Colors.black.withOpacity(0.8),
-            Colors.black.withOpacity(0.8),
-          ])),
-    );
-  }
-
-  Widget gradientLayer() {
-    return Container(
-      height: 400,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              end: Alignment.bottomCenter,
-              begin: Alignment.topCenter,
-              colors: [
-            Colors.transparent,
-            Colors.black.withOpacity(0.1),
-            Colors.black.withOpacity(0.2),
-            Colors.black.withOpacity(0.3),
-            Colors.black.withOpacity(0.4),
-            Colors.black.withOpacity(0.7),
-            Colors.black.withOpacity(0.8),
-            Colors.black.withOpacity(0.8),
-            Colors.black.withOpacity(0.8),
-            Colors.black.withOpacity(0.8),
-            Colors.black.withOpacity(0.8),
-            Colors.black.withOpacity(0.8),
-          ])),
     );
   }
 }

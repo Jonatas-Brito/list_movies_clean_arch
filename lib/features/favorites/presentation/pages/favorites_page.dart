@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/core/strings/app_strings.dart';
 import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
 
 import '../../../../core/themes/app_colors.dart';
@@ -70,7 +71,7 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
       child: Container(
         width: size.width * .8,
         child: Text(
-          'Adicione um filme aos favoritos e ele ficara disponivel aqui!',
+          AppStrings.thereNoFavorites,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyText1!.copyWith(
               fontSize: 25,
@@ -101,8 +102,7 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => OverviewPage(
-                                    popIsFavorite: true, movie: movie)));
+                                builder: (_) => OverviewPage(movie: movie)));
                       },
                     )
                   ],
@@ -133,8 +133,7 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) =>
-                          OverviewPage(popIsFavorite: true, movie: movie)));
+                      builder: (_) => OverviewPage(movie: movie)));
             },
           )
         ],

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:movies_list/core/error/exceptions.dart';
+import 'package:movies_list/core/key/base_key.dart';
 import 'package:movies_list/features/home/data/models/movies_model.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,8 +16,6 @@ abstract class FavoritesListLocalDataSource {
   Future<Movie> removeMovieOfFavorites(Movie moviefavoriteToChache);
 }
 
-const CACHED_MOVIE_FAVORITE_LIST = 'CACHED_MOVIE_FAVORITE_LIST';
-
 class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
   final SharedPreferences sharedPreferences;
   const FavoritesListLocalDataSourceImpl({required this.sharedPreferences});
@@ -24,8 +23,14 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
   @override
   Future<Movie> addMovieToCachedFavorites(Movie moviefavoriteToChache) async {
     // await sharedPreferences.clear();
+
+    const String CACHED_MOVIE_FAVORITE_LIST =
+        BaseKey.CACHED_MOVIE_FAVORITE_LIST;
+
     Movie selecMovie = moviefavoriteToChache;
+
     List<Movie> listFavoriteCache = [];
+
     final checkForKey =
         sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
     try {
@@ -53,7 +58,12 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
   @override
   Future<Movie> removeMovieOfFavorites(Movie moviefavoriteToChache) async {
     // await sharedPreferences.clear();
+
+    const String CACHED_MOVIE_FAVORITE_LIST =
+        BaseKey.CACHED_MOVIE_FAVORITE_LIST;
+
     Movie selecMovie = moviefavoriteToChache;
+
     List<Movie> listFavoriteCache = [];
     final checkForKey =
         sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
@@ -94,6 +104,9 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
 
   @override
   Future<List<Movie>> retriveFavoritesMovies() async {
+    const String CACHED_MOVIE_FAVORITE_LIST =
+        BaseKey.CACHED_MOVIE_FAVORITE_LIST;
+
     final checkForKey =
         sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
     List dynamicList;
@@ -111,8 +124,13 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
   }
 
   List<Movie> _returnFavoritesMovies() {
+    const String CACHED_MOVIE_FAVORITE_LIST =
+        BaseKey.CACHED_MOVIE_FAVORITE_LIST;
+
     List dynamicList;
+
     List<Movie> listFavoriteCache = [];
+
     dynamicList =
         jsonDecode(sharedPreferences.getString(CACHED_MOVIE_FAVORITE_LIST)!);
 

@@ -7,4 +7,5 @@ class AppColors {
   static final Color red = Color(0xFFDA1B37);
   static final Color purple = Color(0xFF7F35E7);
   static final Color bastille = Color(0xFF201A28);
+  static final Color white = Color(0xFFFFFFFF);
 }

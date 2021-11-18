@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:movies_list/core/error/exceptions.dart';
+import 'package:movies_list/core/utils/api_strings/features/home/api_strings_remote.dart';
 import 'package:movies_list/features/home/data/models/movies_model.dart';
 import 'package:movies_list/features/home/data/models/people_credits_models.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
@@ -50,8 +51,8 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
 
   FutureCast _getCastPeople(int id, String key) async {
     List<CastPeople> people = <CastPeople>[];
-    final response = await client.get(Uri.parse(
-        'https://api.themoviedb.org/3/movie/$id/credits?api_key=$key&language=en-US'));
+    final response =
+        await client.get(Uri.parse(ApiStringsHome().uriCast(id, key)));
 
     if (response.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(response.body);
@@ -68,8 +69,8 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
 
   Future<String> _getTrailersId(int id, String key) async {
     String trailerId = '';
-    final response = await client.get(Uri.parse(
-        'https://api.themoviedb.org/3/movie/$id/videos?api_key=$key&language=en-US'));
+    final response =
+        await client.get(Uri.parse(ApiStringsHome().uriTrailer(id, key)));
 
     if (response.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(response.body);
@@ -86,8 +87,7 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
   }
 
   FutureMovies _getMovies(String path, String key) async {
-    String uri =
-        'https://api.themoviedb.org/3/movie/$path?api_key=$key&language=pt-BR&page=1';
+    String uri = ApiStringsHome().uriMovies(path, key);
 
     final response = await client.get(Uri.parse(uri));
 
@@ -103,24 +103,4 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
       throw ServerException();
     }
   }
-
-  // Future<String> getYoutubeId(int id, String key) async {
-  //   String trailerId = '';
-  //   final response = await client.get(Uri.parse(
-  //       'https://api.themoviedb.org/3/movie/$id/videos?api_key=$key&language=en-US'));
-
-  //   if (response.statusCode == 200) {
-  //     Map<String, dynamic> map = jsonDecode(response.body);
-
-  //     List dynamicList = map['results'];
-
-  //     if (dynamicList.isNotEmpty) {
-  //       trailerId = dynamicList[0]['key'];
-  //     }
-  //   } else {
-  //     throw ServerException();
-  //   }
-  //   return trailerId;
-  // }
-
 }

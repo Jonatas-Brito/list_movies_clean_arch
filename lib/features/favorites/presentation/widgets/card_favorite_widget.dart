@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:movies_list/core/strings/app_strings.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
+import 'package:movies_list/core/utils/api_string_images.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 
 import '../../../../main.dart';
@@ -22,6 +24,7 @@ class CardFavorite extends StatelessWidget {
     double height = size.height;
     double textScaleFactor = width / mockupWidth;
     double scale = mockupWidth / width;
+    String imagePath = movie.imagePath;
 
     return Container(
         color: Colors.transparent,
@@ -37,7 +40,7 @@ class CardFavorite extends StatelessWidget {
                         image: DecorationImage(
                             fit: BoxFit.cover,
                             image: CachedNetworkImageProvider(
-                                'http://image.tmdb.org/t/p/w500${movie.imagePath}',
+                                ApiStringImage().originalImage(imagePath),
                                 scale: scale)),
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                   ),
@@ -101,7 +104,7 @@ class CardFavorite extends StatelessWidget {
                                     Colors.transparent)),
                             onPressed: onTap,
                             child: Text(
-                              '''Toque para continuar \nlendo''',
+                              AppStrings.tapToContinueReading,
                               textScaleFactor: textScaleFactor,
                               style: Theme.of(context)
                                   .textTheme
