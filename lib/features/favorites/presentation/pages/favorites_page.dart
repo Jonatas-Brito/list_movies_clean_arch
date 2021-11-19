@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
 
 import '../../../../core/strings/app_strings.dart';
 import '../../../../core/themes/app_colors.dart';
@@ -99,6 +100,7 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
                     CardFavorite(
                       movie: movie,
                       onTap: () {
+                        context.read<GetCastPeopleCubit>().getPeopleCast(movie);
                         Navigator.push(
                             context,
                             MaterialPageRoute(

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_list/core/images/app_images.dart';
 import 'package:movies_list/core/strings/app_strings.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
@@ -143,7 +144,7 @@ class _ModalDetailState extends State<ModalDetail> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Image.asset(
+                                SvgPicture.asset(
                                   AppImages.like,
                                   height: 17,
                                 ),

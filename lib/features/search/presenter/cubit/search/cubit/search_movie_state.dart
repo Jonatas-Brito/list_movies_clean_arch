@@ -11,6 +11,8 @@ class SearchMovieInitial extends SearchMovieState {}
 
 class SearchMovieIsLoading extends SearchMovieState {}
 
+class SearchMovieIsEmpty extends SearchMovieState {}
+
 class SearchMovieIsSuccess extends SearchMovieState {
   final List<Movie> movies;
   const SearchMovieIsSuccess({required this.movies});

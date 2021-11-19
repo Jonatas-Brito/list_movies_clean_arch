@@ -5,8 +5,10 @@ import '../../../../core/themes/app_colors.dart';
 
 class AppTextField extends StatefulWidget {
   final Widget icon;
+  final TextEditingController? controller;
   final Function(String)? onChanged;
-  const AppTextField({Key? key, required this.icon, this.onChanged})
+  const AppTextField(
+      {Key? key, required this.icon, this.onChanged, this.controller})
       : super(key: key);
 
   @override
@@ -28,6 +30,7 @@ class _AppTextFieldState extends State<AppTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       onChanged: widget.onChanged,
+      controller: widget.controller,
       style: Theme.of(context).textTheme.bodyText1!.copyWith(),
       decoration: InputDecoration(
         border: defaultOutlineInputBorder(),

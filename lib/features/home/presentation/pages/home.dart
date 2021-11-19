@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/core/utils/check_favorite_list.dart';
+import 'package:movies_list/core/utils/open_modal_details.dart';
 
 import '../../../../core/strings/app_strings.dart';
 import '../../../../core/themes/app_colors.dart';
@@ -165,21 +167,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Movie checkMovieInFavorites(Movie selectedMovie) {
-    Movie movieSelected = Movie.empty();
-    movieSelected = selectedMovie;
-    favoriteMovies.forEach((movie) {
-      bool equalsId = movie.id == movieSelected.id;
-      if (equalsId) {
-        movieSelected = movie;
-      }
-    });
-
-    print("Is favorite | HomePage: ${movieSelected.isFavorite}");
-
-    return movieSelected;
-  }
-
   Widget popularList(List<Movie> list) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
@@ -198,13 +185,17 @@ class _HomePageState extends State<HomePage> {
               width: width * .43,
               movie: movie,
               onTap: () {
-                context
-                    .read<GetCastPeopleCubit>()
-                    .getPeopleCast(checkMovieInFavorites(movie));
-                context
-                    .read<GetTrailerIdCubit>()
-                    .getIdFromTrailer(checkMovieInFavorites(movie));
-                openBottomSheet(checkMovieInFavorites(movie));
+                context.read<GetCastPeopleCubit>().getPeopleCast(
+                    checkMovieInFavorites(
+                        selectedMovie: movie, favoriteMovies: favoriteMovies));
+                context.read<GetTrailerIdCubit>().getIdFromTrailer(
+                    checkMovieInFavorites(
+                        selectedMovie: movie, favoriteMovies: favoriteMovies));
+                openBottomSheet(
+                    context: context,
+                    movie: checkMovieInFavorites(
+                        selectedMovie: movie, favoriteMovies: favoriteMovies),
+                    favoriteMovies: favoriteMovies);
                 // openBottomSheet();
               },
             );
@@ -231,37 +222,20 @@ class _HomePageState extends State<HomePage> {
               width: width * .365,
               movie: movie,
               onTap: () {
-                context
-                    .read<GetCastPeopleCubit>()
-                    .getPeopleCast(checkMovieInFavorites(movie));
-                context
-                    .read<GetTrailerIdCubit>()
-                    .getIdFromTrailer(checkMovieInFavorites(movie));
-                openBottomSheet(checkMovieInFavorites(movie));
+                context.read<GetCastPeopleCubit>().getPeopleCast(
+                    checkMovieInFavorites(
+                        selectedMovie: movie, favoriteMovies: favoriteMovies));
+                context.read<GetTrailerIdCubit>().getIdFromTrailer(
+                    checkMovieInFavorites(
+                        selectedMovie: movie, favoriteMovies: favoriteMovies));
+                openBottomSheet(
+                    context: context,
+                    movie: checkMovieInFavorites(
+                        selectedMovie: movie, favoriteMovies: favoriteMovies),
+                    favoriteMovies: favoriteMovies);
               },
             );
           }),
     );
-  }
-
-  openBottomSheet(Movie movie) {
-    // Movie movie = Movie.empty();
-    showModalBottomSheet(
-        isScrollControlled: true,
-        barrierColor: Colors.transparent,
-        backgroundColor: AppColors.bastille,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
-          ),
-        ),
-        context: context,
-        elevation: 0,
-        builder: (context) {
-          return ModalDetail(
-            movie: movie,
-          );
-        });
   }
 }

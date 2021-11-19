@@ -26,9 +26,14 @@ class SearchMovieCubit extends Cubit<SearchMovieState> {
     failureOrMovies.fold(
         (failure) => emit(SearchMovieIsError(
             errorMessage: AppStrings.SEARCH_FAILURE_MESSAGE)), (movies) async {
-      await Future.delayed(Duration(seconds: 1));
-      print("Movies: ${movies[0].title}");
-      emit(SearchMovieIsSuccess(movies: movies));
+      if (movies.isEmpty) {
+        emit(SearchMovieIsEmpty());
+      } else {
+        print("Movies: ${movies[0].title}");
+        emit(SearchMovieIsSuccess(movies: movies));
+        await Future.delayed(Duration(milliseconds: 500));
+        emit(SearchMovieInitial());
+      }
     });
   }
 }
