@@ -5,7 +5,8 @@ class AppStrings {
   static String get mostPopular => "Mais populares";
   static String get mostLiked => "Mais curtidos";
   static String get moreInformation => "Mais informações";
-  static String get tapToContinueReading => '''Toque para continuar \nlendo''';
+  static String get tapToContinueReading => 'Toque para continuar \nlendo';
+  static String get trailerNotDisponible => 'Trailer indisponível no momento';
   static String get thereNoFavorites =>
       'Adicione um filme aos favoritos e ele ficara disponivel aqui!';
 

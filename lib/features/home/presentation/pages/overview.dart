@@ -156,6 +156,7 @@ class _OverviewPageState extends State<OverviewPage> {
   }
 
   Widget overviewText(Movie movie) {
+    bool trailerIdExist = movie.trailerId.isNotEmpty;
     Size size = MediaQuery.of(context).size;
     double width = size.width;
     double textScaleFactor = width / mockupWidth;
@@ -175,6 +176,9 @@ class _OverviewPageState extends State<OverviewPage> {
             ],
           ),
           SizedBox(height: 10),
+          // !trailerIdExist
+          //     ? SizedBox()
+          //     :
           ElevatedButton(
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(AppColors.red)),
@@ -288,9 +292,11 @@ class _OverviewPageState extends State<OverviewPage> {
 
       await launch(youtubeUrl);
     } else
-      showScaffoldMessage(context,
-          message: 'Não temos um link para este trailer',
-          color: AppColors.equator);
+      showScaffoldMessage(
+        context,
+        message: AppStrings.trailerNotDisponible,
+        color: AppColors.equator,
+      );
   }
 
   Widget banner() {
