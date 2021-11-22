@@ -33,16 +33,19 @@ class CardFavorite extends StatelessWidget {
             Container(
               child: Row(
                 children: [
-                  Container(
-                    height: height * .275,
-                    width: width * .365,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(
-                                ApiStringImage().originalImage(imagePath),
-                                scale: scale)),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  GestureDetector(
+                    onTap: onTap,
+                    child: Container(
+                      height: height * .275,
+                      width: width * .365,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: CachedNetworkImageProvider(
+                                  ApiStringImage().originalImage(imagePath),
+                                  scale: scale)),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                    ),
                   ),
                   Container(
                     padding: EdgeInsets.only(left: 20),
