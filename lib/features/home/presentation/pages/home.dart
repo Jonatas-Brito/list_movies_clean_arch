@@ -85,7 +85,9 @@ class _HomePageState extends State<HomePage> {
               appBar: MoviesAppBar(
                 onTapIcon: !isReady
                     ? () => createRoute(context,
-                        builder: SearchPage(movies: popularMovies))
+                        builder: SearchPage(
+                            movies: popularMovies,
+                            inTheaterMovies: inTheaterMovies))
                     : null,
               ),
               backgroundColor: AppColors.woodsmoke,

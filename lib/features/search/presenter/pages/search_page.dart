@@ -15,7 +15,12 @@ import '../widgets/text_field_widget.dart';
 
 class SearchPage extends StatefulWidget {
   final List<Movie> movies;
-  const SearchPage({Key? key, required this.movies}) : super(key: key);
+  final List<Movie> inTheaterMovies;
+  const SearchPage({
+    Key? key,
+    required this.movies,
+    required this.inTheaterMovies,
+  }) : super(key: key);
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -26,6 +31,8 @@ class _SearchPageState extends State<SearchPage> {
   TextEditingController fieldController = TextEditingController();
   List<Movie> moviesList = [];
   List<Movie> favoriteMovies = [];
+  List<Movie> popularMovies = [];
+  List<Movie> inTheaterMovies = [];
   bool loading = false;
   bool isEmpty = false;
   bool favoriteIsNotEmpty = false;
@@ -33,7 +40,22 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    moviesList = widget.movies;
+    popularMovies = widget.movies;
+    inTheaterMovies = widget.inTheaterMovies;
+    mergeList();
+  }
+
+  mergeList() {
+    List<Movie> toMergeInTheaters = [];
+    toMergeInTheaters = inTheaterMovies;
+    popularMovies.forEach((movie) {
+      bool contain = toMergeInTheaters.contains(movie);
+      if (contain) {
+        toMergeInTheaters.remove(movie);
+      }
+    });
+    moviesList.addAll(toMergeInTheaters + popularMovies);
+    print(moviesList.length);
   }
 
   List<Widget> mapListToChildren() {

@@ -36,7 +36,6 @@ class _OverviewPageState extends State<OverviewPage> {
   @override
   void initState() {
     setVariables();
-    print("Is favorite: ${movie.trailerId}");
 
     super.initState();
   }
