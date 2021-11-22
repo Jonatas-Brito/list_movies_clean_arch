@@ -47,19 +47,26 @@ class _ModalDetailState extends State<ModalDetail> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: width * .32,
-                height: height * .35,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: CachedNetworkImageProvider(
-                          ApiStringImage().originalImage(imagePath),
-                        )),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+              GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => OverviewPage(movie: movie))),
+                child: Container(
+                  width: width * .32,
+                  height: height * .35,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: CachedNetworkImageProvider(
+                            ApiStringImage().originalImage(imagePath),
+                          )),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: width * .035),
@@ -171,12 +178,8 @@ class _ModalDetailState extends State<ModalDetail> {
           ),
           SizedBox(height: 15),
           TileComponent(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => OverviewPage(movie: movie)));
-            },
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => OverviewPage(movie: movie))),
           )
         ],
       ),

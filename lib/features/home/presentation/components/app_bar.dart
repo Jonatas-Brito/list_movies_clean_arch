@@ -6,7 +6,7 @@ import '../../../../core/themes/app_colors.dart';
 import '../../../../main.dart';
 
 class MoviesAppBar extends StatelessWidget with PreferredSizeWidget {
-  final VoidCallback onTapIcon;
+  final VoidCallback? onTapIcon;
   const MoviesAppBar({required this.onTapIcon});
 
   @override

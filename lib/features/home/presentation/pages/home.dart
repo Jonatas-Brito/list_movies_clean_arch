@@ -81,13 +81,12 @@ class _HomePageState extends State<HomePage> {
               inTheaterMovies = state.movies;
             }
             isReady = loadingTheaterMovies && loadingPopularMovies;
-            print(isReady);
             return Scaffold(
               appBar: MoviesAppBar(
                 onTapIcon: !isReady
                     ? () => createRoute(context,
                         builder: SearchPage(movies: popularMovies))
-                    : () {},
+                    : null,
               ),
               backgroundColor: AppColors.woodsmoke,
               body: isReady ? HomeSkeleton() : buildListMovies(),
@@ -107,7 +106,7 @@ class _HomePageState extends State<HomePage> {
           ListView(
             children: [
               title(AppStrings.mostPopular),
-              horizontalList(popularList(popularMovies)),
+              popularList(popularMovies),
               title(AppStrings.watchInTheaters),
               inTheaterList(inTheaterMovies),
               BlocBuilder<MoviesFavoritesListCubit, MoviesFavoritesListState>(
@@ -124,33 +123,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  Widget horizontalList(Widget widget) {
-    return !isReady
-        ? Column(
-            children: [
-              widget,
-            ],
-          )
-        : SizedBox();
-  }
-
-  Widget title(String tile) {
-    Size size = MediaQuery.of(context).size;
-    double width = size.width;
-    double textScaleFactor = width / mockupWidth;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      child: Text(
-        tile,
-        textScaleFactor: textScaleFactor,
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1!
-            .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
       ),
     );
   }
@@ -224,6 +196,23 @@ class _HomePageState extends State<HomePage> {
               },
             );
           }),
+    );
+  }
+
+  Widget title(String tile) {
+    Size size = MediaQuery.of(context).size;
+    double width = size.width;
+    double textScaleFactor = width / mockupWidth;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      child: Text(
+        tile,
+        textScaleFactor: textScaleFactor,
+        style: Theme.of(context)
+            .textTheme
+            .bodyText1!
+            .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
+      ),
     );
   }
 }
