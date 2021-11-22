@@ -17,7 +17,6 @@ import '../cubit/get_cast_people/get_cast_people_cubit.dart';
 import '../cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
 import '../cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
 import '../cubit/movies_popular/movies_popular_cubit.dart';
-import '../widgets/modal_detail.dart';
 import 'home_skeleton.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   bool loadingTheaterMovies = false;
   bool loadingPopularMovies = false;
-
+  bool isReady = false;
   @override
   void initState() {
     super.initState();
@@ -55,42 +54,47 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MoviesAppBar(
-        onTapIcon: () =>
-            createRoute(context, builder: SearchPage(movies: popularMovies)),
-      ),
-      backgroundColor: AppColors.woodsmoke,
-      body: BlocBuilder<MoviesPopularCubit, MoviePopularState>(
-        bloc: context.watch<MoviesPopularCubit>(),
-        builder: (context, state) {
-          if (state is GetPopularMoviesIsLoading) loadingPopularMovies = true;
-          if (state is GetPopularMoviesIsError) {
-            loadingPopularMovies = false;
-            showErrorMessage(errorMessage: state.errorMessage);
-          }
-          if (state is GetPopularMoviesIsSuccessful)
-            loadingPopularMovies = false;
+    return BlocBuilder<MoviesPopularCubit, MoviePopularState>(
+      bloc: context.watch<MoviesPopularCubit>(),
+      builder: (context, state) {
+        if (state is GetPopularMoviesIsLoading) loadingPopularMovies = true;
+        if (state is GetPopularMoviesIsError) {
+          loadingPopularMovies = false;
+          showErrorMessage(errorMessage: state.errorMessage);
+        }
+        if (state is GetPopularMoviesIsSuccessful) {
+          popularMovies = state.movies;
+          loadingPopularMovies = false;
+        }
 
-          return BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
-              bloc: context.watch<MoviesInTheatersCubit>(),
-              builder: (context, state) {
-                if (state is GetMoviesInTheatersIsLoading)
-                  loadingTheaterMovies = true;
-                if (state is GetMoviesInTheatersIsError) {
-                  loadingTheaterMovies = false;
-                  showErrorMessage(errorMessage: state.errorMessage);
-                }
-                if (state is GetMoviesInTheatersIsSuccessful)
-                  loadingTheaterMovies = false;
-                if (loadingTheaterMovies && loadingPopularMovies) {
-                  return HomeSkeleton();
-                } else {
-                  return buildListMovies();
-                }
-              });
-        },
-      ),
+        return BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
+          bloc: context.watch<MoviesInTheatersCubit>(),
+          builder: (context, state) {
+            if (state is GetMoviesInTheatersIsLoading)
+              loadingTheaterMovies = true;
+            if (state is GetMoviesInTheatersIsError) {
+              loadingTheaterMovies = false;
+              showErrorMessage(errorMessage: state.errorMessage);
+            }
+            if (state is GetMoviesInTheatersIsSuccessful) {
+              loadingTheaterMovies = false;
+              inTheaterMovies = state.movies;
+            }
+            isReady = loadingTheaterMovies && loadingPopularMovies;
+            print(isReady);
+            return Scaffold(
+              appBar: MoviesAppBar(
+                onTapIcon: !isReady
+                    ? () => createRoute(context,
+                        builder: SearchPage(movies: popularMovies))
+                    : () {},
+              ),
+              backgroundColor: AppColors.woodsmoke,
+              body: isReady ? HomeSkeleton() : buildListMovies(),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -103,35 +107,9 @@ class _HomePageState extends State<HomePage> {
           ListView(
             children: [
               title(AppStrings.mostPopular),
-              BlocBuilder<MoviesPopularCubit, MoviePopularState>(
-                  bloc: context.watch<MoviesPopularCubit>(),
-                  builder: (context, state) {
-                    if (state is GetPopularMoviesIsSuccessful) {
-                      popularMovies = state.movies;
-                      return Column(
-                        children: [
-                          popularList(state.movies),
-                        ],
-                      );
-                    }
-
-                    return SizedBox(height: 150);
-                  }),
+              horizontalList(popularList(popularMovies)),
               title(AppStrings.watchInTheaters),
-              BlocBuilder<MoviesInTheatersCubit, MoviesInTheatersState>(
-                  bloc: context.watch<MoviesInTheatersCubit>(),
-                  builder: (context, state) {
-                    if (state is GetMoviesInTheatersIsSuccessful) {
-                      inTheaterMovies = state.movies;
-                      return Column(
-                        children: [
-                          inTheaterList(state.movies),
-                        ],
-                      );
-                    }
-
-                    return SizedBox(height: 150);
-                  }),
+              inTheaterList(inTheaterMovies),
               BlocBuilder<MoviesFavoritesListCubit, MoviesFavoritesListState>(
                 bloc: context.watch<MoviesFavoritesListCubit>(),
                 builder: (context, state) {
@@ -148,6 +126,16 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  Widget horizontalList(Widget widget) {
+    return !isReady
+        ? Column(
+            children: [
+              widget,
+            ],
+          )
+        : SizedBox();
   }
 
   Widget title(String tile) {
