@@ -18,25 +18,20 @@ class MoviesFavoritesPage extends StatefulWidget {
 }
 
 class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
-  List<Movie> movies = [];
+  List<Movie> moviesFavorite = [];
   var homeContext;
 
   @override
   void initState() {
-    context.read<MoviesFavoritesListCubit>().getListFavorites();
     super.initState();
+    // checkFavorites();
   }
 
-  Widget customDivider() {
-    return Column(
-      children: [
-        Container(
-          height: 0.5,
-          color: Colors.grey.withOpacity(0.5),
-        ),
-        SizedBox(height: 15),
-      ],
-    );
+  checkFavorites() {
+    if (moviesFavorite.isEmpty) {
+      print('Estava vazia');
+      context.read<MoviesFavoritesListCubit>().getListFavorites();
+    }
   }
 
   @override
@@ -51,36 +46,20 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
                     bloc: context.read<MoviesFavoritesListCubit>(),
                     builder: (context, state) {
                       if (state is GetMoviesFavoritesIsSuccessful) {
-                        return buildFavorites(state.movies);
+                        moviesFavorite = state.movies;
+                        return buildFavorites(moviesFavorite);
                       }
                       if (state is GetMoviesFavoritesReturnedListEmpy) {
-                        return listIsEmpty();
+                        return errorOrEmptyMessage(state.message);
                       }
-                      if (state is GetPopularMoviesIsError) {}
+                      if (state is GetMoviesFavoritesIsError) {
+                        errorOrEmptyMessage(state.errorMessage);
+                      }
 
-                      return Container(
-                        height: 150,
-                      );
+                      return Container(height: 150);
                     }),
           ),
         ));
-  }
-
-  Widget listIsEmpty() {
-    Size size = MediaQuery.of(context).size;
-    return Center(
-      child: Container(
-        width: size.width * .8,
-        child: Text(
-          AppStrings.thereNoFavorites,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.white.withOpacity(0.7)),
-        ),
-      ),
-    );
   }
 
   Widget buildFavorites(List<Movie> movies) {
@@ -139,6 +118,35 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
             },
           )
         ],
+      ),
+    );
+  }
+
+  Widget customDivider() {
+    return Column(
+      children: [
+        Container(
+          height: 0.5,
+          color: Colors.grey.withOpacity(0.5),
+        ),
+        SizedBox(height: 15),
+      ],
+    );
+  }
+
+  Widget errorOrEmptyMessage(String message) {
+    Size size = MediaQuery.of(context).size;
+    return Center(
+      child: Container(
+        width: size.width * .8,
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              color: Colors.white.withOpacity(0.7)),
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:movies_list/core/strings/app_strings.dart';
 
 import '../../../../../../core/error/failure.dart';
 import '../../../../../../core/usecases/usecases.dart';
@@ -32,7 +33,8 @@ class MoviesFavoritesListCubit extends Cubit<MoviesFavoritesListState> {
         (failure) => emit(GetMoviesFavoritesIsError(
             errorMessage: CACHED_RETRIVE_IS_FAIULURE)), (listMovies) {
       if (listMovies.isEmpty) {
-        emit(GetMoviesFavoritesReturnedListEmpy());
+        emit(GetMoviesFavoritesReturnedListEmpy(
+            message: AppStrings.thereNoFavorites));
       } else {
         print(listMovies.length);
         emit(GetMoviesFavoritesIsSuccessful(movies: listMovies));

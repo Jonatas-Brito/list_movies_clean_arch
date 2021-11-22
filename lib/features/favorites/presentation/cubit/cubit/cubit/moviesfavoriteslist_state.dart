@@ -14,7 +14,10 @@ class GetMoviesFavoritesIsSuccessful extends MoviesFavoritesListState {
   const GetMoviesFavoritesIsSuccessful({required this.movies}) : super();
 }
 
-class GetMoviesFavoritesReturnedListEmpy extends MoviesFavoritesListState {}
+class GetMoviesFavoritesReturnedListEmpy extends MoviesFavoritesListState {
+  final String message;
+  const GetMoviesFavoritesReturnedListEmpy({required this.message});
+}
 
 class GetMoviesFavoritesIsLoading extends MoviesFavoritesListState {
   const GetMoviesFavoritesIsLoading() : super();

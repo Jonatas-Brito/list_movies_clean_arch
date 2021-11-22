@@ -113,7 +113,6 @@ class _HomePageState extends State<HomePage> {
                 bloc: context.watch<MoviesFavoritesListCubit>(),
                 builder: (context, state) {
                   if (state is GetMoviesFavoritesIsSuccessful) {
-                    print("Tamanho: ${state.movies.length}");
                     favoriteMovies = state.movies;
                   }
                   return SizedBox();

@@ -43,6 +43,8 @@ class _NavigationState extends State<Navigation> {
       splashColor: Colors.transparent,
       icon: Icon(icon, size: 32, color: colorIndex(index)),
       onPressed: () {
+        // pageController.jumpToPage(index);
+
         pageController.animateToPage(index,
             duration: Duration(milliseconds: 700),
             curve: Curves.fastLinearToSlowEaseIn);
