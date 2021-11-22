@@ -235,6 +235,7 @@ class _OverviewPageState extends State<OverviewPage> {
                       child: Column(
                         children: [
                           Container(
+                            height: size.height * .132,
                             width: size.width * .18,
                             child: ClipRRect(
                               borderRadius:
@@ -244,8 +245,18 @@ class _OverviewPageState extends State<OverviewPage> {
                                     ApiStringImage().originalImage(pathImage),
                                 placeholder: (context, string) {
                                   return Container(
-                                    height: size.height * .165,
+                                    height: size.height * .132,
                                     width: size.width * .18,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 22,
+                                        vertical: size.height * .05,
+                                      ),
+                                      child: CircularProgressIndicator(
+                                        color: AppColors.white,
+                                        strokeWidth: 2,
+                                      ),
+                                    ),
                                   );
                                 },
                               ),
