@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/features/download/presentation/cubit/download_list_movies/cubit/download_list_movies_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/strings/app_strings.dart';
@@ -44,8 +45,11 @@ class _OverviewPageState extends State<OverviewPage> {
 
   setVariables() {
     movie = widget.movie;
-    isFavorite =
-        widget.movie.isFavorite != null ? widget.movie.isFavorite! : isFavorite;
+
+    hasDownloaded =
+        movie.hasDownloaded != null ? movie.hasDownloaded! : hasDownloaded;
+
+    isFavorite = movie.isFavorite != null ? movie.isFavorite! : isFavorite;
   }
 
   executeBlocs() {
@@ -310,6 +314,7 @@ class _OverviewPageState extends State<OverviewPage> {
   downloadMovie() {
     if (!hasDownloaded) {
       context.read<ManagerDownloadForListCubit>().addOfDownloadList(movie);
+      context.read<DownloadListMoviesCubit>().retriveDownloadMovies();
       showScaffoldMessage(context,
           message: 'Adicionado a lista de download',
           color: AppColors.darkGreen);

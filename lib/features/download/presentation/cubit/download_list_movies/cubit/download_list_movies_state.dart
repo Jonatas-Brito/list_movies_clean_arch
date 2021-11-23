@@ -21,8 +21,7 @@ class GetDownloadListIsError extends DownloadListMoviesState {
 
 class GetDownloadListIsEmpty extends DownloadListMoviesState {
   final String message;
-  const GetDownloadListIsEmpty(
-      {this.message = 'Faça o download de um filme e ele aparecerá aqui'});
+  const GetDownloadListIsEmpty({required this.message});
 }
 
 class GetDownloadListIsLoading extends DownloadListMoviesState {}

@@ -15,7 +15,9 @@ class DownloadListMoviesCubit extends Cubit<DownloadListMoviesState> {
       : super(DownloadListMoviesInitial());
 
   retriveDownloadMovies() async {
+    emit(GetDownloadListIsLoading());
     NoParams params = NoParams();
+    await Future.delayed(Duration(milliseconds: 800));
     final failureOrSuccess = await retriveMoviesForDownload(params);
     _eitherSuccessOrErrorState(failureOrSuccess);
   }
@@ -26,12 +28,13 @@ class DownloadListMoviesCubit extends Cubit<DownloadListMoviesState> {
     failureOrMovies.fold(
         (failure) => emit(GetDownloadListIsError(
             errorMessage: AppStrings.CACHED_RETRIVE_DOWNLOAD_LIST_IS_FAILURE)),
-        (downloadList) {
+        (downloadList) async {
       if (downloadList.isEmpty) {
-        emit(GetDownloadListIsEmpty(message: AppStrings.thereNoFavorites));
+        emit(GetDownloadListIsEmpty(message: AppStrings.thereNoDownloads));
       } else {
-        print(downloadList.length);
         emit(GetDownloadListIsSuccess(downloadList: downloadList));
+        await Future.delayed(Duration(milliseconds: 200));
+        emit(DownloadListMoviesInitial());
       }
     });
   }

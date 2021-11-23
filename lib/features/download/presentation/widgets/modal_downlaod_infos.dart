@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_list/features/download/presentation/cubit/download_list_movies/cubit/download_list_movies_cubit.dart';
 
 import '../../../../core/strings/app_strings.dart';
 import '../../../../core/themes/app_colors.dart';
@@ -72,5 +73,7 @@ class _ModalDownloadInfosState extends State<ModalDownloadInfos> {
 
   removMovieOfDownloadList(Movie movie) {
     context.read<ManagerDownloadForListCubit>().removeOfDownloadList(movie);
+    context.read<DownloadListMoviesCubit>().retriveDownloadMovies();
+    Navigator.pop(context);
   }
 }
