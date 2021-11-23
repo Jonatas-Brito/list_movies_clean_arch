@@ -1,22 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_list/core/strings/app_strings.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
-import 'package:movies_list/core/utils/api_string_images.dart';
-import 'package:movies_list/core/utils/api_string_youtube.dart';
-import 'package:movies_list/core/utils/release_data_converter.dart';
-import 'package:movies_list/core/utils/show_message.dart';
-import 'package:movies_list/features/home/domain/entities/cast_people.dart';
-import 'package:movies_list/features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/strings/app_strings.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/utils/api_string_images.dart';
+import '../../../../core/utils/api_string_youtube.dart';
+import '../../../../core/utils/release_data_converter.dart';
+import '../../../../core/utils/show_message.dart';
 import '../../../../main.dart';
+import '../../../download/presentation/cubit/manager_download_list/manager_download_for_list_cubit.dart';
 import '../../../favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 import '../../../favorites/presentation/cubit/cubit/moviefavorites_cubit.dart';
+import '../../domain/entities/cast_people.dart';
 import '../../domain/entities/movie.dart';
+import '../cubit/get_cast_people/get_cast_people_cubit.dart';
+import '../cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
+import '../cubit/movies_popular/movies_popular_cubit.dart';
 import '../widgets/favorite_button.dart';
 import '../widgets/rating_bar.dart';
 
@@ -31,6 +32,7 @@ class OverviewPage extends StatefulWidget {
 class _OverviewPageState extends State<OverviewPage> {
   bool popIsFavorite = false;
   bool isFavorite = false;
+  bool hasDownloaded = false;
   Movie movie = Movie.empty();
 
   @override
@@ -198,6 +200,28 @@ class _OverviewPageState extends State<OverviewPage> {
               ],
             ),
           ),
+          BlocBuilder<ManagerDownloadForListCubit, ManagerDownloadForListState>(
+            bloc: context.read<ManagerDownloadForListCubit>(),
+            builder: (context, state) {
+              if (state is CacheOfDownloadListSuccess) {
+                context.read<MoviesFavoritesListCubit>().getListFavorites();
+                hasDownloaded = state.movie.hasDownloaded!;
+              }
+              return ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(AppColors.white)),
+                onPressed: () => downloadMovie(),
+                child: Text(
+                  AppStrings.download,
+                  style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.woodsmoke,
+                      ),
+                ),
+              );
+            },
+          ),
           SizedBox(height: 10),
           Text(
             movie.overview,
@@ -281,6 +305,19 @@ class _OverviewPageState extends State<OverviewPage> {
         },
       ),
     );
+  }
+
+  downloadMovie() {
+    if (!hasDownloaded) {
+      context.read<ManagerDownloadForListCubit>().addOfDownloadList(movie);
+      showScaffoldMessage(context,
+          message: 'Adicionado a lista de download',
+          color: AppColors.darkGreen);
+    } else
+      showScaffoldMessage(context,
+          message: 'Este filme já está adicionado a lista de download',
+          color: AppColors.equator);
+    executeBlocs();
   }
 
   routeToYoutube() async {

@@ -10,9 +10,6 @@ import '../../../../domain/usecases/retrive_movies_favorites.dart';
 
 part 'moviesfavoriteslist_state.dart';
 
-const String CACHED_RETRIVE_IS_FAIULURE =
-    'Ocorreu um erro ao listar filmes favoritos';
-
 class MoviesFavoritesListCubit extends Cubit<MoviesFavoritesListState> {
   final RetriveMoviesFavorites retriveMovies;
   MoviesFavoritesListCubit({required this.retriveMovies})
@@ -23,15 +20,16 @@ class MoviesFavoritesListCubit extends Cubit<MoviesFavoritesListState> {
     NoParams params = NoParams();
     final failureOrMovies = await retriveMovies.call(params);
     await Future.delayed(Duration(milliseconds: 100));
-    _eitherLoadedOrErrorState(failureOrMovies);
+    _eitherSuccessOrErrorState(failureOrMovies);
   }
 
-  _eitherLoadedOrErrorState(
+  _eitherSuccessOrErrorState(
     Either<Failure, List<Movie>> failureOrMovies,
   ) async {
     failureOrMovies.fold(
         (failure) => emit(GetMoviesFavoritesIsError(
-            errorMessage: CACHED_RETRIVE_IS_FAIULURE)), (listMovies) {
+            errorMessage: AppStrings.CACHED_RETRIVE_FAVORITE_IS_FAILURE)),
+        (listMovies) {
       if (listMovies.isEmpty) {
         emit(GetMoviesFavoritesReturnedListEmpy(
             message: AppStrings.thereNoFavorites));

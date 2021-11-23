@@ -5,9 +5,9 @@ import '../../../../core/usecases/usecases.dart';
 import '../../../home/domain/entities/movie.dart';
 import '../repositories/movies_favorite_repository.dart';
 
-typedef ThisRemoveUseCase = UseCase<List<Movie>, NoParams>;
+typedef ThisRetriveUseCase = UseCase<List<Movie>, NoParams>;
 
-class RetriveMoviesFavorites implements ThisRemoveUseCase {
+class RetriveMoviesFavorites implements ThisRetriveUseCase {
   final MoviesFavoriteReposiry favoriteReposiry;
   const RetriveMoviesFavorites({required this.favoriteReposiry});
   @override

@@ -21,18 +21,18 @@ class ManagerFavoritesMoviesCubit extends Cubit<ManagerFavoritesMoviesState> {
   void addMovieToFavorites(Movie movie) async {
     print("ADICIONANDO");
     FavoriteParams params = FavoriteParams(movie: movie);
-    final failureOrSuccess = await addToFavorites.call(params);
-    _eitherSuccussOrErrorState(failureOrSuccess);
+    final failureOrSuccess = await addToFavorites(params);
+    _eitherSuccessOrErrorState(failureOrSuccess);
   }
 
   void removeMovieOfFavorites(Movie movie) async {
     print("REMOVENDO");
     FavoriteParams params = FavoriteParams(movie: movie);
-    final failureOrSuccess = await removeOfFavorites.call(params);
-    _eitherSuccussOrErrorState(failureOrSuccess);
+    final failureOrSuccess = await removeOfFavorites(params);
+    _eitherSuccessOrErrorState(failureOrSuccess);
   }
 
-  _eitherSuccussOrErrorState(
+  _eitherSuccessOrErrorState(
     Either<Failure, Movie> failureOrSuccess,
   ) async {
     failureOrSuccess.fold(
@@ -47,9 +47,9 @@ class ManagerFavoritesMoviesCubit extends Cubit<ManagerFavoritesMoviesState> {
   String _setFailureMessage(Failure failure) {
     switch (failure.runtimeType) {
       case CachedToAddFailure:
-        return AppStrings.CACHED_TO_ADD_FAILURE;
+        return AppStrings.CACHED_TO_ADD_FAVORITE_FAILURE;
       case CachedToRemoveFailure:
-        return AppStrings.CACHED_TO_REMOVE_FAILURE;
+        return AppStrings.CACHED_TO_REMOVE_FAVORITE_FAILURE;
       default:
     }
     return 'Erro inesperado';

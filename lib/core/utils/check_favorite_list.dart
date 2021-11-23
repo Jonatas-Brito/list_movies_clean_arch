@@ -1,6 +1,6 @@
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 
-Movie checkMovieInFavorites(
+Movie checkMovie(
     {required Movie selectedMovie, required List<Movie> favoriteMovies}) {
   Movie movieSelected = Movie.empty();
   movieSelected = selectedMovie;

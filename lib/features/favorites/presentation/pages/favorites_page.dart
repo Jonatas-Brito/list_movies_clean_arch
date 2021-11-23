@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_list/features/home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
 
-import '../../../../core/strings/app_strings.dart';
 import '../../../../core/themes/app_colors.dart';
 import '../../../home/domain/entities/movie.dart';
-import '../../../home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
+import '../../../home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
 import '../../../home/presentation/pages/overview.dart';
 import '../cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 import '../widgets/card_favorite_widget.dart';
@@ -37,6 +35,19 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 50,
+          title: Text(
+            'Favoritos',
+            style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                  fontSize: 17,
+                  color: AppColors.white,
+                ),
+          ),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: AppColors.woodsmoke,
+        ),
         backgroundColor: AppColors.woodsmoke,
         body: Container(
           child: Padding(

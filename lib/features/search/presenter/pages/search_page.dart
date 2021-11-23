@@ -2,14 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movies_list/core/images/app_images.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
-import 'package:movies_list/core/utils/check_favorite_list.dart';
-import 'package:movies_list/core/utils/open_modal_details.dart';
-import 'package:movies_list/features/favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 
+import '../../../../core/images/app_images.dart';
+import '../../../../core/themes/app_colors.dart';
 import '../../../../core/utils/api_string_images.dart';
+import '../../../../core/utils/check_favorite_list.dart';
+import '../../../../core/utils/open_modal_details.dart';
+import '../../../favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 import '../../../home/domain/entities/movie.dart';
+import '../../../home/presentation/widgets/modal_detail.dart';
 import '../cubit/search/cubit/search_movie_cubit.dart';
 import '../widgets/text_field_widget.dart';
 
@@ -55,7 +56,6 @@ class _SearchPageState extends State<SearchPage> {
       }
     });
     moviesList.addAll(toMergeInTheaters + popularMovies);
-    print(moviesList.length);
   }
 
   List<Widget> mapListToChildren() {
@@ -70,11 +70,13 @@ class _SearchPageState extends State<SearchPage> {
               onTap: favoriteIsNotEmpty
                   ? () {
                       openBottomSheet(
-                          context: context,
-                          movie: checkMovieInFavorites(
+                        context: context,
+                        widget: ModalDetail(
+                          movie: checkMovie(
                               selectedMovie: movie,
                               favoriteMovies: favoriteMovies),
-                          favoriteMovies: favoriteMovies);
+                        ),
+                      );
                     }
                   : null,
               child: Container(

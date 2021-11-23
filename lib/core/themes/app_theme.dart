@@ -25,7 +25,7 @@ ThemeData appTheme(BuildContext context) {
         .copyWith(
           overline: GoogleFonts.montserrat(
               fontSize: 14,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
               color: AppColors.white),
           bodyText1: GoogleFonts.montserrat(
               fontSize: 16,
@@ -33,18 +33,19 @@ ThemeData appTheme(BuildContext context) {
               color: AppColors.white),
           bodyText2: GoogleFonts.montserrat(
               fontSize: 14,
-              fontWeight: FontWeight.w300,
+              fontWeight: FontWeight.w500,
               color: AppColors.white),
           button: GoogleFonts.montserrat(
               fontSize: 18,
               fontWeight: FontWeight.w200,
               color: AppColors.white),
           subtitle1:
-              GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w500),
+              GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w600),
           subtitle2: GoogleFonts.montserrat(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              color: AppColors.white),
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            color: AppColors.white,
+          ),
         ),
   );
 }

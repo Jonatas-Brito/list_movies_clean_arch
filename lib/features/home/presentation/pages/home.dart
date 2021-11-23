@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_list/core/utils/check_favorite_list.dart';
-import 'package:movies_list/core/utils/open_modal_details.dart';
 
 import '../../../../core/strings/app_strings.dart';
 import '../../../../core/themes/app_colors.dart';
+import '../../../../core/utils/check_favorite_list.dart';
 import '../../../../core/utils/navigation.dart';
+import '../../../../core/utils/open_modal_details.dart';
 import '../../../../core/utils/show_message.dart';
 import '../../../../main.dart';
 import '../../../favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
@@ -17,6 +17,7 @@ import '../cubit/get_cast_people/get_cast_people_cubit.dart';
 import '../cubit/get_trailer_id/cubit/gettrailerid_cubit.dart';
 import '../cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
 import '../cubit/movies_popular/movies_popular_cubit.dart';
+import '../widgets/modal_detail.dart';
 import 'home_skeleton.dart';
 
 class HomePage extends StatefulWidget {
@@ -146,17 +147,17 @@ class _HomePageState extends State<HomePage> {
               width: width * .43,
               movie: movie,
               onTap: () {
-                context.read<GetCastPeopleCubit>().getPeopleCast(
-                    checkMovieInFavorites(
-                        selectedMovie: movie, favoriteMovies: favoriteMovies));
-                context.read<GetTrailerIdCubit>().getIdFromTrailer(
-                    checkMovieInFavorites(
-                        selectedMovie: movie, favoriteMovies: favoriteMovies));
+                context.read<GetCastPeopleCubit>().getPeopleCast(checkMovie(
+                    selectedMovie: movie, favoriteMovies: favoriteMovies));
+                context.read<GetTrailerIdCubit>().getIdFromTrailer(checkMovie(
+                    selectedMovie: movie, favoriteMovies: favoriteMovies));
                 openBottomSheet(
-                    context: context,
-                    movie: checkMovieInFavorites(
+                  context: context,
+                  widget: ModalDetail(
+                    movie: checkMovie(
                         selectedMovie: movie, favoriteMovies: favoriteMovies),
-                    favoriteMovies: favoriteMovies);
+                  ),
+                );
                 // openBottomSheet();
               },
             );
@@ -183,17 +184,17 @@ class _HomePageState extends State<HomePage> {
               width: width * .365,
               movie: movie,
               onTap: () {
-                context.read<GetCastPeopleCubit>().getPeopleCast(
-                    checkMovieInFavorites(
-                        selectedMovie: movie, favoriteMovies: favoriteMovies));
-                context.read<GetTrailerIdCubit>().getIdFromTrailer(
-                    checkMovieInFavorites(
-                        selectedMovie: movie, favoriteMovies: favoriteMovies));
+                context.read<GetCastPeopleCubit>().getPeopleCast(checkMovie(
+                    selectedMovie: movie, favoriteMovies: favoriteMovies));
+                context.read<GetTrailerIdCubit>().getIdFromTrailer(checkMovie(
+                    selectedMovie: movie, favoriteMovies: favoriteMovies));
                 openBottomSheet(
-                    context: context,
-                    movie: checkMovieInFavorites(
+                  context: context,
+                  widget: ModalDetail(
+                    movie: checkMovie(
                         selectedMovie: movie, favoriteMovies: favoriteMovies),
-                    favoriteMovies: favoriteMovies);
+                  ),
+                );
               },
             );
           }),
