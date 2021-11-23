@@ -31,6 +31,7 @@ class _TileDownloadState extends State<TileDownload> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 3),
       child: Container(
+        height: size.height * .121,
         color: Colors.white10,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
