@@ -30,7 +30,6 @@ class GetTrailerIdCubit extends Cubit<GetTrailerIdState> {
             GetTrailerIdIsError(errorMessage: _setFailureMessage(failure))),
         (trailerId) async {
       movie.trailerId = trailerId;
-      print(movie.trailerId = trailerId);
       emit(GetTrailerIdIsSuccessful(movie: movie));
     });
   }

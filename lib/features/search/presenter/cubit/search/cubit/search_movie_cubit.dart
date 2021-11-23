@@ -29,7 +29,6 @@ class SearchMovieCubit extends Cubit<SearchMovieState> {
       if (movies.isEmpty) {
         emit(SearchMovieIsEmpty());
       } else {
-        print("Movies: ${movies[0].title}");
         emit(SearchMovieIsSuccess(movies: movies));
         await Future.delayed(Duration(milliseconds: 500));
         emit(SearchMovieInitial());

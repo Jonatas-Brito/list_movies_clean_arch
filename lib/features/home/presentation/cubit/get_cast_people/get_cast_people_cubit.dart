@@ -31,7 +31,6 @@ class GetCastPeopleCubit extends Cubit<GetCastPeopleState> {
         (failure) => emit(
             GetCastPeopleIsError(errorMessage: _setFailureMessage(failure))),
         (listCast) async {
-      print("Cast: $listCast");
       emit(GetCastPeopleIsSuccessful(listCast: listCast));
     });
   }

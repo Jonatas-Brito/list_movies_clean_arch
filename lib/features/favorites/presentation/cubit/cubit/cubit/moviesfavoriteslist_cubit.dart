@@ -34,7 +34,6 @@ class MoviesFavoritesListCubit extends Cubit<MoviesFavoritesListState> {
         emit(GetMoviesFavoritesReturnedListEmpy(
             message: AppStrings.thereNoFavorites));
       } else {
-        print(listMovies.length);
         emit(GetMoviesFavoritesIsSuccessful(movies: listMovies));
       }
     });

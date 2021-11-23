@@ -11,7 +11,5 @@ Movie checkMovie(
     }
   });
 
-  print("Is favorite | HomePage: ${movieSelected.isFavorite}");
-
   return movieSelected;
 }

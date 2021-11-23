@@ -26,7 +26,6 @@ class _ModalDetailState extends State<ModalDetail> {
   void initState() {
     movie = widget.movie;
 
-    print("ID TRAILER: ${widget.movie.trailerId.isEmpty}");
     super.initState();
   }
 
@@ -38,9 +37,6 @@ class _ModalDetailState extends State<ModalDetail> {
     double height = size.height;
     double textScaleFactor = width / mockupWidth;
     String imagePath = movie.imagePath;
-    print("Vote: $voteAverage");
-    print(
-        "Movie: ${widget.movie.title.length} - Vote ${widget.movie.voteAverage}");
     int titleLength = widget.movie.title.length;
     return Padding(
       padding: const EdgeInsets.all(12),
