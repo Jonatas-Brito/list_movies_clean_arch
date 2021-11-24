@@ -11,7 +11,7 @@ import '../datasources/movies_remote_data_source.dart';
 typedef FutureYoutubeId = Future<Either<Failure, String>>;
 
 typedef _GetPopularOrInTheatersMovies = Future<List<Movie>> Function();
-typedef _GetCastPeople = Future<List<CastPeople>> Function();
+typedef _GetMovies = Future<List<Movie>> Function();
 typedef _GetTrailerId = Future<String> Function();
 
 class MoviesRepositoryImpl implements MoviesRepository {
@@ -42,15 +42,15 @@ class MoviesRepositoryImpl implements MoviesRepository {
   }
 
   @override
-  FutureGetCast getCast(int id, String key) async {
-    return await _getCast(() => remoteDataSource.getCastPeople(id, key));
+  FutureGetMovies getCast(List<Movie> movies, String key) async {
+    return await _getCast(() => remoteDataSource.getCastPeople(movies, key));
   }
 
-  FutureGetCast _getCast(_GetCastPeople getCastPeople) async {
+  FutureGetMovies _getCast(_GetMovies getCastPeople) async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteListCast = await getCastPeople();
-        return Right(remoteListCast);
+        final moviesWithCast = await getCastPeople();
+        return Right(moviesWithCast);
       } on ServerException {
         return Left(ServerFailure());
       }

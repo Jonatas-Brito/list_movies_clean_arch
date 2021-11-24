@@ -12,7 +12,7 @@ class GetCastPeopleInitial extends GetCastPeopleState {}
 class GetCastPeopleIsLoading extends GetCastPeopleState {}
 
 class GetCastPeopleIsSuccessful extends GetCastPeopleState {
-  final List<CastPeople> listCast;
+  final List<Movie> listCast;
   const GetCastPeopleIsSuccessful({required this.listCast});
 }
 

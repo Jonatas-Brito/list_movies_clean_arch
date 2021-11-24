@@ -14,5 +14,5 @@ abstract class MoviesRepository {
   FutureGetMovies getMoviesPopular(String key);
   FutureGetMovies getMoviesInTheaters(String key);
   FutureYoutubeId getYoutubeId(int id, String key);
-  FutureGetCast getCast(int id, String key);
+  FutureGetMovies getCast(List<Movie> movies, String key);
 }

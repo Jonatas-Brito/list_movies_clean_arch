@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import '../../../../../core/error/failure.dart';
 import '../../../../../core/key/tmdb_key.dart';
 import '../../../../../core/strings/app_strings.dart';
-import '../../../domain/entities/cast_people.dart';
 import '../../../domain/entities/movie.dart';
 import '../../../domain/usecases/get_cast.dart';
 
@@ -17,15 +16,15 @@ class GetCastPeopleCubit extends Cubit<GetCastPeopleState> {
   GetCastPeopleCubit({required this.getCastPeople})
       : super(GetCastPeopleInitial());
 
-  getPeopleCast(Movie movie) async {
+  getPeopleCast(List<Movie> movies) async {
     emit(GetCastPeopleIsLoading());
     final failureOrListCast =
-        await getCastPeople(Params(id: movie.id, key: key));
+        await getCastPeople(Params(movies: movies, key: key));
     _eitherSuccessOrErrorState(failureOrListCast);
   }
 
   _eitherSuccessOrErrorState(
-    Either<Failure, List<CastPeople>> failureOrListCast,
+    Either<Failure, List<Movie>> failureOrListCast,
   ) async {
     failureOrListCast.fold(
         (failure) => emit(

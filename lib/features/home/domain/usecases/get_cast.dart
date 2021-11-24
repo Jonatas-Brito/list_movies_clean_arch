@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:movies_list/features/home/domain/entities/movie.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecases.dart';
-import '../entities/cast_people.dart';
 import '../repositories/movies_repository.dart';
 
-typedef FutureGetMovies = Future<Either<Failure, List<CastPeople>>>;
-typedef Usecase = UseCase<List<CastPeople>, Params>;
+typedef FutureGetMovies = Future<Either<Failure, List<Movie>>>;
+typedef Usecase = UseCase<List<Movie>, Params>;
 
 class GetCastPeople implements Usecase {
   final MoviesRepository repository;
@@ -15,15 +15,15 @@ class GetCastPeople implements Usecase {
 
   @override
   FutureGetMovies call(Params params) {
-    return repository.getCast(params.id, params.key);
+    return repository.getCast(params.movies, params.key);
   }
 }
 
 class Params extends Equatable {
   final String key;
-  final int id;
+  final List<Movie> movies;
 
-  const Params({required this.key, required this.id});
+  const Params({required this.key, required this.movies});
 
   @override
   List<Object?> get props => [key, id];

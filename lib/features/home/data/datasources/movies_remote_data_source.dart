@@ -19,7 +19,7 @@ abstract class MoviesRemoteDataSource {
 
   Future<String> getYoutubeId(int id, String key);
 
-  FutureCast getCastPeople(int id, String key);
+  FutureMovies getCastPeople(List<Movie> movies, String key);
 }
 
 class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
@@ -45,16 +45,24 @@ class MoviesRemoteDataSourceImpl implements MoviesRemoteDataSource {
       );
 
   @override
-  FutureCast getCastPeople(int id, String key) => _getCastPeople(
-        id,
+  // FutureCast
+  FutureMovies getCastPeople(List<Movie> movies, String key) => _getCastPeople(
+        movies,
         key,
       );
 
-  FutureCast _getCastPeople(int id, String key) async {
+  FutureMovies _getCastPeople(List<Movie> movies, String key) async {
+    movies.forEach((movie) async {
+      movie.castPeople = await _getListCast(movie.id, key);
+    });
+
+    return movies;
+  }
+
+  FutureCast _getListCast(int id, String key) async {
     List<CastPeople> people = <CastPeople>[];
     final response =
         await client.get(Uri.parse(ApiStringsHome().uriCast(id, key)));
-
     if (response.statusCode == 200) {
       Map<String, dynamic> map = jsonDecode(response.body);
       List dynamicList = map['cast'];
