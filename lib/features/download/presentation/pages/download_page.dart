@@ -73,9 +73,7 @@ class _DownloadPageState extends State<DownloadPage> {
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        Container(
-          height: size.height * .30,
-        ),
+        SizedBox(height: size.height * .35),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Text(

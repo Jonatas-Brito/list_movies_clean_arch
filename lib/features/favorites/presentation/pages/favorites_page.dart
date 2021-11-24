@@ -36,7 +36,7 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 50,
+          toolbarHeight: 75,
           title: Text(
             'Favoritos',
             style: Theme.of(context).textTheme.subtitle2!.copyWith(
@@ -81,25 +81,7 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
           return Column(
             children: [
               if (index == 0) ...[Container(height: 20)],
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                child: Column(
-                  children: [
-                    if (index > 0) ...[customDivider()],
-                    CardFavorite(
-                      movie: movie,
-                      onTap: () {
-                        context.read<GetCastPeopleCubit>().getPeopleCast(movie);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => OverviewPage(movie: movie)));
-                      },
-                    )
-                  ],
-                ),
-              ),
+              listFavorite(movie, index),
               if (index == movies.length - 1) ...[
                 Padding(
                   padding:
@@ -147,18 +129,21 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
 
   Widget errorOrEmptyMessage(String message) {
     Size size = MediaQuery.of(context).size;
-    return Center(
-      child: Container(
-        width: size.width * .8,
-        child: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.white.withOpacity(0.7)),
+    return Column(
+      children: [
+        SizedBox(height: size.height * .335),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Text(
+            message,
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+                color: Colors.grey.shade50),
+            textAlign: TextAlign.center,
+          ),
         ),
-      ),
+      ],
     );
   }
 }

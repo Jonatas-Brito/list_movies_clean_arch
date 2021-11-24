@@ -4,10 +4,10 @@ Movie checkMovie(
     {required Movie selectedMovie, required List<Movie> favoriteMovies}) {
   Movie movieSelected = Movie.empty();
   movieSelected = selectedMovie;
-  favoriteMovies.forEach((movie) {
-    bool equalsId = movie.id == movieSelected.id;
+  favoriteMovies.forEach((movieFavorite) {
+    bool equalsId = movieFavorite.id == movieSelected.id;
     if (equalsId) {
-      movieSelected = movie;
+      movieSelected = movieFavorite;
     }
   });
 

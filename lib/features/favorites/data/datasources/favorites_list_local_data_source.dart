@@ -110,18 +110,22 @@ class FavoritesListLocalDataSourceImpl implements FavoritesListLocalDataSource {
 
     final checkForKey =
         sharedPreferences.containsKey(CACHED_MOVIE_FAVORITE_LIST);
-    List dynamicList;
-    List<Movie> listFavoriteCache = [];
-    if (checkForKey) {
-      dynamicList =
-          jsonDecode(sharedPreferences.getString(CACHED_MOVIE_FAVORITE_LIST)!);
-      dynamicList.forEach((movie) {
-        Movie movieForFavorites = MovieModel.fromJson(movie);
-        movieForFavorites.isFavorite = true;
-        listFavoriteCache.add(movieForFavorites);
-      });
+    try {
+      List dynamicList;
+      List<Movie> listFavoriteCache = [];
+      if (checkForKey) {
+        dynamicList = jsonDecode(
+            sharedPreferences.getString(CACHED_MOVIE_FAVORITE_LIST)!);
+        dynamicList.forEach((movie) {
+          Movie movieForFavorites = MovieModel.fromJson(movie);
+          movieForFavorites.isFavorite = true;
+          listFavoriteCache.add(movieForFavorites);
+        });
+      }
+      return Future.value(listFavoriteCache);
+    } catch (e) {
+      throw CachedException();
     }
-    return Future.value(listFavoriteCache);
   }
 
   List<Movie> _returnFavoritesMovies() {

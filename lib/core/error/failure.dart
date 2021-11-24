@@ -32,3 +32,7 @@ class UnconnectedDevice extends Failure {
 class SearchFailure extends Failure {
   SearchFailure() : super(properties: []);
 }
+
+class ErrorCheckMovie extends Failure {
+  ErrorCheckMovie() : super(properties: []);
+}
