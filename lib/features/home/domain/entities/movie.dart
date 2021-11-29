@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import 'cast_people.dart';
 
+// ignore: must_be_immutable
 class Movie extends Equatable {
   final int id;
   final String title;

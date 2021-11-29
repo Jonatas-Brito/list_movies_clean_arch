@@ -1,6 +1,7 @@
 import '../../domain/entities/movie.dart';
 import 'people_credits_models.dart';
 
+// ignore: must_be_immutable
 class MovieModel extends Movie {
   MovieModel({
     required int id,
