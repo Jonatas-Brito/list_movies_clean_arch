@@ -20,6 +20,7 @@ import 'features/favorites/domain/usecases/remove_movie_of_favorites.dart';
 import 'features/favorites/domain/usecases/retrive_movies_favorites.dart';
 import 'features/favorites/presentation/cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 import 'features/favorites/presentation/cubit/cubit/moviefavorites_cubit.dart';
+import 'features/home/data/datasources/client_http_services_data_sources.dart';
 import 'features/home/data/datasources/movies_remote_data_source.dart';
 import 'features/home/data/repositories/movies_repository.dart';
 import 'features/home/domain/repositories/movies_repository.dart';
@@ -69,6 +70,7 @@ Future<void> init() async {
 
   // External
   sl.registerLazySingleton(() => Client());
+  sl.registerLazySingleton<HttpService>(() => HttpServiceImpl(client: sl()));
   sl.registerLazySingleton(() => InternetConnectionChecker());
 
   ///
