@@ -28,3 +28,7 @@ class CachedToRetriveFailure extends Failure {
 class UnconnectedDevice extends Failure {
   UnconnectedDevice() : super(properties: []);
 }
+
+class SearchFailure extends Failure {
+  SearchFailure() : super(properties: []);
+}

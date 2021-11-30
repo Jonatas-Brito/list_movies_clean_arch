@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
+
+import '../themes/app_colors.dart';
 
 Color verifyColorPrimaryToPercent(double percent) {
   Color color = AppColors.darkGreen;

@@ -3,6 +3,7 @@
         "dartz",
         "mockito",
         "mocktail",
-        "Schyler"
+        "Schyler",
+        "typeahead"
     ]
 }

@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/core/key/tmdb_key.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/home/domain/usecases/get_youtube_id.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_in_theaters/movies_in_theaters_cubit.dart';
+
+import '../../../../../../core/error/failure.dart';
+import '../../../../../../core/key/tmdb_key.dart';
+import '../../../../../../core/strings/app_strings.dart';
+import '../../../../domain/entities/movie.dart';
+import '../../../../domain/usecases/get_youtube_id.dart';
 
 part 'gettrailerid_state.dart';
 
@@ -29,7 +30,6 @@ class GetTrailerIdCubit extends Cubit<GetTrailerIdState> {
             GetTrailerIdIsError(errorMessage: _setFailureMessage(failure))),
         (trailerId) async {
       movie.trailerId = trailerId;
-      print(movie.trailerId = trailerId);
       emit(GetTrailerIdIsSuccessful(movie: movie));
     });
   }
@@ -37,9 +37,9 @@ class GetTrailerIdCubit extends Cubit<GetTrailerIdState> {
   String _setFailureMessage(Failure failure) {
     switch (failure.runtimeType) {
       case UnconnectedDevice:
-        return NETWORK_FAILURE_MESSAGE;
+        return AppStrings.NETWORK_FAILURE_MESSAGE;
       case ServerFailure:
-        return SERVER_FAILURE_MESSAGE;
+        return AppStrings.SERVER_FAILURE_MESSAGE;
       default:
     }
     return 'Erro inesperado';

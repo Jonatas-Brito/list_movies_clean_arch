@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
 import 'package:movies_list/features/favorites/presentation/pages/favorites_page.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   const CustomNavigationBar({Key? key}) : super(key: key);

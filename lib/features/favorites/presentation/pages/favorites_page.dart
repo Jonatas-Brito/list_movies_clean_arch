@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_list/features/home/presentation/cubit/movies_popular/movies_popular_cubit.dart';
 
 import '../../../../core/themes/app_colors.dart';
 import '../../../home/domain/entities/movie.dart';
+import '../../../home/presentation/cubit/get_cast_people/get_cast_people_cubit.dart';
 import '../../../home/presentation/pages/overview.dart';
 import '../cubit/cubit/cubit/moviesfavoriteslist_cubit.dart';
 import '../widgets/card_favorite_widget.dart';
@@ -16,30 +16,38 @@ class MoviesFavoritesPage extends StatefulWidget {
 }
 
 class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
-  List<Movie> movies = [];
+  List<Movie> moviesFavorite = [];
   var homeContext;
 
   @override
   void initState() {
-    context.read<MoviesFavoritesListCubit>().getListFavorites();
     super.initState();
+    // checkFavorites();
   }
 
-  Widget customDivider() {
-    return Column(
-      children: [
-        Container(
-          height: 0.5,
-          color: Colors.grey.withOpacity(0.5),
-        ),
-        SizedBox(height: 15),
-      ],
-    );
+  checkFavorites() {
+    if (moviesFavorite.isEmpty) {
+      print('Estava vazia');
+      context.read<MoviesFavoritesListCubit>().getListFavorites();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 50,
+          title: Text(
+            'Favoritos',
+            style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                  fontSize: 17,
+                  color: AppColors.white,
+                ),
+          ),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: AppColors.woodsmoke,
+        ),
         backgroundColor: AppColors.woodsmoke,
         body: Container(
           child: Padding(
@@ -49,36 +57,20 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
                     bloc: context.read<MoviesFavoritesListCubit>(),
                     builder: (context, state) {
                       if (state is GetMoviesFavoritesIsSuccessful) {
-                        return buildFavorites(state.movies);
+                        moviesFavorite = state.movies;
+                        return buildFavorites(moviesFavorite);
                       }
                       if (state is GetMoviesFavoritesReturnedListEmpy) {
-                        return listIsEmpty();
+                        return errorOrEmptyMessage(state.message);
                       }
-                      if (state is GetPopularMoviesIsError) {}
+                      if (state is GetMoviesFavoritesIsError) {
+                        errorOrEmptyMessage(state.errorMessage);
+                      }
 
-                      return Container(
-                        height: 150,
-                      );
+                      return Container(height: 150);
                     }),
           ),
         ));
-  }
-
-  Widget listIsEmpty() {
-    Size size = MediaQuery.of(context).size;
-    return Center(
-      child: Container(
-        width: size.width * .8,
-        child: Text(
-          'Adicione um filme aos favoritos e ele ficara disponivel aqui!',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.white.withOpacity(0.7)),
-        ),
-      ),
-    );
   }
 
   Widget buildFavorites(List<Movie> movies) {
@@ -98,11 +90,11 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
                     CardFavorite(
                       movie: movie,
                       onTap: () {
+                        context.read<GetCastPeopleCubit>().getPeopleCast(movie);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => OverviewPage(
-                                    popIsFavorite: true, movie: movie)));
+                                builder: (_) => OverviewPage(movie: movie)));
                       },
                     )
                   ],
@@ -133,11 +125,39 @@ class _MoviesFavoritesPageState extends State<MoviesFavoritesPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) =>
-                          OverviewPage(popIsFavorite: true, movie: movie)));
+                      builder: (_) => OverviewPage(movie: movie)));
             },
           )
         ],
+      ),
+    );
+  }
+
+  Widget customDivider() {
+    return Column(
+      children: [
+        Container(
+          height: 0.5,
+          color: Colors.grey.withOpacity(0.5),
+        ),
+        SizedBox(height: 15),
+      ],
+    );
+  }
+
+  Widget errorOrEmptyMessage(String message) {
+    Size size = MediaQuery.of(context).size;
+    return Center(
+      child: Container(
+        width: size.width * .8,
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              color: Colors.white.withOpacity(0.7)),
+        ),
       ),
     );
   }

@@ -11,13 +11,10 @@ class HomeSkeleton extends StatefulWidget {
 class _HomeSkeletonState extends State<HomeSkeleton> {
   Widget titleSkeleton({bool secondText = false}) {
     Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: SkeletonContainer.square(
-          height: size.height * .045,
-          width: secondText ? size.width * .48 : size.width * .38,
-          borderRadius: BorderRadius.all(Radius.circular(20))),
-    );
+    return SkeletonContainer.square(
+        height: size.height * .03,
+        width: secondText ? size.width * .48 : size.width * .38,
+        borderRadius: BorderRadius.all(Radius.circular(20)));
   }
 
   skeletonWidget({bool isMoviesInTheater = false}) {
@@ -25,7 +22,7 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
     double height = size.height;
     double width = size.width;
     return Container(
-      height: isMoviesInTheater ? height * .2439 : height * .30,
+      height: isMoviesInTheater ? height * .35 : height * .39,
       width: width,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -34,10 +31,16 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: SkeletonContainer.square(
-                height: isMoviesInTheater ? height * .2439 : height * .30,
-                width: isMoviesInTheater ? width * .365 : width * .43,
-                borderRadius: BorderRadius.circular(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SkeletonContainer.square(
+                    height: isMoviesInTheater ? height * .2439 : height * .30,
+                    width: isMoviesInTheater ? width * .365 : width * .43,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  SizedBox(height: 4),
+                ],
               ),
             );
           }),
@@ -46,14 +49,26 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        titleSkeleton(),
-        skeletonWidget(),
-        titleSkeleton(secondText: true),
-        skeletonWidget(isMoviesInTheater: true),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: titleSkeleton(),
+          ),
+          SizedBox(height: 12),
+          skeletonWidget(),
+          SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: titleSkeleton(secondText: true),
+          ),
+          SizedBox(height: 12),
+          skeletonWidget(isMoviesInTheater: true),
+        ],
+      ),
     );
   }
 }

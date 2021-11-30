@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_list/core/images/app_images.dart';
+import 'package:movies_list/core/strings/app_strings.dart';
 import 'package:movies_list/core/themes/app_colors.dart';
+import 'package:movies_list/core/utils/api_string_images.dart';
 import 'package:movies_list/features/home/domain/entities/movie.dart';
 import 'package:movies_list/features/home/presentation/components/tile_component.dart';
 import 'package:movies_list/features/home/presentation/pages/overview.dart';
@@ -22,7 +26,6 @@ class _ModalDetailState extends State<ModalDetail> {
   void initState() {
     movie = widget.movie;
 
-    print("ID TRAILER: ${widget.movie.trailerId.isEmpty}");
     super.initState();
   }
 
@@ -33,28 +36,33 @@ class _ModalDetailState extends State<ModalDetail> {
     double width = size.width;
     double height = size.height;
     double textScaleFactor = width / mockupWidth;
-    print("Vote: $voteAverage");
-    print(
-        "Movie: ${widget.movie.title.length} - Vote ${widget.movie.voteAverage}");
+    String imagePath = movie.imagePath;
     int titleLength = widget.movie.title.length;
     return Padding(
       padding: const EdgeInsets.all(12),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: width * .32,
-                height: height * .35,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: CachedNetworkImageProvider(
-                          'http://image.tmdb.org/t/p/original${movie.imagePath}',
-                        )),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+              GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => OverviewPage(movie: movie))),
+                child: Container(
+                  width: width * .32,
+                  height: height * .35,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: CachedNetworkImageProvider(
+                            ApiStringImage().originalImage(imagePath),
+                          )),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: width * .035),
@@ -139,12 +147,12 @@ class _ModalDetailState extends State<ModalDetail> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Image.asset(
-                                  'assets/icons/like.png',
+                                SvgPicture.asset(
+                                  AppImages.like,
                                   height: 17,
                                 ),
                                 Text(
-                                  "Mais curtidos",
+                                  AppStrings.mostLiked,
                                   style: Theme.of(context)
                                       .textTheme
                                       .subtitle2!
@@ -166,12 +174,8 @@ class _ModalDetailState extends State<ModalDetail> {
           ),
           SizedBox(height: 15),
           TileComponent(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => OverviewPage(movie: movie)));
-            },
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => OverviewPage(movie: movie))),
           )
         ],
       ),

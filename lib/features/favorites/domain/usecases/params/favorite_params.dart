@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
+
+import '../../../../home/domain/entities/movie.dart';
 
 class FavoriteParams extends Equatable {
   final Movie movie;

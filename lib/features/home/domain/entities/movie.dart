@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:movies_list/features/home/domain/entities/cast_people.dart';
 
+import 'cast_people.dart';
+
+// ignore: must_be_immutable
 class Movie extends Equatable {
   final int id;
   final String title;
@@ -9,6 +11,7 @@ class Movie extends Equatable {
   final String overview;
   final int voteCount;
   bool? isFavorite;
+  bool? hasDownloaded;
   final String releaseDate;
   final String bannerPath;
   List<CastPeople> castPeople;
@@ -21,6 +24,7 @@ class Movie extends Equatable {
     required this.title,
     required this.castPeople,
     required this.isFavorite,
+    required this.hasDownloaded,
     required this.voteAverage,
     required this.bannerPath,
     required this.imagePath,
@@ -36,6 +40,7 @@ class Movie extends Equatable {
     this.imagePath = '',
     this.trailerId = '',
     this.isFavorite = false,
+    this.hasDownloaded = false,
     this.castPeople = const <CastPeople>[],
     this.bannerPath = '',
     this.voteAverage = 0,
@@ -51,6 +56,7 @@ class Movie extends Equatable {
         title,
         imagePath,
         isFavorite,
+        hasDownloaded,
         bannerPath,
         voteAverage,
         releaseDate,

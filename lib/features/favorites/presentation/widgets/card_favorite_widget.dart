@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
 
+import '../../../../core/strings/app_strings.dart';
+import '../../../../core/themes/app_colors.dart';
+import '../../../../core/utils/api_string_images.dart';
 import '../../../../main.dart';
+import '../../../home/domain/entities/movie.dart';
 
 class CardFavorite extends StatelessWidget {
   final Movie movie;
@@ -22,6 +24,7 @@ class CardFavorite extends StatelessWidget {
     double height = size.height;
     double textScaleFactor = width / mockupWidth;
     double scale = mockupWidth / width;
+    String imagePath = movie.imagePath;
 
     return Container(
         color: Colors.transparent,
@@ -30,16 +33,19 @@ class CardFavorite extends StatelessWidget {
             Container(
               child: Row(
                 children: [
-                  Container(
-                    height: height * .275,
-                    width: width * .365,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(
-                                'http://image.tmdb.org/t/p/w500${movie.imagePath}',
-                                scale: scale)),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  GestureDetector(
+                    onTap: onTap,
+                    child: Container(
+                      height: height * .275,
+                      width: width * .365,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: CachedNetworkImageProvider(
+                                  ApiStringImage().originalImage(imagePath),
+                                  scale: scale)),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                    ),
                   ),
                   Container(
                     padding: EdgeInsets.only(left: 20),
@@ -101,7 +107,7 @@ class CardFavorite extends StatelessWidget {
                                     Colors.transparent)),
                             onPressed: onTap,
                             child: Text(
-                              '''Toque para continuar \nlendo''',
+                              AppStrings.tapToContinueReading,
                               textScaleFactor: textScaleFactor,
                               style: Theme.of(context)
                                   .textTheme

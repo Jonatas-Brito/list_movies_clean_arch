@@ -1,13 +1,10 @@
-import 'dart:convert';
-
-import 'package:movies_list/core/error/exceptions.dart';
-import 'package:movies_list/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:movies_list/features/favorites/data/datasources/favorites_list_local_data_source.dart';
-import 'package:movies_list/features/favorites/domain/repositories/movies_favorite_repository.dart';
-import 'package:movies_list/features/home/data/models/movies_model.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failure.dart';
+import '../../../home/domain/entities/movie.dart';
+import '../../domain/repositories/movies_favorite_repository.dart';
+import '../datasources/favorites_list_local_data_source.dart';
 
 class MoviesFavoriteReposiryImpl implements MoviesFavoriteReposiry {
   final FavoritesListLocalDataSource localFavoritesDataSource;

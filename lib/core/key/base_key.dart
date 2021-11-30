@@ -1,0 +1,4 @@
+class BaseKey {
+  static const String CACHED_MOVIE_FAVORITE_LIST = 'CACHED_MOVIE_FAVORITE_LIST';
+  static const String CACHED_MOVIE_DOWNLOAD_LIST = 'CACHED_MOVIE_DOWNLOAD_LIST';
+}

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movies_list/core/themes/app_colors.dart';
-import 'package:movies_list/features/home/presentation/pages/home.dart';
-import 'package:movies_list/features/favorites/presentation/pages/favorites_page.dart';
-import 'package:movies_list/features/home/presentation/widgets/page_in_construction.dart';
+
+import 'core/themes/app_colors.dart';
+import 'features/download/presentation/pages/download_page.dart';
+import 'features/favorites/presentation/pages/favorites_page.dart';
+import 'features/home/presentation/pages/home.dart';
+import 'features/home/presentation/widgets/page_in_construction.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({
@@ -20,8 +22,8 @@ class _NavigationState extends State<Navigation> {
   List<Widget> pages = [
     HomePage(),
     MoviesFavoritesPage(),
-    PageInConstructio(),
-    PageInConstructio(page: 2)
+    DownloadPage(),
+    PageInConstruction(page: 2)
   ];
 
   List<IconData> iconPages = [];
@@ -37,20 +39,14 @@ class _NavigationState extends State<Navigation> {
     pageController.dispose();
   }
 
-  Widget buildInConstruction() {
-    return Container(
-      color: AppColors.woodsmoke,
-      alignment: Alignment.center,
-      child: Text('Tela em construcão!'),
-    );
-  }
-
   Widget setIconAndIndex({required int index, required IconData icon}) {
     return IconButton(
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       icon: Icon(icon, size: 32, color: colorIndex(index)),
       onPressed: () {
+        // pageController.jumpToPage(index);
+
         pageController.animateToPage(index,
             duration: Duration(milliseconds: 700),
             curve: Curves.fastLinearToSlowEaseIn);

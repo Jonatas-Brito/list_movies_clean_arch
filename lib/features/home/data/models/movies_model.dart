@@ -1,6 +1,7 @@
-import 'package:movies_list/features/home/data/models/people_credits_models.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
+import '../../domain/entities/movie.dart';
+import 'people_credits_models.dart';
 
+// ignore: must_be_immutable
 class MovieModel extends Movie {
   MovieModel({
     required int id,
@@ -12,22 +13,25 @@ class MovieModel extends Movie {
     required int voteCount,
     required List<CastPeopleModel> castPeople,
     bool? isFavorite,
+    bool? hasDownloaded,
     required double? voteAverage,
     required String? trailerId,
     required String bannerPath,
   }) : super(
-            id: id,
-            trailerId: trailerId!,
-            castPeople: castPeople,
-            title: title,
-            imagePath: imagePath,
-            voteAverage: voteAverage!,
-            popularity: popularity,
-            releaseDate: releaseDate,
-            voteCount: voteCount,
-            overview: overview,
-            bannerPath: bannerPath,
-            isFavorite: isFavorite);
+          id: id,
+          trailerId: trailerId!,
+          castPeople: castPeople,
+          title: title,
+          imagePath: imagePath,
+          voteAverage: voteAverage!,
+          popularity: popularity,
+          releaseDate: releaseDate,
+          voteCount: voteCount,
+          overview: overview,
+          bannerPath: bannerPath,
+          isFavorite: isFavorite,
+          hasDownloaded: hasDownloaded,
+        );
 
   factory MovieModel.fromJson(Map<String, dynamic> map) {
     return MovieModel(
@@ -41,6 +45,8 @@ class MovieModel extends Movie {
             ? (map['vote_average'] as num).toDouble()
             : null,
         isFavorite: map['is_favorite'] != null ? map['is_favorite'] : false,
+        hasDownloaded:
+            map['has_downloaded'] != null ? map['has_downloaded'] : false,
         bannerPath: map['backdrop_path'] != null ? map['backdrop_path'] : null,
         imagePath: map['poster_path'] != null ? map['poster_path'] : null,
         popularity: map['popularity'] != null ? map['popularity'] : null,

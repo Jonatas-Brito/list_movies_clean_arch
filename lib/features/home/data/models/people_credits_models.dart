@@ -1,4 +1,4 @@
-import 'package:movies_list/features/home/domain/entities/cast_people.dart';
+import '../../domain/entities/cast_people.dart';
 
 class CastPeopleModel extends CastPeople {
   CastPeopleModel({
