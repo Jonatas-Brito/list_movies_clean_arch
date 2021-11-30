@@ -7,6 +7,8 @@ import 'dart:async' as _i4;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:movies_list/core/error/failure.dart' as _i5;
+import 'package:movies_list/features/home/domain/entities/cast_people.dart'
+    as _i7;
 import 'package:movies_list/features/home/domain/entities/movie.dart' as _i6;
 import 'package:movies_list/features/home/domain/repositories/movies_repository.dart'
     as _i3;
@@ -43,6 +45,21 @@ class MockMoviesRepository extends _i1.Mock implements _i3.MoviesRepository {
           returnValue: Future<_i2.Either<_i5.Failure, List<_i6.Movie>>>.value(
               _FakeEither_0<_i5.Failure, List<_i6.Movie>>())) as _i4
           .Future<_i2.Either<_i5.Failure, List<_i6.Movie>>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, String>> getYoutubeId(
+          int? id, String? key) =>
+      (super.noSuchMethod(Invocation.method(#getYoutubeId, [id, key]),
+              returnValue: Future<_i2.Either<_i5.Failure, String>>.value(
+                  _FakeEither_0<_i5.Failure, String>()))
+          as _i4.Future<_i2.Either<_i5.Failure, String>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, List<_i7.CastPeople>>> getCast(
+          int? id, String? key) =>
+      (super.noSuchMethod(Invocation.method(#getCast, [id, key]),
+              returnValue:
+                  Future<_i2.Either<_i5.Failure, List<_i7.CastPeople>>>.value(
+                      _FakeEither_0<_i5.Failure, List<_i7.CastPeople>>()))
+          as _i4.Future<_i2.Either<_i5.Failure, List<_i7.CastPeople>>>);
   @override
   String toString() => super.toString();
 }

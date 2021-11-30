@@ -8,6 +8,8 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:movies_list/core/network/network_info.dart' as _i2;
 import 'package:movies_list/features/home/data/datasources/movies_remote_data_source.dart'
     as _i4;
+import 'package:movies_list/features/home/domain/entities/cast_people.dart'
+    as _i6;
 import 'package:movies_list/features/home/domain/entities/movie.dart' as _i5;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -53,6 +55,16 @@ class MockMoviesRemoteDataSource extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#getMoviesInTheaters, [key]),
               returnValue: Future<List<_i5.Movie>>.value(<_i5.Movie>[]))
           as _i3.Future<List<_i5.Movie>>);
+  @override
+  _i3.Future<String> getYoutubeId(int? id, String? key) =>
+      (super.noSuchMethod(Invocation.method(#getYoutubeId, [id, key]),
+          returnValue: Future<String>.value('')) as _i3.Future<String>);
+  @override
+  _i3.Future<List<_i6.CastPeople>> getCastPeople(int? id, String? key) =>
+      (super.noSuchMethod(Invocation.method(#getCastPeople, [id, key]),
+              returnValue:
+                  Future<List<_i6.CastPeople>>.value(<_i6.CastPeople>[]))
+          as _i3.Future<List<_i6.CastPeople>>);
   @override
   String toString() => super.toString();
 }
