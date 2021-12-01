@@ -4,6 +4,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movies_list/core/error/exceptions.dart';
 import 'package:movies_list/core/key/tmdb_key.dart';
+import 'package:movies_list/features/home/data/datasources/client_http_services_data_sources.dart';
 import 'package:movies_list/features/home/data/datasources/movies_remote_data_source.dart';
 import 'package:http/http.dart' as http;
 import 'package:movies_list/features/home/data/models/movies_model.dart';
@@ -11,12 +12,12 @@ import 'package:movies_list/features/home/data/models/people_credits_models.dart
 import '../../../../fixtures/fixtures_reader.dart';
 import 'movies_remote_data_source_test.mocks.dart';
 
-@GenerateMocks([http.Client])
+@GenerateMocks([HttpServiceImpl])
 void main() {
-  MockClient mockHttpClient = MockClient();
+  MockHttpServiceImpl mockHttpServiceImpl = MockHttpServiceImpl();
 
   MoviesRemoteDataSourceImpl dataSource =
-      MoviesRemoteDataSourceImpl(client: mockHttpClient);
+      MoviesRemoteDataSourceImpl(client: mockHttpServiceImpl);
 
   Map<String, dynamic> tMapMovies = jsonDecode(fixture('movie.json'));
 
@@ -42,14 +43,14 @@ void main() {
     String uri =
         'https://api.themoviedb.org/3/movie/popular?api_key=$key&language=pt-BR&page=1';
 
-    when(mockHttpClient.get(Uri.parse(uri)))
+    when(mockHttpServiceImpl.get(uri))
         .thenAnswer((_) async => http.Response(fixture('movie.json'), 200));
   }
 
   void setUpMockHttopClientSuccess200MoviesInTheaters() {
     String uri =
         'https://api.themoviedb.org/3/movie/now_playing?api_key=$key&language=pt-BR&page=1';
-    when(mockHttpClient.get(Uri.parse(uri)))
+    when(mockHttpServiceImpl.get(uri))
         .thenAnswer((_) async => http.Response(fixture('movie.json'), 200));
   }
 
@@ -58,9 +59,8 @@ void main() {
 
     String uri =
         'https://api.themoviedb.org/3/movie/$id/videos?api_key=$key&language=en-US';
-    when(mockHttpClient.get(Uri.parse(uri))).thenAnswer(
-        (realInvocation) async =>
-            http.Response(fixture('trailer_id.json'), 200));
+    when(mockHttpServiceImpl.get(uri)).thenAnswer((realInvocation) async =>
+        http.Response(fixture('trailer_id.json'), 200));
   }
 
   void setUpMockHttopClientSuccess200CastList() {
@@ -68,35 +68,35 @@ void main() {
 
     String uri =
         'https://api.themoviedb.org/3/movie/$id/credits?api_key=$key&language=en-US';
-    when(mockHttpClient.get(Uri.parse(uri))).thenAnswer(
+    when(mockHttpServiceImpl.get(uri)).thenAnswer(
         (realInvocation) async => http.Response(fixture('cast.json'), 200));
   }
 
   void setUpMockHttopClientFailure404orOther() {
     String uri =
         'https://api.themoviedb.org/3/movie/popular?api_key=$key&language=pt-BR&page=1';
-    when(mockHttpClient.get(Uri.parse(uri)))
+    when(mockHttpServiceImpl.get(uri))
         .thenAnswer((_) async => http.Response('Somenthing went wrong', 404));
   }
 
   void setUpMockHttopClientFailure404orOtherMoviesInTheaters() {
     String uri =
         'https://api.themoviedb.org/3/movie/now_playing?api_key=$key&language=pt-BR&page=1';
-    when(mockHttpClient.get(Uri.parse(uri))).thenAnswer(
+    when(mockHttpServiceImpl.get(uri)).thenAnswer(
         (realInvocation) async => http.Response('Somenthing went wrong', 404));
   }
 
   void setUpMockHttopClientFailure404orOtherYoutubeId() {
     String uri =
         'https://api.themoviedb.org/3/movie/$id/videos?api_key=$key&language=en-US';
-    when(mockHttpClient.get(Uri.parse(uri)))
+    when(mockHttpServiceImpl.get(uri))
         .thenAnswer((_) async => http.Response('Somenthing went wrong', 404));
   }
 
   void setUpMockHttopClientFailure404orOtherCastList() {
     String uri =
         'https://api.themoviedb.org/3/movie/$id/credits?api_key=$key&language=en-US';
-    when(mockHttpClient.get(Uri.parse(uri)))
+    when(mockHttpServiceImpl.get(uri))
         .thenAnswer((_) async => http.Response('Somenthing went wrong', 404));
   }
 
@@ -112,7 +112,7 @@ void main() {
       // act
       await dataSource.getMoviesPopular(key);
       // assert
-      verify(mockHttpClient.get(Uri.parse(uri)));
+      verify(mockHttpServiceImpl.get(uri));
     });
 
     test('should return Movies when the status code is 200 (success)',
@@ -125,10 +125,8 @@ void main() {
       expect(result, equals([tMapMoviesModel]));
     });
 
-    test(
-        '''should throw a ServerException when the 
-        response code is 404 or other than 200''',
-        () async {
+    test('''should throw a ServerException when the
+        response code is 404 or other than 200''', () async {
       // arrange
       setUpMockHttopClientFailure404orOther();
       // act
@@ -158,7 +156,7 @@ void main() {
       // act
       await dataSource.getMoviesInTheaters(key);
       // assert
-      verify(mockHttpClient.get(Uri.parse(uri)));
+      verify(mockHttpServiceImpl.get(uri));
     });
 
     test('should return Movies when the status code is 200 (success)',
@@ -172,10 +170,8 @@ void main() {
       expect(result, equals([tMapMoviesModel]));
     });
 
-    test(
-        '''should throw a ServerException when the 
-        response code is 404 or other than 200''',
-        () async {
+    test('''should throw a ServerException when the
+        response code is 404 or other than 200''', () async {
       // arrange
       setUpMockHttopClientFailure404orOtherMoviesInTheaters();
       // act
@@ -204,7 +200,7 @@ void main() {
       // act
       await dataSource.getYoutubeId(id, key);
       // assert
-      verify(mockHttpClient.get(Uri.parse(uri)));
+      verify(mockHttpServiceImpl.get(uri));
     });
 
     test('should return TrailerId when the status code is 200 (success)',
@@ -218,10 +214,8 @@ void main() {
       expect(result, equals(tMapMoviesModel.trailerId));
     });
 
-    test(
-        '''should throw a ServerException when the 
-        response code is 404 or other than 200''',
-        () async {
+    test('''should throw a ServerException when the
+        response code is 404 or other than 200''', () async {
       // arrange
       setUpMockHttopClientFailure404orOtherYoutubeId();
       // act
@@ -250,7 +244,7 @@ void main() {
       // act
       await dataSource.getCastPeople(id, key);
       // assert
-      verify(mockHttpClient.get(Uri.parse(uri)));
+      verify(mockHttpServiceImpl.get(uri));
     });
 
     test('should return [CastList] when the status code is 200 (success)',
@@ -264,10 +258,8 @@ void main() {
       expect(result[0], equals(tMapCastPeople));
     });
 
-    test(
-        '''should throw a ServerException when the 
-        response code is 404 or other than 200''',
-        () async {
+    test('''should throw a ServerException when the
+        response code is 404 or other than 200''', () async {
       // arrange
       setUpMockHttopClientFailure404orOtherCastList();
       // act

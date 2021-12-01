@@ -9,9 +9,7 @@ import 'package:movies_list/features/home/domain/usecases/get_movies_in_theaters
 
 import 'get_movies_in_theaters_test.mocks.dart';
 
-@GenerateMocks([
-  MoviesRepository,
-])
+@GenerateMocks([MoviesRepository])
 void main() {
   final tRepository = MockMoviesRepository();
   final tUsecase = GetMoviesInTheaters(tRepository);
