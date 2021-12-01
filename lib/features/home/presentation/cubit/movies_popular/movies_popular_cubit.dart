@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movies_list/core/error/failure.dart';
-import 'package:movies_list/core/key/tmdb_key.dart';
-import 'package:movies_list/features/home/domain/entities/movie.dart';
-import 'package:movies_list/features/home/domain/usecases/get_popular_movies.dart';
+import '../../../domain/entities/movie.dart';
+import '../../../../../core/key/tmdb_key.dart';
+import '../../../../../core/error/failure.dart';
+import '../../../domain/usecases/get_popular_movies.dart';
 
 part 'movies_popular_state.dart';
 
