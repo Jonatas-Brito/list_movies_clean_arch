@@ -34,7 +34,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   # External access
   url_launcher: ^6.0.10
-  mockito: ^5.0.16
 
 dev_dependencies:
   flutter_test:
@@ -43,6 +42,8 @@ dev_dependencies:
   # Mock class for tests
   # Bloc test
   bloc_test: ^8.5.0
+  mockito: ^5.0.15
+
 
   
 
