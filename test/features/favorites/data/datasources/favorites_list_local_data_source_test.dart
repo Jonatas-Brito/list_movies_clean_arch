@@ -1,20 +1,22 @@
 // import 'dart:convert';
 
 // import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:mockito/mockito.dart';
 // import 'package:movies_list/core/error/exceptions.dart';
 // import 'package:movies_list/core/key/base_key.dart';
 // import 'package:movies_list/features/favorites/data/datasources/favorites_list_local_data_source.dart';
 // import 'package:movies_list/features/home/data/models/movies_model.dart';
 // import 'package:movies_list/features/home/domain/entities/movie.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 // import '../../../../fixtures/fixtures_reader.dart';
 // import 'favorites_list_local_data_source_test.mocks.dart';
 
-// @GenerateMocks([SharedPreferences])
+@GenerateMocks([SharedPreferences])
 void main() {
+  test("", () {});
   // MockSharedPreferences mockSharedPreferences = MockSharedPreferences();
 
   // const CACHED_MOVIE_FAVORITE_LIST = BaseKey.CACHED_MOVIE_FAVORITE_LIST;
@@ -22,6 +24,7 @@ void main() {
   // FavoritesListLocalDataSourceImpl localDataSource =
   //     FavoritesListLocalDataSourceImpl(
   //         sharedPreferences: mockSharedPreferences);
+
   // Map<String, dynamic> tMapMovies = jsonDecode(fixture('movie.json'));
   // List dynamicList = tMapMovies['results'];
   // List<Movie> moviesFavorites = [];

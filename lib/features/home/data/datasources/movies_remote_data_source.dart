@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/utils/api_strings/features/home/api_strings_remote.dart';
